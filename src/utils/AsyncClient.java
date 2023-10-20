@@ -42,6 +42,8 @@ public class AsyncClient {
             while (true) {
                 readBuffer.clear();
                 try {
+                    // Read buffered message
+                    // TODO: put in a queue producer consumer style
                     int bytesRead = channel.read(readBuffer);
                     if (bytesRead == -1) break;
                     if (bytesRead > 0) {
