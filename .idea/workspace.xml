@@ -5,20 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="75c0e452-b7e4-426b-bd4d-8ebda73c89ea" name="Changes" comment="feat: add project files">
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/junit_platform_console_standalone_1_9_3.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/jar/junit-platform-console-standalone-1.9.3.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/CouncilRegistry.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/utils/Acceptor.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/utils/Client.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/utils/Server.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/utils/Message.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tests/utils/MessageTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PaxosCouncil.iml" beforeDir="false" afterPath="$PROJECT_DIR$/PaxosCouncil.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Acceptor.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Councillor.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Proposer.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -28,8 +17,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="JUnit5 Test Class" />
         <option value="Class" />
+        <option value="JUnit5 Test Class" />
       </list>
     </option>
   </component>
@@ -77,16 +66,9 @@
       <recent name="utils" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.WritableClient">
+  <component name="RunManager" selected="JUnit.MessageTest.testToString">
     <configuration name="Client" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="utils.Client" />
-      <module name="PaxosCouncil" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="NIOEchoServer" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="NIOEchoServer" />
       <module name="PaxosCouncil" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -112,7 +94,7 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="LineBuilderTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="MessageTest.fromString" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="PaxosCouncil" />
       <extension name="coverage">
         <pattern>
@@ -121,19 +103,36 @@
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="utils" />
-      <option name="MAIN_CLASS_NAME" value="utils.LineBuilderTest" />
-      <option name="TEST_OBJECT" value="class" />
+      <option name="MAIN_CLASS_NAME" value="utils.MessageTest" />
+      <option name="METHOD_NAME" value="fromString" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="MessageTest.testToString" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="PaxosCouncil" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="utils.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="utils" />
+      <option name="MAIN_CLASS_NAME" value="utils.MessageTest" />
+      <option name="METHOD_NAME" value="testToString" />
+      <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.MessageTest.testToString" />
+        <item itemvalue="JUnit.MessageTest.fromString" />
         <item itemvalue="Application.WritableClient" />
         <item itemvalue="Application.Server" />
         <item itemvalue="Application.Client" />
-        <item itemvalue="Application.NIOEchoServer" />
-        <item itemvalue="JUnit.LineBuilderTest" />
       </list>
     </recent_temporary>
   </component>
@@ -178,7 +177,15 @@
       <option name="project" value="LOCAL" />
       <updated>1697505864008</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="feat: add project files">
+      <option name="closed" value="true" />
+      <created>1697810563055</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1697810563055</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
