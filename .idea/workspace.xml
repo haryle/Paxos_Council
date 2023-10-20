@@ -4,9 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="75c0e452-b7e4-426b-bd4d-8ebda73c89ea" name="Changes" comment="feat: add project files">
-      <change afterPath="$PROJECT_DIR$/src/utils/Message.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tests/utils/MessageTest.java" afterDir="false" />
+    <list default="true" id="75c0e452-b7e4-426b-bd4d-8ebda73c89ea" name="Changes" comment="feat: add message class">
+      <change afterPath="$PROJECT_DIR$/src/utils/AsyncMessageParser.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tests/utils/AsyncMessageParserTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -66,35 +66,8 @@
       <recent name="utils" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.MessageTest.testToString">
-    <configuration name="Client" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="utils.Client" />
-      <module name="PaxosCouncil" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="Server" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="Server" />
-      <module name="PaxosCouncil" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="WritableClient" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="utils.WritableClient" />
-      <module name="PaxosCouncil" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="utils.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="MessageTest.fromString" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="JUnit.AsyncMessageParserTest">
+    <configuration name="AsyncMessageParserTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="PaxosCouncil" />
       <extension name="coverage">
         <pattern>
@@ -103,8 +76,55 @@
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="utils" />
-      <option name="MAIN_CLASS_NAME" value="utils.MessageTest" />
-      <option name="METHOD_NAME" value="fromString" />
+      <option name="MAIN_CLASS_NAME" value="utils.AsyncMessageParserTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="AsyncMessageParserTest.appendStringDoesNotEndsWithDelimiterMultipleTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="PaxosCouncil" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="utils.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="utils" />
+      <option name="MAIN_CLASS_NAME" value="utils.AsyncMessageParserTest" />
+      <option name="METHOD_NAME" value="appendStringDoesNotEndsWithDelimiterMultipleTest" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="AsyncMessageParserTest.appendStringEndsWithDelimiterMultipleTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="PaxosCouncil" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="utils.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="utils" />
+      <option name="MAIN_CLASS_NAME" value="utils.AsyncMessageParserTest" />
+      <option name="METHOD_NAME" value="appendStringEndsWithDelimiterMultipleTest" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="AsyncMessageParserTest.appendStringEndsWithDelimiterOneTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="PaxosCouncil" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="utils.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="utils" />
+      <option name="MAIN_CLASS_NAME" value="utils.AsyncMessageParserTest" />
+      <option name="METHOD_NAME" value="appendStringEndsWithDelimiterOneTest" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -128,11 +148,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.AsyncMessageParserTest" />
+        <item itemvalue="JUnit.AsyncMessageParserTest.appendStringDoesNotEndsWithDelimiterMultipleTest" />
+        <item itemvalue="JUnit.AsyncMessageParserTest.appendStringEndsWithDelimiterMultipleTest" />
+        <item itemvalue="JUnit.AsyncMessageParserTest.appendStringEndsWithDelimiterOneTest" />
         <item itemvalue="JUnit.MessageTest.testToString" />
-        <item itemvalue="JUnit.MessageTest.fromString" />
-        <item itemvalue="Application.WritableClient" />
-        <item itemvalue="Application.Server" />
-        <item itemvalue="Application.Client" />
       </list>
     </recent_temporary>
   </component>
@@ -185,7 +205,15 @@
       <option name="project" value="LOCAL" />
       <updated>1697810563055</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="feat: add message class">
+      <option name="closed" value="true" />
+      <created>1697811619787</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1697811619787</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -193,6 +221,7 @@
     <MESSAGE value="feat: add roles" />
     <MESSAGE value="feat: add jar file" />
     <MESSAGE value="feat: add project files" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: add project files" />
+    <MESSAGE value="feat: add message class" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: add message class" />
   </component>
 </project>
