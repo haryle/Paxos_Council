@@ -47,4 +47,16 @@ class AsyncMessageParserTest {
         assertEquals(output.length, 1);
         assertEquals(output[0], "0:0:PREPARE:0:2");
     }
+
+    @Test
+    void appendStringDoesNotEndsWithDelimiterHasNewLineMultipleTest() {
+        String[] output = parser.append("0:0:PREPARE:0:0\n;0:0:PREPARE:0:1;0:0:PREPARE:0:");
+        assertEquals(output.length, 2);
+        assertEquals(output[0], "0:0:PREPARE:0:0");
+        assertEquals(output[1], "0:0:PREPARE:0:1");
+
+        output = parser.append("2;");
+        assertEquals(output.length, 1);
+        assertEquals(output[0], "0:0:PREPARE:0:2");
+    }
 }
