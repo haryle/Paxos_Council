@@ -34,7 +34,6 @@ public abstract class AsyncClient<T> {
     protected final Queue<T> queue;
     protected final Thread socketReader;
     protected final Thread messageHandler;
-    public volatile boolean isUp = true;
     SocketChannel channel;
     private AsyncMessageParser parser;
 
@@ -106,7 +105,8 @@ public abstract class AsyncClient<T> {
      * @throws IOException if fails to close
      */
     public void close() throws IOException {
-        channel.close();
+        if (channel != null)
+            channel.close();
         socketReader.interrupt();
         messageHandler.interrupt();
     }
@@ -114,8 +114,8 @@ public abstract class AsyncClient<T> {
     /**
      * Responds to message. To be reimplemented in children's class
      *
-     * @param message paramterized message
-     * @throws IOException if cannot read from channel
+     * @param message parametrized message
+     * @throws IOException if current thread cannot read from channel
      */
     public abstract void handleMessage(T message) throws IOException;
 
