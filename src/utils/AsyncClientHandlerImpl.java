@@ -7,10 +7,15 @@ import java.nio.channels.SocketChannel;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class AsyncClientHandlerImpl extends AsyncClientConnection {
+    private final AtomicInteger timestamp;
+
+    private final CommService commService;
 
     public AsyncClientHandlerImpl(SocketChannel channel, AtomicInteger timestamp,
                                   CommService commService) {
-        super(channel, timestamp, commService);
+        super(channel);
+        this.timestamp = timestamp;
+        this.commService = commService;
     }
 
     @Override
@@ -57,4 +62,5 @@ public class AsyncClientHandlerImpl extends AsyncClientConnection {
         commService.receive(message);
         commService.send(message.to, message, false);
     }
+
 }
