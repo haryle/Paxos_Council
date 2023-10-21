@@ -1,5 +1,6 @@
 package utils;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import utils.helpers.Message;
@@ -10,7 +11,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Executors;
-import java.util.concurrent.atomic.AtomicInteger;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -28,15 +28,20 @@ class CommServiceTest {
 
     @BeforeEach
     void setUp() {
-        AtomicInteger timestamp = new AtomicInteger();
         commService = new CommService(5, 5000, new ConcurrentHashMap<>(),
                 new ConcurrentHashMap<>(),
                 Executors.newSingleThreadScheduledExecutor());
-        first = new MockConnection(null, timestamp, commService);
-        second = new MockConnection(null, timestamp, commService);
+        first = new MockConnection(null);
+        second = new MockConnection(null);
         commService.registerConnection(0, first);
         commService.registerConnection(1, second);
     }
+
+    @AfterEach
+    void tearDown() {
+        commService.close();
+    }
+
 
     @Test
     void testWhenReplyNotReceivedMessageIsResent() throws InterruptedException {
@@ -80,7 +85,7 @@ class CommServiceTest {
         int maxAttempt = 5;
         commService.setMAX_ATTEMPT(maxAttempt);
         commService.setTIME_OUT(10);
-        commService.broadcast(prepareMessageToSecond);
+        commService.broadcast(broadcastMessage);
         Thread.sleep(100);
 
         // Number of sent messages include the first one
@@ -97,11 +102,11 @@ class CommServiceTest {
     }
 
     @Test
-    void testWhenBroadCastAndReplyReceivedNoResent() throws InterruptedException{
+    void testWhenBroadCastAndReplyReceivedNoResent() throws InterruptedException {
         int maxAttempt = 2;
         commService.setTIME_OUT(100);
         commService.setMAX_ATTEMPT(maxAttempt);
-        commService.broadcast(prepareMessageToSecond);
+        commService.broadcast(broadcastMessage);
         commService.receive(replyMessageSecondToFirst);
         Thread.sleep(300);
         // Since reply message is received, no message is resent and no nak is received
@@ -110,13 +115,12 @@ class CommServiceTest {
         assertTrue(commService.getRetryQueue().isEmpty());
     }
 
-    class MockConnection extends AsyncClientConnection {
+    static class MockConnection extends AsyncClientConnection {
         public final List<Message> sentMessages;
         public int messageCount = 0;
 
-        public MockConnection(SocketChannel channel, AtomicInteger timestamp,
-                              CommService messageService) {
-            super(channel, timestamp, messageService);
+        public MockConnection(SocketChannel channel) {
+            super(channel);
             sentMessages = new ArrayList<>();
         }
 

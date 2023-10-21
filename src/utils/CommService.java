@@ -93,7 +93,6 @@ public class CommService {
             } catch (IOException e) {
                 logger.info("Error sending message to: " + receiver + " message: " + message);
             }
-
         }
     }
 
@@ -150,6 +149,20 @@ public class CommService {
                     if (nak != null) send(message.from, nak, false);
                     retryQueue.remove(runID);
                 }
+            }
+        }
+    }
+
+    /**
+     * Shutdown the threadPool and close all socketChannel connections
+     */
+    public void close() {
+        scheduledThreadPool.shutdown();
+        for (int id : registry.keySet()) {
+            try {
+                registry.get(id).close();
+            } catch (IOException e) {
+                logger.info("Fail to close connection: " + id + " error: " + e.toString());
             }
         }
     }

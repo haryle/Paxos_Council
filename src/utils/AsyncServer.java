@@ -22,12 +22,18 @@ public class AsyncServer {
         this(port, 5, 5000);
     }
 
+    public void close() throws IOException {
+        threadPool.shutdown();
+        serverSocketChannel.close();
+        commService.close();
+    }
+
     public AsyncServer(int port, int max_attempt, int timeout) throws IOException {
         // Setup serverSocketChannel
         serverSocketChannel = ServerSocketChannel.open();
         serverSocketChannel.bind(new InetSocketAddress(port));
         serverSocketChannel.configureBlocking(false);
-        System.out.println("Server started on port " + port);
+        logger.info("Server started on port " + port);
 
         // Setup threadPool and commService
         threadPool = Executors.newCachedThreadPool();
