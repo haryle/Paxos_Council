@@ -1,17 +1,36 @@
 package utils.helpers;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class Message {
     public static final String delimiter = ";";
     public static final String separator = ":";
     public int from;
     public int to;
     public int ID;
-
     public int acceptID;
     public int acceptValue;
-
+    public List<Integer> informList;
     public int timestamp = -1;
     public String type;
+
+    public static List<Integer> StringToList(String stringList) {
+        List<Integer> integerList = new ArrayList<>();
+        Pattern pattern = Pattern.compile("-?\\d+"); // Regular expression to match integers
+
+        Matcher matcher = pattern.matcher(stringList);
+
+        // If the string contains integers
+        while (matcher.find()) {
+            int number = Integer.parseInt(matcher.group());
+            integerList.add(number);
+        }
+
+        return integerList;
+    }
 
     public Message(int from,
                    int to,
@@ -19,6 +38,7 @@ public class Message {
                    int ID,
                    int acceptID,
                    int acceptValue,
+                   List<Integer> informList,
                    int timestamp) {
         this.from = from;
         this.to = to;
@@ -26,6 +46,7 @@ public class Message {
         this.ID = ID;
         this.acceptID = acceptID;
         this.acceptValue = acceptValue;
+        this.informList = informList;
         this.timestamp = timestamp;
     }
 
@@ -35,17 +56,31 @@ public class Message {
                    int ID,
                    int acceptID,
                    int acceptValue) {
-        this(from, to, type, ID, acceptID, acceptValue, -1);
+        this(from, to, type, ID, acceptID, acceptValue, new ArrayList<>(), -1);
+    }
+
+    public Message(int from,
+                   int to,
+                   String type,
+                   int ID,
+                   int acceptID,
+                   int acceptValue,
+                   int timestamp) {
+        this(from, to, type, ID, acceptID, acceptValue, new ArrayList<>(), timestamp);
     }
 
     public Message(Message message) {
         this(message.from, message.to, message.type, message.ID, message.acceptID,
-                message.acceptValue, message.timestamp);
+                message.acceptValue, message.informList, message.timestamp);
     }
 
 
+    public static Message inform(int to, List<Integer> informList) {
+        return new Message(-1, to, "INFORM", -1, -1, -1, informList, -1);
+    }
+
     public static Message connect(int from) {
-        return new Message(from, -1, "CONNECT", -1, -1, -1, -1);
+        return new Message(from, -1, "CONNECT", -1, -1, -1, new ArrayList<>(), -1);
     }
 
     public static Message prepare(int from, int to, int ID) {
@@ -98,23 +133,26 @@ public class Message {
                 Integer.parseInt(components[3]),
                 Integer.parseInt(components[4]),
                 Integer.parseInt(components[5]),
-                Integer.parseInt(components[6]));
+                StringToList(components[6]),
+                Integer.parseInt(components[7]));
     }
 
     public String toString() {
         return from +
-               separator +
-               to +
-               separator +
-               type +
-               separator +
-               ID +
-               separator +
-               acceptID +
-               separator +
-               acceptValue +
-               separator +
-               timestamp +
-               delimiter;
+                separator +
+                to +
+                separator +
+                type +
+                separator +
+                ID +
+                separator +
+                acceptID +
+                separator +
+                acceptValue +
+                separator +
+                informList +
+                separator +
+                timestamp +
+                delimiter;
     }
 }

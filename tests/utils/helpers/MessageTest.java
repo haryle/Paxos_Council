@@ -5,6 +5,10 @@ import org.junit.jupiter.api.Test;
 import utils.helpers.AsyncMessageParser;
 import utils.helpers.Message;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class MessageTest {
@@ -17,7 +21,7 @@ class MessageTest {
 
     @Test
     void fromString() {
-        String testString = "0:1:PROPOSE:10:0:1:1";
+        String testString = "0:1:PROPOSE:10:0:1:[]:1";
         Message message = Message.fromString(testString);
         assertEquals(message.from, 0);
         assertEquals(message.to, 1);
@@ -31,7 +35,7 @@ class MessageTest {
     @Test
     void testToString() {
         Message message = new Message(0, 1, "PROPOSE", 0, 1, 1, 1);
-        assertEquals(message.toString(), "0:1:PROPOSE:0:1:1:1;");
+        assertEquals(message.toString(), "0:1:PROPOSE:0:1:1:[]:1;");
     }
 
     @Test
@@ -122,5 +126,17 @@ class MessageTest {
         assertEquals(message.ID, 10);
         assertEquals(message.acceptValue, 5);
         assertEquals(message.timestamp, 14);
+    }
+
+    @Test
+    void testInformMessage(){
+        List<Integer> informList = new ArrayList<>(Arrays.asList(1, 2, 3, 4, 5));
+        Message message = Message.inform(10, informList);
+        assertEquals(10, message.to);
+        assertEquals(informList, message.informList);
+        message = Message.fromString(parser.append(message.toString())[0]);
+        assertEquals(10, message.to);
+        assertEquals("INFORM", message.type);
+        assertEquals(informList, message.informList);
     }
 }
