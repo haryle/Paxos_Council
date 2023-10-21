@@ -4,24 +4,21 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="75c0e452-b7e4-426b-bd4d-8ebda73c89ea" name="Changes" comment="feat: add test server">
-      <change afterPath="$PROJECT_DIR$/src/Councillor.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/utils/AsyncClientConnection.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/utils/AsyncClientHandlerImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/utils/AsyncServer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/utils/CommService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/utils/helpers/Message.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/utils/helpers/RetryInfo.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tests/utils/CommServiceTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tests/utils/helpers/MessageTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
+    <list default="true" id="75c0e452-b7e4-426b-bd4d-8ebda73c89ea" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/utils/Acceptor.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/utils/AcceptorCouncillor.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/utils/Proposer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/utils/ProposerCouncillor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/utils/AsyncClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/AsyncClient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/utils/AsyncMessageParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/helpers/AsyncMessageParser.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/utils/Message.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/utils/WriteServer.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/utils/AsyncMessageParserTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/tests/utils/helpers/AsyncMessageParserTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/utils/MessageTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/AsyncClientConnection.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/AsyncClientConnection.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/AsyncClientHandlerImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/AsyncClientHandlerImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/AsyncServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/AsyncServer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/CommService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/CommService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/helpers/Message.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/helpers/Message.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/utils/CommServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/tests/utils/CommServiceTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/utils/helpers/MessageTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/tests/utils/helpers/MessageTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -60,7 +57,7 @@
     &quot;jdk.selected.JAVA_MODULE&quot;: &quot;corretto-1.8&quot;,
     &quot;last_opened_file_path&quot;: &quot;C:/Users/harry/IdeaProjects/PaxosCouncil/jar/junit-platform-console-standalone-1.9.3.jar&quot;,
     &quot;onboarding.tips.debug.path&quot;: &quot;C:/Users/harry/IdeaProjects/PaxosCouncil/src/Main.java&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Libraries&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.34712642&quot;,
     &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;
@@ -86,81 +83,72 @@
       <recent name="utils" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.CommServiceTest">
-    <configuration name="CommServiceTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="JUnit.MessageTest">
+    <configuration name="main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="main" />
+      <module name="PaxosCouncil" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="MessageTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="PaxosCouncil" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="utils.*" />
+          <option name="PATTERN" value="utils.helpers.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="utils" />
-      <option name="MAIN_CLASS_NAME" value="utils.CommServiceTest" />
+      <option name="PACKAGE_NAME" value="utils.helpers" />
+      <option name="MAIN_CLASS_NAME" value="utils.helpers.MessageTest" />
       <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="CommServiceTest.testWhenBroadCastAndNoReplyMessagesResent" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="MessageTest.fromString" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="PaxosCouncil" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="utils.*" />
+          <option name="PATTERN" value="utils.helpers.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="utils" />
-      <option name="MAIN_CLASS_NAME" value="utils.CommServiceTest" />
-      <option name="METHOD_NAME" value="testWhenBroadCastAndNoReplyMessagesResent" />
+      <option name="PACKAGE_NAME" value="utils.helpers" />
+      <option name="MAIN_CLASS_NAME" value="utils.helpers.MessageTest" />
+      <option name="METHOD_NAME" value="fromString" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="CommServiceTest.testWhenBroadCastAndReplyReceivedNoResent" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="MessageTest.testInformMessage" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="PaxosCouncil" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="utils.*" />
+          <option name="PATTERN" value="utils.helpers.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="utils" />
-      <option name="MAIN_CLASS_NAME" value="utils.CommServiceTest" />
-      <option name="METHOD_NAME" value="testWhenBroadCastAndReplyReceivedNoResent" />
+      <option name="PACKAGE_NAME" value="utils.helpers" />
+      <option name="MAIN_CLASS_NAME" value="utils.helpers.MessageTest" />
+      <option name="METHOD_NAME" value="testInformMessage" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="CommServiceTest.testWhenReplyNotReceivedMessageIsResent" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="MessageTest.testToString" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="PaxosCouncil" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="utils.*" />
+          <option name="PATTERN" value="utils.helpers.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="utils" />
-      <option name="MAIN_CLASS_NAME" value="utils.CommServiceTest" />
-      <option name="METHOD_NAME" value="testWhenReplyNotReceivedMessageIsResent" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="CommServiceTest.testWhenReplyReceivedBeforeTimeOutMessageIsNotResent" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="PaxosCouncil" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="utils.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="utils" />
-      <option name="MAIN_CLASS_NAME" value="utils.CommServiceTest" />
-      <option name="METHOD_NAME" value="testWhenReplyReceivedBeforeTimeOutMessageIsNotResent" />
+      <option name="PACKAGE_NAME" value="utils.helpers" />
+      <option name="MAIN_CLASS_NAME" value="utils.helpers.MessageTest" />
+      <option name="METHOD_NAME" value="testToString" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -168,11 +156,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.CommServiceTest" />
-        <item itemvalue="JUnit.CommServiceTest.testWhenBroadCastAndReplyReceivedNoResent" />
-        <item itemvalue="JUnit.CommServiceTest.testWhenBroadCastAndNoReplyMessagesResent" />
-        <item itemvalue="JUnit.CommServiceTest.testWhenReplyReceivedBeforeTimeOutMessageIsNotResent" />
-        <item itemvalue="JUnit.CommServiceTest.testWhenReplyNotReceivedMessageIsResent" />
+        <item itemvalue="JUnit.MessageTest" />
+        <item itemvalue="JUnit.MessageTest.testInformMessage" />
+        <item itemvalue="JUnit.MessageTest.testToString" />
+        <item itemvalue="JUnit.MessageTest.fromString" />
+        <item itemvalue="Application.main" />
       </list>
     </recent_temporary>
   </component>
@@ -287,5 +275,11 @@
     <MESSAGE value="feat: add Client with non blocking receive" />
     <MESSAGE value="feat: add test server" />
     <option name="LAST_COMMIT_MESSAGE" value="feat: add test server" />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/Paxos_Council$CommServiceTest.ic" NAME="CommServiceTest Coverage Results" MODIFIED="1697889960485" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>utils.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/Paxos_Council$All_in_PaxosCouncil.ic" NAME="All in PaxosCouncil Coverage Results" MODIFIED="1697890072399" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
   </component>
 </project>
