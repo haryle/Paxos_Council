@@ -2,19 +2,18 @@ package utils;
 
 import utils.helpers.Message;
 
+import java.io.IOException;
 import java.nio.channels.SocketChannel;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public abstract class AsyncClientConnection extends AsyncClient<Message> {
-    protected final AtomicInteger timestamp;
-    protected final CommService commService;
 
-    public AsyncClientConnection(SocketChannel channel,
-                                 AtomicInteger timestamp,
-                                 CommService commService) {
+    public AsyncClientConnection(SocketChannel channel) {
         super(channel);
-        this.timestamp = timestamp;
-        this.commService = commService;
+    }
+
+    public AsyncClientConnection(String host, int port) throws IOException {
+        super(host, port);
     }
 
     @Override
