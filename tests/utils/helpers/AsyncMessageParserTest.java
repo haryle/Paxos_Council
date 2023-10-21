@@ -1,7 +1,8 @@
-package utils;
+package utils.helpers;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import utils.helpers.AsyncMessageParser;
 
 import static org.junit.jupiter.api.Assertions.*;
 
