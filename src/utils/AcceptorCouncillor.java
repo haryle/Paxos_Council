@@ -32,13 +32,13 @@ public class AcceptorCouncillor extends AsyncClientConnection {
     }
 
     public void handlePropose(Message message) throws IOException {
-        Message reply = acceptorHandler.handlePropose(message);
+        Message reply = acceptorHandler.handleMessage(message);
         if (reply.to != councillorID)
             send(reply);
     }
 
     public void handlePrepare(Message message) throws IOException {
-        Message reply = acceptorHandler.handlePrepare(message);
+        Message reply = acceptorHandler.handleMessage(message);
         if (reply.to != councillorID)
             send(reply);
     }

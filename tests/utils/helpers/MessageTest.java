@@ -131,7 +131,7 @@ class MessageTest {
     @Test
     void testInformMessage(){
         List<Integer> informList = new ArrayList<>(Arrays.asList(1, 2, 3, 4, 5));
-        Message message = Message.inform(10, informList);
+        Message message = Message.inform(10, 0, informList);
         assertEquals(10, message.to);
         assertEquals(informList, message.informList);
         message = Message.fromString(parser.append(message.toString())[0]);

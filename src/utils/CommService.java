@@ -124,7 +124,7 @@ public class CommService {
     public void inform(Message message) {
         int sender = message.from;
         List<Integer> receivers = new ArrayList<>(registry.keySet());
-        Message reply = Message.inform(sender, receivers);
+        Message reply = Message.inform(sender, message.ID, receivers);
         send(sender, reply, false);
     }
 

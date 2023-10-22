@@ -14,7 +14,7 @@ public class Message {
     public int acceptID;
     public int acceptValue;
     public List<Integer> informList;
-    public int timestamp = -1;
+    public int timestamp;
     public String type;
 
     public static List<Integer> StringToList(String stringList) {
@@ -75,8 +75,8 @@ public class Message {
     }
 
 
-    public static Message inform(int to, List<Integer> informList) {
-        return new Message(-1, to, "INFORM", -1, -1, -1, informList, -1);
+    public static Message inform(int to, int ID, List<Integer> informList) {
+        return new Message(-1, to, "INFORM", ID, -1, -1, informList, -1);
     }
 
     public static Message connect(int from) {
@@ -110,7 +110,7 @@ public class Message {
 
     public static Message rejectPropose(int from, int to, int ID, int value,
                                         int timestamp) {
-        return new Message(from, to, "NAK_PREPARE", ID, -1, value, timestamp);
+        return new Message(from, to, "NAK_PROPOSE", ID, -1, value, timestamp);
     }
 
     public static Message getNakMessage(Message message) {

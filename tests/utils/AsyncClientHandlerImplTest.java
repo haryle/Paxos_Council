@@ -33,7 +33,7 @@ class AsyncClientHandlerImplTest extends CommServiceFixture {
         ArrayList<Integer> arrayList = new ArrayList<>();
         arrayList.add(0);
         arrayList.add(1);
-        informMessage = Message.inform(0, arrayList);
+        informMessage = Message.inform(0, 10, arrayList);
     }
 
     @Override
