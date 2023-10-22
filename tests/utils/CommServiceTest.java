@@ -413,9 +413,7 @@ class OneSenderFourReceiversCommServiceTest extends CommServiceFixture {
         // A NAK is sent when no message received f
         MockConnection senderConn =
                 (MockConnection) commService.getRegistry().get(sender);
-        informSender.timestamp = -1;
-        assertEquals(senderConn.sentMessages.get(0).toString(), informSender.toString());
-        assertEquals(1 + nakMessages.size(),senderConn.messageCount);
+        assertEquals(nakMessages.size(), senderConn.messageCount);
         // Check that the retryQueue is empty
         assertTrue(commService.getRetryQueue().isEmpty());
     }
@@ -443,10 +441,8 @@ class OneSenderFourReceiversCommServiceTest extends CommServiceFixture {
         // Since reply message is received, no message is resent and no nak is received
         for (MockConnection receiverConn : receiverConns)
             assertEquals(1, receiverConn.messageCount);
-        // Receive only one inform message
-        assertEquals(1, senderConn.messageCount);
-        informSender.timestamp = -1;
-        assertEquals(informSender.toString(), senderConn.sentMessages.get(0).toString());
+        // Receive only zero message
+        assertEquals(0, senderConn.messageCount);
         assertTrue(commService.getRetryQueue().isEmpty());
     }
 
@@ -455,11 +451,13 @@ class OneSenderFourReceiversCommServiceTest extends CommServiceFixture {
         whenBroadCastReceiveInsufficientReplyWillRetryTillNAK(prepareBroadcast,
                 Collections.singletonList(replyPrepareRejectIDThird));
     }
+
     @Test
     void testPrepareReceiveTwoRepliesWillResend() throws InterruptedException {
         whenBroadCastReceiveInsufficientReplyWillRetryTillNAK(prepareBroadcast,
                 Arrays.asList(replyPrepareRejectIDThird, replyPreparePromiseIDSecond));
     }
+
     @Test
     void testPrepareReceiveAllRepliesWillNotResend() throws InterruptedException {
         whenBroadCastReceiveFullReplyWillNotRetry(prepareBroadcast,
@@ -472,11 +470,13 @@ class OneSenderFourReceiversCommServiceTest extends CommServiceFixture {
         whenBroadCastReceiveInsufficientReplyWillRetryTillNAK(proposeBroadcast,
                 Collections.singletonList(replyProposeAcceptThird));
     }
+
     @Test
     void testProposeReceiveTwoRepliesWillResend() throws InterruptedException {
         whenBroadCastReceiveInsufficientReplyWillRetryTillNAK(proposeBroadcast,
                 Arrays.asList(replyProposeRejectFourth, replyProposeAcceptSecond));
     }
+
     @Test
     void testProposeReceiveAllRepliesWillNotResend() throws InterruptedException {
         whenBroadCastReceiveFullReplyWillNotRetry(proposeBroadcast,

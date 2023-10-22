@@ -109,7 +109,6 @@ public class CommService {
      * @param message message to broadcast
      */
     public void broadcast(Message message) {
-        inform(message);
         int sender = message.from;
         for (int receiver : registry.keySet()) {
             if (receiver != sender) {

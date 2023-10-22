@@ -24,7 +24,7 @@ public class AsyncClientHandlerImpl extends AsyncClientConnection {
             handleConnectMessage(message);
         else if (message.type.equalsIgnoreCase("PREPARE") || message.type.equalsIgnoreCase("PROPOSE"))
             handleBroadcastMessage(message);
-        else
+        else if (message.type.equalsIgnoreCase("PROMISE") || message.type.equalsIgnoreCase("NAK_PREPARE"))
             handleRelayMessage(message);
     }
 
@@ -33,7 +33,7 @@ public class AsyncClientHandlerImpl extends AsyncClientConnection {
      *
      * @param message connection message
      */
-    public void handleConnectMessage(Message message) {
+    private void handleConnectMessage(Message message) {
         commService.registerConnection(message.from, this);
     }
 
@@ -46,7 +46,8 @@ public class AsyncClientHandlerImpl extends AsyncClientConnection {
      * @param message PREPARE or PROPOSE message
      * @throws IOException if fails to send message
      */
-    public void handleBroadcastMessage(Message message) throws IOException {
+    private void handleBroadcastMessage(Message message) throws IOException {
+        commService.inform(message);
         // Register current timestamp
         message.timestamp = timestamp.getAndIncrement();
         commService.broadcast(message);
@@ -59,7 +60,7 @@ public class AsyncClientHandlerImpl extends AsyncClientConnection {
      * @param message NAK, PROMISE or ACCEPT messages
      * @throws IOException if fails to relay message
      */
-    public void handleRelayMessage(Message message) throws IOException {
+    private void handleRelayMessage(Message message) throws IOException {
         commService.receive(message);
         commService.send(message.to, message, false);
     }
