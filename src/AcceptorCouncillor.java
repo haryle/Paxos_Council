@@ -1,9 +1,7 @@
-package utils;
-
+import utils.AsyncClientConnection;
 import utils.helpers.Message;
 
 import java.io.IOException;
-import java.nio.channels.SocketChannel;
 
 public class AcceptorCouncillor extends AsyncClientConnection {
     private final int councillorID;

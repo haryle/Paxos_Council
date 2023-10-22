@@ -4,16 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="75c0e452-b7e4-426b-bd4d-8ebda73c89ea" name="Changes" comment="feat: finish behaviour testing for acceptor, fixing a bug causing previous accepted ID to not be returned appropriately">
-      <change afterPath="$PROJECT_DIR$/tests/utils/ProposerTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/utils/AcceptorCouncillor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/AcceptorCouncillor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/utils/CommService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/CommService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/utils/Proposer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/Proposer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/utils/helpers/Message.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/helpers/Message.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/utils/AsyncClientHandlerImplTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/tests/utils/AsyncClientHandlerImplTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/utils/helpers/MessageTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/tests/utils/helpers/MessageTest.java" afterDir="false" />
-    </list>
+    <list default="true" id="75c0e452-b7e4-426b-bd4d-8ebda73c89ea" name="Changes" comment="feat: finish behaviour testing for proposer" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -328,7 +319,15 @@
       <option name="project" value="LOCAL" />
       <updated>1697944580005</updated>
     </task>
-    <option name="localTasksCounter" value="20" />
+    <task id="LOCAL-00020" summary="feat: finish behaviour testing for proposer">
+      <option name="closed" value="true" />
+      <created>1697974215476</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1697974215476</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -346,7 +345,8 @@
     <MESSAGE value="feat: add acceptor" />
     <MESSAGE value="feat: add project items" />
     <MESSAGE value="feat: finish behaviour testing for acceptor, fixing a bug causing previous accepted ID to not be returned appropriately" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: finish behaviour testing for acceptor, fixing a bug causing previous accepted ID to not be returned appropriately" />
+    <MESSAGE value="feat: finish behaviour testing for proposer" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: finish behaviour testing for proposer" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/Paxos_Council$CommServiceTest.ic" NAME="CommServiceTest Coverage Results" MODIFIED="1697889960485" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">

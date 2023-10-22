@@ -1,5 +1,3 @@
-package utils;
-
 import utils.helpers.Message;
 
 public class Acceptor {
