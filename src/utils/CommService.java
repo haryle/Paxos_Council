@@ -5,6 +5,8 @@ import utils.helpers.Message;
 import utils.helpers.RetryInfo;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -112,6 +114,18 @@ public class CommService {
                 send(receiver, directedMessage, true);
             }
         }
+    }
+
+    /**
+     * Inform the sender the current set of receivers
+     *
+     * @param message broadcast message
+     */
+    public void inform(Message message) {
+        int sender = message.from;
+        List<Integer> receivers = new ArrayList<>(registry.keySet());
+        Message reply = Message.inform(sender, receivers);
+        send(sender, reply, false);
     }
 
     /**

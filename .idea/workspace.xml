@@ -4,21 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="75c0e452-b7e4-426b-bd4d-8ebda73c89ea" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/utils/Acceptor.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/utils/AcceptorCouncillor.java" afterDir="false" />
+    <list default="true" id="75c0e452-b7e4-426b-bd4d-8ebda73c89ea" name="Changes" comment="feat: add project items">
       <change afterPath="$PROJECT_DIR$/src/utils/Proposer.java" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/utils/ProposerCouncillor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tests/utils/AsyncClientHandlerImplTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/utils/AsyncClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/AsyncClient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/utils/AsyncClientConnection.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/AsyncClientConnection.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/utils/AsyncClientHandlerImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/AsyncClientHandlerImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/utils/AsyncServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/AsyncServer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/utils/CommService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/CommService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/utils/helpers/Message.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/helpers/Message.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tests/utils/CommServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/tests/utils/CommServiceTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/utils/helpers/MessageTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/tests/utils/helpers/MessageTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -28,8 +21,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="JUnit5 Test Class" />
         <option value="Class" />
+        <option value="JUnit5 Test Class" />
       </list>
     </option>
   </component>
@@ -83,84 +76,84 @@
       <recent name="utils" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.MessageTest">
-    <configuration name="main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="main" />
+  <component name="RunManager" selected="JUnit.All in PaxosCouncil">
+    <configuration name="All in PaxosCouncil" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="PaxosCouncil" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="TEST_OBJECT" value="package" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="MessageTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="AsyncClientHandlerImplTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="PaxosCouncil" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="utils.helpers.*" />
+          <option name="PATTERN" value="utils.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="utils.helpers" />
-      <option name="MAIN_CLASS_NAME" value="utils.helpers.MessageTest" />
+      <option name="PACKAGE_NAME" value="utils" />
+      <option name="MAIN_CLASS_NAME" value="utils.AsyncClientHandlerImplTest" />
       <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="MessageTest.fromString" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="AsyncClientHandlerImplTest.testHandleBroadcastMessageWithNoReplyWillResend" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="PaxosCouncil" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="utils.helpers.*" />
+          <option name="PATTERN" value="utils.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="utils.helpers" />
-      <option name="MAIN_CLASS_NAME" value="utils.helpers.MessageTest" />
-      <option name="METHOD_NAME" value="fromString" />
+      <option name="PACKAGE_NAME" value="utils" />
+      <option name="MAIN_CLASS_NAME" value="utils.AsyncClientHandlerImplTest" />
+      <option name="METHOD_NAME" value="testHandleBroadcastMessageWithNoReplyWillResend" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="MessageTest.testInformMessage" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="AsyncClientHandlerImplTest.testHandleBroadcastMessageWithReplyWillNotResend" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="PaxosCouncil" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="utils.helpers.*" />
+          <option name="PATTERN" value="utils.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="utils.helpers" />
-      <option name="MAIN_CLASS_NAME" value="utils.helpers.MessageTest" />
-      <option name="METHOD_NAME" value="testInformMessage" />
+      <option name="PACKAGE_NAME" value="utils" />
+      <option name="MAIN_CLASS_NAME" value="utils.AsyncClientHandlerImplTest" />
+      <option name="METHOD_NAME" value="testHandleBroadcastMessageWithReplyWillNotResend" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="MessageTest.testToString" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="CommServiceTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="PaxosCouncil" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="utils.helpers.*" />
+          <option name="PATTERN" value="utils.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="utils.helpers" />
-      <option name="MAIN_CLASS_NAME" value="utils.helpers.MessageTest" />
-      <option name="METHOD_NAME" value="testToString" />
-      <option name="TEST_OBJECT" value="method" />
+      <option name="PACKAGE_NAME" value="utils" />
+      <option name="MAIN_CLASS_NAME" value="utils.CommServiceTest" />
+      <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.MessageTest" />
-        <item itemvalue="JUnit.MessageTest.testInformMessage" />
-        <item itemvalue="JUnit.MessageTest.testToString" />
-        <item itemvalue="JUnit.MessageTest.fromString" />
-        <item itemvalue="Application.main" />
+        <item itemvalue="JUnit.All in PaxosCouncil" />
+        <item itemvalue="JUnit.AsyncClientHandlerImplTest" />
+        <item itemvalue="JUnit.CommServiceTest" />
+        <item itemvalue="JUnit.AsyncClientHandlerImplTest.testHandleBroadcastMessageWithReplyWillNotResend" />
+        <item itemvalue="JUnit.AsyncClientHandlerImplTest.testHandleBroadcastMessageWithNoReplyWillResend" />
       </list>
     </recent_temporary>
   </component>
@@ -261,7 +254,63 @@
       <option name="project" value="LOCAL" />
       <updated>1697814962761</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="feat: remove redundant fields">
+      <option name="closed" value="true" />
+      <created>1697929318667</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1697929318667</updated>
+    </task>
+    <task id="LOCAL-00013" summary="feat: remove redundant fields">
+      <option name="closed" value="true" />
+      <created>1697929327759</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1697929327759</updated>
+    </task>
+    <task id="LOCAL-00014" summary="feat: remove redundant fields">
+      <option name="closed" value="true" />
+      <created>1697929336991</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1697929336991</updated>
+    </task>
+    <task id="LOCAL-00015" summary="feat: remove redundant fields">
+      <option name="closed" value="true" />
+      <created>1697929353043</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1697929353043</updated>
+    </task>
+    <task id="LOCAL-00016" summary="feat: add inform method">
+      <option name="closed" value="true" />
+      <created>1697929365148</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1697929365148</updated>
+    </task>
+    <task id="LOCAL-00017" summary="feat: add acceptor">
+      <option name="closed" value="true" />
+      <created>1697929386296</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1697929386296</updated>
+    </task>
+    <task id="LOCAL-00018" summary="feat: add project items">
+      <option name="closed" value="true" />
+      <created>1697929393940</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1697929393940</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -274,7 +323,11 @@
     <MESSAGE value="feat: fix message parser containing new line not properly formatted" />
     <MESSAGE value="feat: add Client with non blocking receive" />
     <MESSAGE value="feat: add test server" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: add test server" />
+    <MESSAGE value="feat: remove redundant fields" />
+    <MESSAGE value="feat: add inform method" />
+    <MESSAGE value="feat: add acceptor" />
+    <MESSAGE value="feat: add project items" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: add project items" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/Paxos_Council$CommServiceTest.ic" NAME="CommServiceTest Coverage Results" MODIFIED="1697889960485" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">

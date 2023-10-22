@@ -41,11 +41,13 @@ public class AsyncClientHandlerImpl extends AsyncClientConnection {
      * Broadcast PREPARE and PROPOSE messages from proposer to all acceptors
      * <p>
      * Replies for each message are tracked and resent accordingly
+     * Also sends to the proposer the list of processes it broadcasts the message to
      *
      * @param message PREPARE or PROPOSE message
      * @throws IOException if fails to send message
      */
     public void handleBroadcastMessage(Message message) throws IOException {
+        commService.inform(message);
         // Register current timestamp
         message.timestamp = timestamp.getAndIncrement();
         commService.broadcast(message);

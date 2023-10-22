@@ -15,16 +15,22 @@ import java.util.concurrent.Executors;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-class CommServiceTest {
+class CommServiceFixture {
     Message broadcastMessage = Message.prepare(0, 0, 10);
     Message prepareMessageToSecond = Message.prepare(0, 1, 10);
     Message nakMessageSecondToFirst = Message.getNakMessage(prepareMessageToSecond);
-    Message replyMessageSecondToFirst = Message.promise(prepareMessageToSecond.to,
+    Message replyPromiseWithoutAcceptID = Message.promise(prepareMessageToSecond.to,
             prepareMessageToSecond.from,
             prepareMessageToSecond.ID, prepareMessageToSecond.timestamp);
-    private MockConnection first;
-    private MockConnection second;
-    private CommService commService;
+    Message replyPromiseWithAcceptID = Message.promise(prepareMessageToSecond.to,
+            prepareMessageToSecond.from,
+            prepareMessageToSecond.ID, 0, 1, prepareMessageToSecond.timestamp);
+    Message replyRejectPropose = Message.rejectPropose(prepareMessageToSecond.to,
+            prepareMessageToSecond.from, prepareMessageToSecond.ID, prepareMessageToSecond.acceptValue,
+            prepareMessageToSecond.timestamp);
+    protected MockConnection first;
+    protected MockConnection second;
+    protected CommService commService;
 
     @BeforeEach
     void setUp() {
@@ -38,11 +44,33 @@ class CommServiceTest {
     }
 
     @AfterEach
-    void tearDown() {
+    void tearDown() throws IOException {
         commService.close();
     }
 
 
+    static class MockConnection extends AsyncClientConnection {
+        public final List<Message> sentMessages;
+        public int messageCount = 0;
+
+        public MockConnection(SocketChannel channel) {
+            super(channel);
+            sentMessages = new ArrayList<>();
+        }
+
+        @Override
+        public void send(Message message) throws IOException {
+            messageCount++;
+            sentMessages.add(message);
+        }
+
+        @Override
+        public void handleMessage(Message message) throws IOException {
+        }
+    }
+}
+
+class CommServiceTest extends CommServiceFixture {
     @Test
     void testWhenReplyNotReceivedMessageIsResent() throws InterruptedException {
         // Prepare fixture
@@ -71,7 +99,7 @@ class CommServiceTest {
         commService.setTIME_OUT(100);
         commService.setMAX_ATTEMPT(maxAttempt);
         commService.send(prepareMessageToSecond.to, prepareMessageToSecond, true);
-        commService.receive(replyMessageSecondToFirst);
+        commService.receive(replyPromiseWithoutAcceptID);
         Thread.sleep(300);
         // Since reply message is received, no message is resent and no nak is received
         assertEquals(1, second.messageCount);
@@ -101,13 +129,12 @@ class CommServiceTest {
         assertTrue(commService.getRetryQueue().isEmpty());
     }
 
-    @Test
-    void testWhenBroadCastAndReplyReceivedNoResent() throws InterruptedException {
+    void WhenBroadCastAndReplyReceivedNoResent(Message reply) throws InterruptedException {
         int maxAttempt = 2;
         commService.setTIME_OUT(100);
         commService.setMAX_ATTEMPT(maxAttempt);
         commService.broadcast(broadcastMessage);
-        commService.receive(replyMessageSecondToFirst);
+        commService.receive(reply);
         Thread.sleep(300);
         // Since reply message is received, no message is resent and no nak is received
         assertEquals(1, second.messageCount);
@@ -115,23 +142,18 @@ class CommServiceTest {
         assertTrue(commService.getRetryQueue().isEmpty());
     }
 
-    static class MockConnection extends AsyncClientConnection {
-        public final List<Message> sentMessages;
-        public int messageCount = 0;
+    @Test
+    void testBroadcastWithReplyPromiseNoID() throws InterruptedException {
+        WhenBroadCastAndReplyReceivedNoResent(replyPromiseWithoutAcceptID);
+    }
 
-        public MockConnection(SocketChannel channel) {
-            super(channel);
-            sentMessages = new ArrayList<>();
-        }
+    @Test
+    void testBroadcastWithReplyPromisedID() throws InterruptedException {
+        WhenBroadCastAndReplyReceivedNoResent(replyPromiseWithAcceptID);
+    }
 
-        @Override
-        public void send(Message message) throws IOException {
-            messageCount++;
-            sentMessages.add(message);
-        }
-
-        @Override
-        public void handleMessage(Message message) throws IOException {
-        }
+    @Test
+    void testBroadcastWithReplyRejectPropose() throws InterruptedException {
+        WhenBroadCastAndReplyReceivedNoResent(replyRejectPropose);
     }
 }
