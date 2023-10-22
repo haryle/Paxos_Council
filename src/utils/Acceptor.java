@@ -15,21 +15,31 @@ public class Acceptor {
         hasAccepted = false;
     }
 
-    public synchronized Message handlePrepare(Message message) {
+    public Message handleMessage(Message message) {
+        if (message.type.equalsIgnoreCase("PREPARE"))
+            return handlePrepare(message);
+        if (message.type.equalsIgnoreCase("PROPOSE"))
+            return handlePropose(message);
+        return null;
+    }
+
+    private synchronized Message handlePrepare(Message message) {
         if (message.ID <= maxID)
             return Message.getNakMessage(message);
         maxID = message.ID;
         if (hasAccepted)
-            return Message.promise(message.to, message.from, message.ID, message.acceptID, message.acceptValue, message.timestamp);
+            return Message.promise(message.to, message.from, message.ID,
+                    acceptedID, acceptedValue, message.timestamp);
         return Message.promise(message.to, message.from, message.ID, message.timestamp);
     }
 
-    public synchronized Message handlePropose(Message message) {
+    private synchronized Message handlePropose(Message message) {
         if (message.ID == maxID) {
             hasAccepted = true;
             acceptedID = message.ID;
             acceptedValue = message.acceptValue;
-            return Message.accept(message.to, message.from, acceptedID, acceptedValue, message.timestamp);
+            return Message.accept(message.to, message.from, acceptedID, acceptedValue
+                    , message.timestamp);
         }
         return Message.getNakMessage(message);
     }
