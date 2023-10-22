@@ -4,7 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="75c0e452-b7e4-426b-bd4d-8ebda73c89ea" name="Changes" comment="feat: finish behaviour testing for proposer" />
+    <list default="true" id="75c0e452-b7e4-426b-bd4d-8ebda73c89ea" name="Changes" comment="feat: restructure repository">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/AsyncClientHandlerImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/AsyncClientHandlerImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/CommService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/CommService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/utils/AcceptorTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/tests/AcceptorTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/utils/AsyncClientHandlerImplTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/tests/utils/AsyncClientHandlerImplTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/utils/CommServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/tests/utils/CommServiceTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/utils/ProposerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/tests/ProposerTest.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -59,8 +67,8 @@
       <recent name="C:\Users\harry\IdeaProjects\PaxosCouncil\src" />
     </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
-      <recent name="utils.helpers" />
       <recent name="" />
+      <recent name="utils.helpers" />
       <recent name="main" />
       <recent name="utils" />
     </key>
@@ -68,8 +76,8 @@
       <recent name="utils" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.ProposerUnitTest">
-    <configuration name="ProposerUnitTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="JUnit.OneSenderFourReceiversCommServiceTest">
+    <configuration name="OneSenderFourReceiversCommServiceTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="PaxosCouncil" />
       <extension name="coverage">
         <pattern>
@@ -78,13 +86,13 @@
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="utils" />
-      <option name="MAIN_CLASS_NAME" value="utils.ProposerUnitTest" />
+      <option name="MAIN_CLASS_NAME" value="utils.OneSenderFourReceiversCommServiceTest" />
       <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="ProposerUnitTest.testPropose_HIGHHIGHHIGH_SendProposeHighValue" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="OneSenderFourReceiversCommServiceTest.testProposeReceiveAllRepliesWillNotResend" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="PaxosCouncil" />
       <extension name="coverage">
         <pattern>
@@ -93,14 +101,14 @@
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="utils" />
-      <option name="MAIN_CLASS_NAME" value="utils.ProposerUnitTest" />
-      <option name="METHOD_NAME" value="testPropose_HIGHHIGHHIGH_SendProposeHighValue" />
+      <option name="MAIN_CLASS_NAME" value="utils.OneSenderFourReceiversCommServiceTest" />
+      <option name="METHOD_NAME" value="testProposeReceiveAllRepliesWillNotResend" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="ProposerUnitTest.testPropose_HIGHHIGHLOW_SendProposeHighValue" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="OneSenderFourReceiversCommServiceTest.testProposeReceiveOneReplyWillResend" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="PaxosCouncil" />
       <extension name="coverage">
         <pattern>
@@ -109,14 +117,14 @@
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="utils" />
-      <option name="MAIN_CLASS_NAME" value="utils.ProposerUnitTest" />
-      <option name="METHOD_NAME" value="testPropose_HIGHHIGHLOW_SendProposeHighValue" />
+      <option name="MAIN_CLASS_NAME" value="utils.OneSenderFourReceiversCommServiceTest" />
+      <option name="METHOD_NAME" value="testProposeReceiveOneReplyWillResend" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="ProposerUnitTest.testPropose_HIGHHIGHNAK_SendProposeHighValue" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="OneSenderFourReceiversCommServiceTest.testProposeReceiveTwoRepliesWillResend" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="PaxosCouncil" />
       <extension name="coverage">
         <pattern>
@@ -125,14 +133,14 @@
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="utils" />
-      <option name="MAIN_CLASS_NAME" value="utils.ProposerUnitTest" />
-      <option name="METHOD_NAME" value="testPropose_HIGHHIGHNAK_SendProposeHighValue" />
+      <option name="MAIN_CLASS_NAME" value="utils.OneSenderFourReceiversCommServiceTest" />
+      <option name="METHOD_NAME" value="testProposeReceiveTwoRepliesWillResend" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="ProposerUnitTest.testPropose_HIGHHIGHNo_SendProposeHighValue" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="OneSenderOneReceiverCommServiceTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="PaxosCouncil" />
       <extension name="coverage">
         <pattern>
@@ -141,20 +149,19 @@
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="utils" />
-      <option name="MAIN_CLASS_NAME" value="utils.ProposerUnitTest" />
-      <option name="METHOD_NAME" value="testPropose_HIGHHIGHNo_SendProposeHighValue" />
-      <option name="TEST_OBJECT" value="method" />
+      <option name="MAIN_CLASS_NAME" value="utils.OneSenderOneReceiverCommServiceTest" />
+      <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.ProposerUnitTest" />
-        <item itemvalue="JUnit.ProposerUnitTest.testPropose_HIGHHIGHLOW_SendProposeHighValue" />
-        <item itemvalue="JUnit.ProposerUnitTest.testPropose_HIGHHIGHNo_SendProposeHighValue" />
-        <item itemvalue="JUnit.ProposerUnitTest.testPropose_HIGHHIGHNAK_SendProposeHighValue" />
-        <item itemvalue="JUnit.ProposerUnitTest.testPropose_HIGHHIGHHIGH_SendProposeHighValue" />
+        <item itemvalue="JUnit.OneSenderFourReceiversCommServiceTest" />
+        <item itemvalue="JUnit.OneSenderOneReceiverCommServiceTest" />
+        <item itemvalue="JUnit.OneSenderFourReceiversCommServiceTest.testProposeReceiveAllRepliesWillNotResend" />
+        <item itemvalue="JUnit.OneSenderFourReceiversCommServiceTest.testProposeReceiveTwoRepliesWillResend" />
+        <item itemvalue="JUnit.OneSenderFourReceiversCommServiceTest.testProposeReceiveOneReplyWillResend" />
       </list>
     </recent_temporary>
   </component>
@@ -327,7 +334,15 @@
       <option name="project" value="LOCAL" />
       <updated>1697974215476</updated>
     </task>
-    <option name="localTasksCounter" value="21" />
+    <task id="LOCAL-00021" summary="feat: restructure repository">
+      <option name="closed" value="true" />
+      <created>1697974489455</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1697974489455</updated>
+    </task>
+    <option name="localTasksCounter" value="22" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -346,7 +361,8 @@
     <MESSAGE value="feat: add project items" />
     <MESSAGE value="feat: finish behaviour testing for acceptor, fixing a bug causing previous accepted ID to not be returned appropriately" />
     <MESSAGE value="feat: finish behaviour testing for proposer" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: finish behaviour testing for proposer" />
+    <MESSAGE value="feat: restructure repository" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: restructure repository" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/Paxos_Council$CommServiceTest.ic" NAME="CommServiceTest Coverage Results" MODIFIED="1697889960485" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">

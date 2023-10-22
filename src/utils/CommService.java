@@ -19,7 +19,6 @@ public class CommService {
     private final ScheduledExecutorService scheduledThreadPool;
     private int MAX_ATTEMPT;
     private int TIME_OUT;
-
     public CommService(int maxAttempt, int timeOut, Map<Integer,
             AsyncClientConnection> registry,
                        Map<Pair<Integer, Integer>, RetryInfo> retryQueue,
@@ -29,6 +28,10 @@ public class CommService {
         this.registry = registry;
         this.retryQueue = retryQueue;
         this.scheduledThreadPool = scheduledThreadPool;
+    }
+
+    public Map<Integer, AsyncClientConnection> getRegistry() {
+        return registry;
     }
 
     public void setMAX_ATTEMPT(int MAX_ATTEMPT) {
@@ -106,6 +109,7 @@ public class CommService {
      * @param message message to broadcast
      */
     public void broadcast(Message message) {
+        inform(message);
         int sender = message.from;
         for (int receiver : registry.keySet()) {
             if (receiver != sender) {
@@ -126,6 +130,20 @@ public class CommService {
         List<Integer> receivers = new ArrayList<>(registry.keySet());
         Message reply = Message.inform(sender, message.ID, receivers);
         send(sender, reply, false);
+    }
+
+    /**
+     * Shutdown the threadPool and close all socketChannel connections
+     */
+    public void close() {
+        scheduledThreadPool.shutdown();
+        for (int id : registry.keySet()) {
+            try {
+                registry.get(id).close();
+            } catch (IOException e) {
+                logger.info("Fail to close connection: " + id + " error: " + e.toString());
+            }
+        }
     }
 
     /**
@@ -163,20 +181,6 @@ public class CommService {
                     if (nak != null) send(message.from, nak, false);
                     retryQueue.remove(runID);
                 }
-            }
-        }
-    }
-
-    /**
-     * Shutdown the threadPool and close all socketChannel connections
-     */
-    public void close() {
-        scheduledThreadPool.shutdown();
-        for (int id : registry.keySet()) {
-            try {
-                registry.get(id).close();
-            } catch (IOException e) {
-                logger.info("Fail to close connection: " + id + " error: " + e.toString());
             }
         }
     }
