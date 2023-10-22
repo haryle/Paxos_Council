@@ -2,6 +2,12 @@ import utils.helpers.Message;
 
 import java.util.*;
 
+/**
+ * Service class representing a Paxos Proposer
+ * <p>
+ * Proposer generate propose or prepare messages to be sent to acceptors.
+ * Proposer also handles replies for prepare messages
+ */
 public class Proposer {
     public static final int MAX_PROPOSER = 10;
     public final int councillorID; // My CouncillorID
@@ -47,10 +53,26 @@ public class Proposer {
         acceptorList = new ArrayList<>();
     }
 
+    /**
+     * Handle a reply from broadcasting server for each prepare/propose message.
+     * <p>
+     * Proposer registers the list of acceptors it expects responses from and only
+     * proceeds when replies from all acceptors it expects are received.
+     *
+     * @param message inform message
+     */
     private void handleInformMessage(Message message) {
         acceptorList = message.informList;
     }
 
+    /**
+     * Handle replies for prepare messages.
+     * <p>
+     * Proposer add the response to the list of all responses, and drop the
+     * sender's councillorID from the list of acceptors it is expecting replies from
+     *
+     * @param message PROMISE or NAK_PREPARE messages
+     */
     private void handlePrepareResponse(Message message) {
         int sender = message.from;
         acceptorResponse.put(sender, message);
@@ -58,6 +80,18 @@ public class Proposer {
             acceptorList.remove(Integer.valueOf(sender));
     }
 
+    /**
+     * Propose a value at the end of phase 1
+     * <p>
+     * If the majority has replied (with promise messages), if any promise contained a previously accepted value,
+     * choose the value with the highest accepted ID as the proposed value, otherwise choose the councillorID
+     * as proposed value. Return a PROPOSE message with the proposed value.
+     * <p>
+     * If has not received reply from majority, restart phase 1 after some delays
+     *
+     * @return a PREPARE for a reset of phase 1 or PROPOSE for the beginning of phase 2
+     * @throws InterruptedException if the sleeping thread is interrupted
+     */
     private Message proposeValue() throws InterruptedException {
         int numMajority = acceptorResponse.size() / 2 + 1;
         int numResponse = 0;
@@ -76,18 +110,30 @@ public class Proposer {
         // If it does not receive from majority -> begin next round
         if (numResponse < numMajority) {
             nextRound();
+            // Sleep between wait min and wait max
+            Thread.sleep(randomizer.nextInt(waitMax - waitMin + 1) + waitMin);
             return Message.prepare(councillorID, 0, ID);
         } else {
             // Check if any response contains a previously proposedValue
             int proposeValue = councillorID;
             if (value != 0)
                 proposeValue = value;
-            // Sleep between wait min and wait max
-            Thread.sleep(randomizer.nextInt(waitMax - waitMin + 1) + waitMin);
             return Message.propose(councillorID, 0, ID, proposeValue);
         }
     }
 
+    /**
+     * Public method for handling acceptor's responses,
+     * <p>
+     * If the message's ID is not the current round ID, ignore the message. If the message is INFORM,
+     * handleInform. If the message is a PREPARE's response (PROMISE, NAK_PREPARE), handlePrepareResponse.
+     * If all replies for the current round's PREPARE is received, invoke proposeValue. Any other type of
+     * messages will be ignored
+     *
+     * @param message acceptor's response
+     * @return null, PROPOSE or PREPARE
+     * @throws InterruptedException if interrupted while sleeping.
+     */
     public synchronized Message handleMessage(Message message) throws InterruptedException {
         if (message.ID != ID) // Ignore messages from a different round
             return null;

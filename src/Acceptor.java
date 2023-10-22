@@ -1,5 +1,13 @@
 import utils.helpers.Message;
 
+/**
+ * Service class representing a Paxos Acceptor.
+ * <p>
+ * Acceptor handles Proposer's message and return
+ * corresponding replies. The public interface contains
+ * just the handleMessage method, which returns a nullable String.
+ *
+ */
 public class Acceptor {
     private int maxID;
     private int acceptedID;
@@ -13,6 +21,18 @@ public class Acceptor {
         hasAccepted = false;
     }
 
+    /**
+     * Blanket catch all method to handle message
+     * Only handles PREPARE or PROPOSE
+     * <p>
+     * When incoming message is PREPARE, handled by handlePrepare
+     * When incoming message is PROPOSE, handled by handlePropose
+     * <p>
+     * Otherwise ignore
+     *
+     * @param message incoming proposer's message
+     * @return reply to PREPARE and PROPOSE, can be PROMISE, NAK_PREPARE, ACCEPT, NAK_PROPOSE
+     */
     public Message handleMessage(Message message) {
         if (message.type.equalsIgnoreCase("PREPARE"))
             return handlePrepare(message);
@@ -21,6 +41,21 @@ public class Acceptor {
         return null;
     }
 
+    /**
+     * Phase 1 logic for acceptor
+     * <p>
+     * If the message ID is greater than max ID and if
+     * the acceptor has not accepted any value, reply with
+     * promise without ID
+     * <p>
+     * If the message ID is greater than max ID and if the acceptor
+     * has accepted a value, reply with promise with new value
+     * <p>
+     * Otherwise send a NAK message
+     *
+     * @param message prepare message from a proposer
+     * @return promise message or nak
+     */
     private synchronized Message handlePrepare(Message message) {
         if (message.ID <= maxID)
             return Message.getNakMessage(message);
@@ -31,6 +66,18 @@ public class Acceptor {
         return Message.promise(message.to, message.from, message.ID, message.timestamp);
     }
 
+    /**
+     * Phase 2 logic for acceptor
+     * <p>
+     * If the proposer message's ID is not the currently registered max_id, send a
+     * nak.
+     * <p>
+     * If the proposer message's ID is the currently registered max_id, accept the
+     * proposed value and send an accept message
+     *
+     * @param message propose message
+     * @return accept or nak message
+     */
     private synchronized Message handlePropose(Message message) {
         if (message.ID == maxID) {
             hasAccepted = true;
