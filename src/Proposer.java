@@ -114,14 +114,33 @@ public class Proposer {
             nextRound();
             // Sleep between wait min and wait max
             Thread.sleep(randomizer.nextInt(waitMax - waitMin + 1) + waitMin);
-            return Message.prepare(councillorID, 0, ID);
+            return prepare();
         } else {
             // Check if any response contains a previously proposedValue
-            int proposeValue = councillorID;
+            int proposedValue = councillorID;
             if (value != 0)
-                proposeValue = value;
-            return Message.propose(councillorID, 0, ID, proposeValue);
+                proposedValue = value;
+            return propose(proposedValue);
         }
+    }
+
+    /**
+     * Generate a prepare message
+     *
+     * @return prepare message
+     */
+    public Message prepare() {
+        return Message.prepare(councillorID, 0, ID);
+    }
+
+    /**
+     * Generate a propose message with input value
+     *
+     * @param proposeValue proposed value
+     * @return propose message
+     */
+    public Message propose(int proposeValue) {
+        return Message.propose(councillorID, 0, ID, proposeValue);
     }
 
     /**
