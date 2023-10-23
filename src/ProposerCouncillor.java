@@ -78,7 +78,7 @@ public class ProposerCouncillor extends AcceptorCouncillor {
         if (message.type.equalsIgnoreCase("PROPOSE") ||
                 message.type.equalsIgnoreCase("PREPARE"))
             reply = acceptorHandler.handleMessage(message);
-        if (reply != null && reply.to != councillorID)
+        if (reply != null && (reply.to != councillorID || reply.type.equalsIgnoreCase("ACCEPT")))
             send(reply);
     }
 }

@@ -4,7 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="75c0e452-b7e4-426b-bd4d-8ebda73c89ea" name="Changes" comment="feat: add methods for prepare and propose">
+    <list default="true" id="75c0e452-b7e4-426b-bd4d-8ebda73c89ea" name="Changes" comment="feat: update proposer councillor">
+      <change afterPath="$PROJECT_DIR$/src/Learner.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/AcceptorCouncillor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/AcceptorCouncillor.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ProposerCouncillor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ProposerCouncillor.java" afterDir="false" />
@@ -17,8 +18,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Class" />
         <option value="JUnit5 Test Class" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -377,7 +378,15 @@
       <option name="project" value="LOCAL" />
       <updated>1698030155364</updated>
     </task>
-    <option name="localTasksCounter" value="29" />
+    <task id="LOCAL-00029" summary="feat: update proposer councillor">
+      <option name="closed" value="true" />
+      <created>1698031582547</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1698031582547</updated>
+    </task>
+    <option name="localTasksCounter" value="30" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -404,7 +413,8 @@
     <MESSAGE value="feat: add inform list instead of overwrite" />
     <MESSAGE value="feat: add InterruptedException in signature" />
     <MESSAGE value="feat: add methods for prepare and propose" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: add methods for prepare and propose" />
+    <MESSAGE value="feat: update proposer councillor" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: update proposer councillor" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

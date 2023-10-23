@@ -51,8 +51,8 @@ public class AcceptorCouncillor extends AsyncClientConnection {
     @Override
     public void handleMessage(Message message) throws IOException, InterruptedException {
         Message reply = acceptorHandler.handleMessage(message);
-        // Does not send reply if the reply is addressing itself or is null
-        if (reply != null && reply.to != councillorID)
+        // Does not send reply if the reply is null
+        if (reply != null)
             send(reply);
     }
 }
