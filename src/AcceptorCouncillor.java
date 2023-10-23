@@ -8,9 +8,9 @@ import java.io.IOException;
  * message from proposer.
  */
 public class AcceptorCouncillor extends AsyncClientConnection {
-    private final int councillorID;
+    protected final int councillorID;
 
-    private final Acceptor acceptorHandler;
+    protected final Acceptor acceptorHandler;
 
     /**
      * Connect to the Broadcast Server which acts as the central communicator
@@ -34,7 +34,7 @@ public class AcceptorCouncillor extends AsyncClientConnection {
      *
      * @throws IOException if failures during sending
      */
-    public void start() throws IOException {
+    public void start() throws IOException, InterruptedException {
         send(Message.connect(councillorID));
         super.start();
     }
@@ -49,14 +49,8 @@ public class AcceptorCouncillor extends AsyncClientConnection {
      * @throws IOException if there is any sending error
      */
     @Override
-    public void handleMessage(Message message) throws IOException {
-        Message reply = null;
-        if (message.type.equalsIgnoreCase("PREPARE"))
-            reply = acceptorHandler.handleMessage(message);
-        else if (message.type.equalsIgnoreCase("PROPOSE"))
-            reply = acceptorHandler.handleMessage(message);
-        else
-            logger.info("Acceptor receives invalid message: " + message);
+    public void handleMessage(Message message) throws IOException, InterruptedException {
+        Message reply = acceptorHandler.handleMessage(message);
         // Does not send reply if the reply is addressing itself or is null
         if (reply != null && reply.to != councillorID)
             send(reply);

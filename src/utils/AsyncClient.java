@@ -71,7 +71,7 @@ public abstract class AsyncClient<T> {
      *
      * @throws IOException if thread encounters exceptions
      */
-    public void start() throws IOException {
+    public void start() throws IOException, InterruptedException {
         socketReader.start();
         messageHandler.start();
     }
@@ -95,7 +95,7 @@ public abstract class AsyncClient<T> {
      * @param message message of parameterized type
      * @throws IOException if send fails
      */
-    public void send(T message) throws IOException {
+    public void send(T message) throws IOException, InterruptedException {
         send(message.toString());
     }
 
@@ -117,7 +117,7 @@ public abstract class AsyncClient<T> {
      * @param message parametrized message
      * @throws IOException if current thread cannot read from channel
      */
-    public abstract void handleMessage(T message) throws IOException;
+    public abstract void handleMessage(T message) throws IOException, InterruptedException;
 
     /**
      * Method to convert String message to parameterized type T
@@ -142,7 +142,7 @@ public abstract class AsyncClient<T> {
                     logger.info("Dequeue message: " + message);
                     try {
                         handleMessage(message);
-                    } catch (IOException e) {
+                    } catch (IOException | InterruptedException e) {
                         try {
                             close();
                         } catch (IOException ex) {

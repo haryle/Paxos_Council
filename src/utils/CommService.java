@@ -96,7 +96,7 @@ public class CommService {
                     scheduledThreadPool.schedule(new RetryRunnable(message), TIME_OUT
                             , TimeUnit.MILLISECONDS);
                 }
-            } catch (IOException e) {
+            } catch (IOException | InterruptedException e) {
                 logger.info("Error sending message to: " + receiver + " message: " + message);
             }
         }
