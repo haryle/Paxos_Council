@@ -23,6 +23,7 @@ public class Proposer {
         ID = councillorID;
         acceptorResponse = new HashMap<>();
         acceptorList = new ArrayList<>();
+        acceptorList.add(councillorID); // Awaits answer from self
         this.waitMin = waitMin;
         this.waitMax = waitMax;
     }
@@ -51,6 +52,7 @@ public class Proposer {
         ID += MAX_PROPOSER;
         acceptorResponse = new HashMap<>();
         acceptorList = new ArrayList<>();
+        acceptorList.add(councillorID); // Awaits message from self
     }
 
     /**
@@ -62,7 +64,7 @@ public class Proposer {
      * @param message inform message
      */
     private void handleInformMessage(Message message) {
-        acceptorList = message.informList;
+        acceptorList.addAll(message.informList);
     }
 
     /**

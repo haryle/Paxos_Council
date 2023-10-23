@@ -13,7 +13,11 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 class ProposerUnitTest {
     Proposer proposer;
-    List<Integer> receivers = new ArrayList<>(Arrays.asList(1, 2, 3));
+
+    int proposerID = 1;
+    List<Integer> receivers;
+
+    Message proposerSelfResponse;
 
     Message firstNak;
 
@@ -41,7 +45,9 @@ class ProposerUnitTest {
 
     @BeforeEach
     void setUp() throws InterruptedException {
-        proposer = new Proposer(6, 10, 11);
+        proposer = new Proposer(proposerID, 10, 11);
+        receivers = new ArrayList<>(Arrays.asList(1, 2, 3));
+        receivers.remove(Integer.valueOf(proposerID));
         Message inform = Message.inform(proposer.councillorID, proposer.getID(),
                 receivers);
         proposer.handleMessage(inform);
@@ -73,7 +79,9 @@ class ProposerUnitTest {
 
     @Test
     void testRegisterAcceptorsWhenReceivingAcceptorList() throws InterruptedException {
-        assertEquals(receivers, proposer.getAcceptorList());
+        receivers.add(proposerID);
+        assertEquals(receivers.size(), proposer.getAcceptorList().size());
+        assertTrue(proposer.getAcceptorList().containsAll(receivers));
     }
 
     @Test
@@ -83,7 +91,7 @@ class ProposerUnitTest {
         proposer.handleMessage(inform);
         proposer.nextRound();
         assertEquals(proposer.councillorID + Proposer.MAX_PROPOSER, proposer.getID());
-        assertTrue(proposer.getAcceptorList().isEmpty());
+        assertTrue(proposer.getAcceptorList().contains(proposerID));
     }
 
     @Test
@@ -92,7 +100,7 @@ class ProposerUnitTest {
         Message inform = Message.inform(proposer.councillorID, proposer.councillorID,
                 receivers);
         proposer.handleMessage(inform);
-        assertTrue(proposer.getAcceptorList().isEmpty());
+        assertTrue(proposer.getAcceptorList().contains(proposerID));
     }
 
     void testHandlingUnhandledMessage(Message message, int sender) throws InterruptedException {
@@ -137,7 +145,7 @@ class ProposerUnitTest {
         proposer.handleMessage(second);
         Message reply = proposer.handleMessage(third);
         assertTrue(proposer.getAcceptorResponse().isEmpty());
-        assertTrue(proposer.getAcceptorList().isEmpty());
+        assertTrue(proposer.getAcceptorList().contains(proposerID));
         assertEquals(proposer.councillorID + Proposer.MAX_PROPOSER, proposer.getID());
         return reply;
     }
@@ -191,7 +199,7 @@ class ProposerUnitTest {
     }
 
     @Test
-    void testPropose_NAKNOLOW_SendLowValue() throws InterruptedException{
+    void testPropose_NAKNOLOW_SendLowValue() throws InterruptedException {
         Message reply = fixtureReceiveThreeMessages(firstPromiseNoID,
                 secondNak, thirdPromiseLowID);
         Message expectPropose = Message.propose(proposer.councillorID, 0,
@@ -200,7 +208,7 @@ class ProposerUnitTest {
     }
 
     @Test
-    void testPropose_NAKNOHIGH_SendHighValue() throws InterruptedException{
+    void testPropose_NAKNOHIGH_SendHighValue() throws InterruptedException {
         Message reply = fixtureReceiveThreeMessages(firstPromiseNoID,
                 secondNak, thirdPromiseHighID);
         Message expectPropose = Message.propose(proposer.councillorID, 0,
@@ -209,7 +217,7 @@ class ProposerUnitTest {
     }
 
     @Test
-    void testPropose_NAKLOWHIGH_SendHighValue() throws InterruptedException{
+    void testPropose_NAKLOWHIGH_SendHighValue() throws InterruptedException {
         Message reply = fixtureReceiveThreeMessages(firstPromiseLowID,
                 secondNak, thirdPromiseHighID);
         Message expectPropose = Message.propose(proposer.councillorID, 0,
@@ -227,7 +235,7 @@ class ProposerUnitTest {
     }
 
     @Test
-    void testPropose_NONONAK_SendProposeCouncillorID() throws InterruptedException{
+    void testPropose_NONONAK_SendProposeCouncillorID() throws InterruptedException {
         Message reply = fixtureReceiveThreeMessages(firstPromiseNoID,
                 secondPromiseNoID, thirdNak);
         Message expectPropose = Message.propose(proposer.councillorID, 0,
@@ -236,7 +244,7 @@ class ProposerUnitTest {
     }
 
     @Test
-    void testPropose_NONOLOW_SendProposeLowValue() throws InterruptedException{
+    void testPropose_NONOLOW_SendProposeLowValue() throws InterruptedException {
         Message reply = fixtureReceiveThreeMessages(firstPromiseNoID,
                 secondPromiseNoID, thirdPromiseLowID);
         Message expectPropose = Message.propose(proposer.councillorID, 0,
@@ -245,7 +253,7 @@ class ProposerUnitTest {
     }
 
     @Test
-    void testPropose_NONOHIGH_SendProposeHighValue() throws InterruptedException{
+    void testPropose_NONOHIGH_SendProposeHighValue() throws InterruptedException {
         Message reply = fixtureReceiveThreeMessages(firstPromiseNoID,
                 secondPromiseNoID, thirdPromiseHighID);
         Message expectPropose = Message.propose(proposer.councillorID, 0,
@@ -254,7 +262,7 @@ class ProposerUnitTest {
     }
 
     @Test
-    void testPropose_NOLOWHIGH_SendProposeHighValue() throws InterruptedException{
+    void testPropose_NOLOWHIGH_SendProposeHighValue() throws InterruptedException {
         Message reply = fixtureReceiveThreeMessages(firstPromiseNoID,
                 secondPromiseLowID, thirdPromiseHighID);
         Message expectPropose = Message.propose(proposer.councillorID, 0,
@@ -263,7 +271,7 @@ class ProposerUnitTest {
     }
 
     @Test
-    void testPropose_LOWLOWLOW_SendProposeLowValue() throws InterruptedException{
+    void testPropose_LOWLOWLOW_SendProposeLowValue() throws InterruptedException {
         Message reply = fixtureReceiveThreeMessages(firstPromiseLowID,
                 secondPromiseLowID, thirdPromiseLowID);
         Message expectPropose = Message.propose(proposer.councillorID, 0,
@@ -272,7 +280,7 @@ class ProposerUnitTest {
     }
 
     @Test
-    void testPropose_LOWLOWNAK_SendProposeLowValue() throws InterruptedException{
+    void testPropose_LOWLOWNAK_SendProposeLowValue() throws InterruptedException {
         Message reply = fixtureReceiveThreeMessages(firstPromiseLowID,
                 secondPromiseLowID, thirdNak);
         Message expectPropose = Message.propose(proposer.councillorID, 0,
@@ -281,7 +289,7 @@ class ProposerUnitTest {
     }
 
     @Test
-    void testPropose_LOWLOWNO_SendProposeLowValue() throws InterruptedException{
+    void testPropose_LOWLOWNO_SendProposeLowValue() throws InterruptedException {
         Message reply = fixtureReceiveThreeMessages(firstPromiseLowID,
                 secondPromiseLowID, thirdPromiseNoID);
         Message expectPropose = Message.propose(proposer.councillorID, 0,
@@ -290,7 +298,7 @@ class ProposerUnitTest {
     }
 
     @Test
-    void testPropose_LOWLOWHIGH_SendProposeHighValue() throws InterruptedException{
+    void testPropose_LOWLOWHIGH_SendProposeHighValue() throws InterruptedException {
         Message reply = fixtureReceiveThreeMessages(firstPromiseLowID,
                 secondPromiseLowID, thirdPromiseHighID);
         Message expectPropose = Message.propose(proposer.councillorID, 0,
@@ -299,7 +307,7 @@ class ProposerUnitTest {
     }
 
     @Test
-    void testPropose_HIGHHIGHHIGH_SendProposeHighValue() throws InterruptedException{
+    void testPropose_HIGHHIGHHIGH_SendProposeHighValue() throws InterruptedException {
         Message reply = fixtureReceiveThreeMessages(firstPromiseHighID,
                 secondPromiseHighID, thirdPromiseHighID);
         Message expectPropose = Message.propose(proposer.councillorID, 0,
@@ -308,7 +316,7 @@ class ProposerUnitTest {
     }
 
     @Test
-    void testPropose_HIGHHIGHNAK_SendProposeHighValue() throws InterruptedException{
+    void testPropose_HIGHHIGHNAK_SendProposeHighValue() throws InterruptedException {
         Message reply = fixtureReceiveThreeMessages(firstPromiseHighID,
                 secondPromiseHighID, thirdNak);
         Message expectPropose = Message.propose(proposer.councillorID, 0,
@@ -317,7 +325,7 @@ class ProposerUnitTest {
     }
 
     @Test
-    void testPropose_HIGHHIGHNo_SendProposeHighValue() throws InterruptedException{
+    void testPropose_HIGHHIGHNo_SendProposeHighValue() throws InterruptedException {
         Message reply = fixtureReceiveThreeMessages(firstPromiseHighID,
                 secondPromiseHighID, thirdPromiseNoID);
         Message expectPropose = Message.propose(proposer.councillorID, 0,
@@ -326,7 +334,7 @@ class ProposerUnitTest {
     }
 
     @Test
-    void testPropose_HIGHHIGHLOW_SendProposeHighValue() throws InterruptedException{
+    void testPropose_HIGHHIGHLOW_SendProposeHighValue() throws InterruptedException {
         Message reply = fixtureReceiveThreeMessages(firstPromiseHighID,
                 secondPromiseHighID, thirdPromiseLowID);
         Message expectPropose = Message.propose(proposer.councillorID, 0,

@@ -19,6 +19,7 @@ public class CommService {
     private final ScheduledExecutorService scheduledThreadPool;
     private int MAX_ATTEMPT;
     private int TIME_OUT;
+
     public CommService(int maxAttempt, int timeOut, Map<Integer,
             AsyncClientConnection> registry,
                        Map<Pair<Integer, Integer>, RetryInfo> retryQueue,
@@ -127,6 +128,8 @@ public class CommService {
     public void inform(Message message) {
         int sender = message.from;
         List<Integer> receivers = new ArrayList<>(registry.keySet());
+        // Remove sender from registry
+        receivers.remove(Integer.valueOf(sender));
         Message reply = Message.inform(sender, message.ID, receivers);
         send(sender, reply, false);
     }

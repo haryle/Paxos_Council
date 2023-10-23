@@ -43,7 +43,7 @@ class CommServiceFixture {
     int third = 3;
     int fourth = 4;
 
-    List<Integer> commList = new ArrayList<>(Arrays.asList(first, second, third,
+    List<Integer> commList = new ArrayList<>(Arrays.asList(second, third,
             fourth));
 
     Message informSender;
