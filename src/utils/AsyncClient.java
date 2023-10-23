@@ -135,11 +135,9 @@ public abstract class AsyncClient<T> {
     class MessageHandler implements Runnable {
         @Override
         public void run() {
-            logger.info("Running MessageHandler");
             while (!Thread.currentThread().isInterrupted()) {
                 while (!queue.isEmpty()) {
                     T message = queue.poll();
-                    logger.info("Dequeue message: " + message);
                     try {
                         handleMessage(message);
                     } catch (IOException | InterruptedException e) {
@@ -163,7 +161,6 @@ public abstract class AsyncClient<T> {
     class SocketReader implements Runnable {
         @Override
         public void run() {
-            logger.info("Running SocketReader");
             ByteBuffer readBuffer = ByteBuffer.allocate(BUF_SIZE);
             while (!Thread.currentThread().isInterrupted()) {
                 readBuffer.clear();
@@ -179,9 +176,7 @@ public abstract class AsyncClient<T> {
                         // Put message in queue
                         if (messages != null) {
                             for (String msg : messages) {
-                                logger.info("Received message: " + msg);
                                 T message = castMessage(msg);
-                                logger.info("Queuing message: " + message);
                                 queue.add(message);
                             }
                         }

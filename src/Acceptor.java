@@ -1,5 +1,7 @@
 import utils.helpers.Message;
 
+import java.util.logging.Logger;
+
 /**
  * Service class representing a Paxos Acceptor.
  * <p>
@@ -9,6 +11,7 @@ import utils.helpers.Message;
  *
  */
 public class Acceptor {
+    protected final Logger logger = Logger.getLogger(this.getClass().getName());
     private int maxID;
     private int acceptedID;
     private int acceptedValue;
@@ -34,11 +37,14 @@ public class Acceptor {
      * @return reply to PREPARE and PROPOSE, can be PROMISE, NAK_PREPARE, ACCEPT, NAK_PROPOSE
      */
     public Message handleMessage(Message message) {
+        logger.info("Acceptor receives message: " + message);
+        Message response = null;
         if (message.type.equalsIgnoreCase("PREPARE"))
-            return handlePrepare(message);
+            response= handlePrepare(message);
         if (message.type.equalsIgnoreCase("PROPOSE"))
-            return handlePropose(message);
-        return null;
+            response =  handlePropose(message);
+        logger.info("Acceptor response: " + response);
+        return response;
     }
 
     /**

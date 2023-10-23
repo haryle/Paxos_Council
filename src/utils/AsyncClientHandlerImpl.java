@@ -34,6 +34,7 @@ public class AsyncClientHandlerImpl extends AsyncClientConnection {
      * @param message connection message
      */
     private void handleConnectMessage(Message message) {
+        logger.info("Server receives CONNECT message from: " + message.from);
         commService.registerConnection(message.from, this);
     }
 
@@ -47,6 +48,7 @@ public class AsyncClientHandlerImpl extends AsyncClientConnection {
      * @throws IOException if fails to send message
      */
     private void handleBroadcastMessage(Message message) throws IOException {
+        logger.info("Server receives broadcast message : " + message);
         commService.inform(message);
         // Register current timestamp
         message.timestamp = timestamp.getAndIncrement();

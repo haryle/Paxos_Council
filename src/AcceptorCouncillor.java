@@ -50,9 +50,15 @@ public class AcceptorCouncillor extends AsyncClientConnection {
      */
     @Override
     public void handleMessage(Message message) throws IOException, InterruptedException {
+        logger.info("Acceptor receives message: " + message);
         Message reply = acceptorHandler.handleMessage(message);
         // Does not send reply if the reply is null
         if (reply != null)
             send(reply);
+    }
+
+    public static void main(String[] argv) throws IOException, InterruptedException {
+        AcceptorCouncillor councillor = new AcceptorCouncillor("localhost", 12345, 2);
+        councillor.start();
     }
 }

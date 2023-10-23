@@ -65,6 +65,7 @@ public class CommService {
     public void receive(Message message) {
         Pair<Integer, Integer> runID = Pair.with(message.timestamp,
                 message.from);
+        logger.info("Receiving reply from: " + runID);
         retryQueue.remove(runID);
     }
 
@@ -82,20 +83,25 @@ public class CommService {
         if (registry.containsKey(receiver)) {
             AsyncClientConnection connection = registry.get(receiver);
             try {
-                connection.send(message);
                 if (trackReply) {
                     // Add message info to retryQueue if runID does not exist
                     // otherwise increment retry Attempt
                     // Also create a scheduled task to retry after TIME_OUT
                     Pair<Integer, Integer> runID = Pair.with(message.timestamp,
                             message.to);
-                    if (retryQueue.containsKey(runID))
+                    if (retryQueue.containsKey(runID)) {
+                        logger.info("Incrementing retry count for: " + runID);
                         retryQueue.get(runID).incAttempt();
-                    else retryQueue.put(runID, new RetryInfo(message));
+                    }
+                    else {
+                        logger.info("Expecting reply from: " + runID);
+                        retryQueue.put(runID, new RetryInfo(message));
+                    }
                     // Add retry runnable
                     scheduledThreadPool.schedule(new RetryRunnable(message), TIME_OUT
                             , TimeUnit.MILLISECONDS);
                 }
+                connection.send(message);
             } catch (IOException | InterruptedException e) {
                 logger.info("Error sending message to: " + receiver + " message: " + message);
             }
@@ -176,6 +182,7 @@ public class CommService {
                 RetryInfo info = retryQueue.get(runID);
                 // Has not reached the maximum attempts -> retry and increment number
                 if (info.getAttempt() < MAX_ATTEMPT) {
+                    logger.info("Resending message: " + message);
                     send(message.to, message, true);
                 } else {
                     // Max attempt reached -> send nak and remove from queue

@@ -20,11 +20,19 @@ public class ProposerCouncillor extends AcceptorCouncillor {
      * @param waitMax      max wait period before beginning the next round
      * @throws IOException if there is any error in connecting to the councillor
      */
-    public ProposerCouncillor(String host, int port, int councillorID, int waitMin, int waitMax) throws IOException {
+    public ProposerCouncillor(String host, int port, int councillorID, int waitMin,
+                              int waitMax) throws IOException {
         super(host, port, councillorID);
         proposer = new Proposer(councillorID, waitMin, waitMax);
     }
 
+    public static void main(String[] argv) throws IOException, InterruptedException {
+        ProposerCouncillor proposer = new ProposerCouncillor("localhost", 12345, 1,
+                1000, 2000);
+        proposer.start();
+        Thread.sleep(1000);
+        proposer.prepare();
+    }
 
     /**
      * Begin the process, sending prepare message
@@ -35,7 +43,6 @@ public class ProposerCouncillor extends AcceptorCouncillor {
     public void prepare() throws IOException, InterruptedException {
         send(proposer.prepare());
     }
-
 
     /**
      * Send message to central server.
@@ -48,13 +55,13 @@ public class ProposerCouncillor extends AcceptorCouncillor {
      */
     @Override
     public void send(Message message) throws IOException, InterruptedException {
+        super.send(message);
         if (message.to == 0 &&
-                (message.type.equalsIgnoreCase("PREPARE") || message.type.equalsIgnoreCase("PROPOSE"))) {
+            (message.type.equalsIgnoreCase("PREPARE") || message.type.equalsIgnoreCase("PROPOSE"))) {
             Message directedMessage = new Message(message);
             directedMessage.to = councillorID;
             handleMessage(directedMessage);
         }
-        super.send(message);
     }
 
     /**
@@ -69,17 +76,26 @@ public class ProposerCouncillor extends AcceptorCouncillor {
      * @throws InterruptedException if sleep is interrupted
      */
     @Override
-    public void handleMessage(Message message) throws IOException, InterruptedException {
+    public void handleMessage(Message message) throws IOException,
+            InterruptedException {
+        logger.info("Proposer receives message: " + message);
         Message reply = null;
         if (message.type.equalsIgnoreCase("INFORM") ||
-                message.type.equalsIgnoreCase("PROMISE") ||
-                message.type.equalsIgnoreCase("NAK_PREPARE"))
+            message.type.equalsIgnoreCase("PROMISE") ||
+            message.type.equalsIgnoreCase("NAK_PREPARE"))
             reply = proposer.handleMessage(message);
         if (message.type.equalsIgnoreCase("PROPOSE") ||
-                message.type.equalsIgnoreCase("PREPARE"))
+            message.type.equalsIgnoreCase("PREPARE"))
             reply = acceptorHandler.handleMessage(message);
-        if (reply != null && (reply.to != councillorID || reply.type.equalsIgnoreCase("ACCEPT")))
-            send(reply);
+        if (reply != null) {
+            // If message directs to self, handle it excepts for if it is ACCEPT
+            if (reply.to == councillorID && (
+                    reply.type.equalsIgnoreCase("PROMISE") ||
+                    reply.type.equalsIgnoreCase("NAK_PREPARE")))
+                handleMessage(reply);
+            else
+                send(reply);
+        }
     }
 }
 

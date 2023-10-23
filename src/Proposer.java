@@ -1,6 +1,7 @@
 import utils.helpers.Message;
 
 import java.util.*;
+import java.util.logging.Logger;
 
 /**
  * Service class representing a Paxos Proposer
@@ -9,6 +10,8 @@ import java.util.*;
  * Proposer also handles replies for prepare messages
  */
 public class Proposer {
+    protected final Logger logger = Logger.getLogger(this.getClass().getName());
+
     public static final int MAX_PROPOSER = 10;
     public final int councillorID; // My CouncillorID
     Random randomizer = new Random();
@@ -65,6 +68,7 @@ public class Proposer {
      */
     private void handleInformMessage(Message message) {
         acceptorList.addAll(message.informList);
+        logger.info("Expecting reply from: " + acceptorList);
     }
 
     /**
@@ -166,6 +170,9 @@ public class Proposer {
             handlePrepareResponse(message);
             if (acceptorList.isEmpty())
                 return proposeValue();
+            else{
+                logger.info("Expecting reply from: " + acceptorList);
+            }
         }
         return null;
     }
