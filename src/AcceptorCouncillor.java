@@ -35,7 +35,7 @@ public class AcceptorCouncillor extends AsyncClientConnection {
      * @throws IOException if failures during sending
      */
     public void start() throws IOException, InterruptedException {
-        send(Message.connect(councillorID));
+         send(Message.connect(councillorID));
         super.start();
     }
 

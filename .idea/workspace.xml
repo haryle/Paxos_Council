@@ -4,9 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="75c0e452-b7e4-426b-bd4d-8ebda73c89ea" name="Changes" comment="feat: add InterruptedException in signature">
+    <list default="true" id="75c0e452-b7e4-426b-bd4d-8ebda73c89ea" name="Changes" comment="feat: add methods for prepare and propose">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Proposer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Proposer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AcceptorCouncillor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/AcceptorCouncillor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ProposerCouncillor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ProposerCouncillor.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -368,7 +369,15 @@
       <option name="project" value="LOCAL" />
       <updated>1698029778360</updated>
     </task>
-    <option name="localTasksCounter" value="28" />
+    <task id="LOCAL-00028" summary="feat: add methods for prepare and propose">
+      <option name="closed" value="true" />
+      <created>1698030155364</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1698030155364</updated>
+    </task>
+    <option name="localTasksCounter" value="29" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -394,7 +403,8 @@
     <MESSAGE value="feat: add comments for acceptor councillor" />
     <MESSAGE value="feat: add inform list instead of overwrite" />
     <MESSAGE value="feat: add InterruptedException in signature" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: add InterruptedException in signature" />
+    <MESSAGE value="feat: add methods for prepare and propose" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: add methods for prepare and propose" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

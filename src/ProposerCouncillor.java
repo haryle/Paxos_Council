@@ -25,6 +25,18 @@ public class ProposerCouncillor extends AcceptorCouncillor {
         proposer = new Proposer(councillorID, waitMin, waitMax);
     }
 
+
+    /**
+     * Begin the process, sending prepare message
+     *
+     * @throws IOException          if send issues occur
+     * @throws InterruptedException if thread sleep is interrupted
+     */
+    public void prepare() throws IOException, InterruptedException {
+        send(proposer.prepare());
+    }
+
+
     /**
      * Send message to central server.
      * <p>
@@ -45,6 +57,17 @@ public class ProposerCouncillor extends AcceptorCouncillor {
         super.send(message);
     }
 
+    /**
+     * Handle incoming message
+     * <p>
+     * If message is INFORM, PROMISE, NAK_PREPARE, handle it as a proposer
+     * <p>
+     * If message is PREPARE OR PROSE, handle it as an acceptor
+     *
+     * @param message parametrized message
+     * @throws IOException          if error with sending
+     * @throws InterruptedException if sleep is interrupted
+     */
     @Override
     public void handleMessage(Message message) throws IOException, InterruptedException {
         Message reply = null;
