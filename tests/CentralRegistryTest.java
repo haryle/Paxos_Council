@@ -78,15 +78,57 @@ class DeterministicPaxosCouncilTest {
     }
 
     @Test
-    void testWhenTwoProposersProposesTheFirstOneWins() throws IOException, InterruptedException {
+    void testWhenTwoProposersProposesTheOneWithHigherIDWins() throws IOException, InterruptedException {
         ProposerCouncillor first = new ProposerCouncillor(HOST, PORT, 1, 10, 10, 10,10);
-        ProposerCouncillor second = new ProposerCouncillor(HOST, PORT, 2, 500, 1000, 500,1000);
+        ProposerCouncillor second = new ProposerCouncillor(HOST, PORT, 2, 10, 10, 10,10);
         first.start();
         second.start();
         first.prepare();
         second.prepare();
-        Thread.sleep(10000);
-        assertEquals(proposers.get(0).getCouncillorID(), learnedValue.get());
+        Thread.sleep(2000);
+        assertEquals(second.getCouncillorID(), learnedValue.get());
+    }
+
+    @Test
+    void testWhenThreeProposersProposesTheOneWithHigherIDWins() throws IOException, InterruptedException {
+        ProposerCouncillor first = new ProposerCouncillor(HOST, PORT, 1, 10, 10, 10,10);
+        ProposerCouncillor second = new ProposerCouncillor(HOST, PORT, 2, 10, 10, 10,10);
+        ProposerCouncillor third = new ProposerCouncillor(HOST, PORT, 3, 10, 10, 10,10);
+        first.start();
+        second.start();
+        third.start();
+        third.prepare();
+        first.prepare();
+        second.prepare();
+        Thread.sleep(2000);
+        assertEquals(third.getCouncillorID(), learnedValue.get());
+    }
+
+    @Test
+    void whenTwoProposerProposesButTheHigherIDOneIsSlowerTheFasterOneWins() throws IOException, InterruptedException{
+        ProposerCouncillor first = new ProposerCouncillor(HOST, PORT, 1, 10, 10, 10,10);
+        ProposerCouncillor second = new ProposerCouncillor(HOST, PORT, 2, 1000, 1000, 10,10);
+        first.start();
+        second.start();
+        first.prepare();
+        second.prepare();
+        Thread.sleep(5000);
+        assertEquals(first.getCouncillorID(), learnedValue.get());
+    }
+
+    @Test
+    void whenThreeProposersProposeButTheHigherOnesAreSlowerTheFirstOneWins() throws IOException, InterruptedException{
+        ProposerCouncillor first = new ProposerCouncillor(HOST, PORT, 1, 10, 10, 10,10);
+        ProposerCouncillor second = new ProposerCouncillor(HOST, PORT, 2, 3000, 3000, 10,10);
+        ProposerCouncillor third = new ProposerCouncillor(HOST, PORT, 3, 1500, 1800, 10,10);
+        first.start();
+        second.start();
+        third.start();
+        second.prepare();
+        third.prepare();
+        first.prepare();
+        Thread.sleep(8000);
+        assertEquals(first.getCouncillorID(), learnedValue.get());
     }
 
 }

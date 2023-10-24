@@ -127,6 +127,7 @@ public class Proposer {
             int proposedValue = councillorID;
             if (value != 0)
                 proposedValue = value;
+            Thread.sleep(randomizer.nextInt(waitMax - waitMin + 1) + waitMin);
             return propose(proposedValue);
         }
     }

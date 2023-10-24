@@ -55,9 +55,10 @@ acceptors: compile_src
 	@java $(LOGGING_FLAG) -cp $(JARFILES):$(OUTDIR) AcceptorCouncillor -p $(PORT) -id 9 -rMin $(REPLY_MIN) -rMax $(REPLY_MAX) &
 
 proposers: compile_src
+	@java $(LOGGING_FLAG) -cp $(JARFILES):$(OUTDIR) ProposerCouncillor -p $(PORT) -id 3 -min $(MIN) -max $(MAX) -d $(DELAY) -rMin $(REPLY_MIN) -rMax $(REPLY_MAX) &
 	@java $(LOGGING_FLAG) -cp $(JARFILES):$(OUTDIR) ProposerCouncillor -p $(PORT) -id 1 -min $(MIN) -max $(MAX) -d $(DELAY) -rMin $(REPLY_MIN) -rMax $(REPLY_MAX) &
 	@java $(LOGGING_FLAG) -cp $(JARFILES):$(OUTDIR) ProposerCouncillor -p $(PORT) -id 2 -min $(MIN) -max $(MAX) -d $(DELAY) -rMin $(REPLY_MIN) -rMax $(REPLY_MAX) &
-	@java $(LOGGING_FLAG) -cp $(JARFILES):$(OUTDIR) ProposerCouncillor -p $(PORT) -id 3 -min $(MIN) -max $(MAX) -d $(DELAY) -rMin $(REPLY_MIN) -rMax $(REPLY_MAX) &
+
 
 
 .PHONY = clean
