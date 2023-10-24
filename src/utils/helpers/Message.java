@@ -17,21 +17,6 @@ public class Message {
     public int timestamp;
     public String type;
 
-    public static List<Integer> StringToList(String stringList) {
-        List<Integer> integerList = new ArrayList<>();
-        Pattern pattern = Pattern.compile("-?\\d+"); // Regular expression to match integers
-
-        Matcher matcher = pattern.matcher(stringList);
-
-        // If the string contains integers
-        while (matcher.find()) {
-            int number = Integer.parseInt(matcher.group());
-            integerList.add(number);
-        }
-
-        return integerList;
-    }
-
     public Message(int from,
                    int to,
                    String type,
@@ -74,6 +59,25 @@ public class Message {
                 message.acceptValue, message.informList, message.timestamp);
     }
 
+    public static List<Integer> StringToList(String stringList) {
+        List<Integer> integerList = new ArrayList<>();
+        Pattern pattern = Pattern.compile("-?\\d+"); // Regular expression to match
+        // integers
+
+        Matcher matcher = pattern.matcher(stringList);
+
+        // If the string contains integers
+        while (matcher.find()) {
+            int number = Integer.parseInt(matcher.group());
+            integerList.add(number);
+        }
+
+        return integerList;
+    }
+
+    public static Message shutdown(int to, int ID) {
+        return new Message(-1, to, "SHUTDOWN", ID, -1, -1, new ArrayList<>(), -1);
+    }
 
     public static Message inform(int to, int ID, List<Integer> informList) {
         return new Message(-1, to, "INFORM", ID, -1, -1, informList, -1);
@@ -139,20 +143,20 @@ public class Message {
 
     public String toString() {
         return from +
-                separator +
-                to +
-                separator +
-                type +
-                separator +
-                ID +
-                separator +
-                acceptID +
-                separator +
-                acceptValue +
-                separator +
-                informList +
-                separator +
-                timestamp +
-                delimiter;
+               separator +
+               to +
+               separator +
+               type +
+               separator +
+               ID +
+               separator +
+               acceptID +
+               separator +
+               acceptValue +
+               separator +
+               informList +
+               separator +
+               timestamp +
+               delimiter;
     }
 }

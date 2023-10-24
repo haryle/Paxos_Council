@@ -69,6 +69,8 @@ public class ProposerCouncillor extends AcceptorCouncillor {
     @Override
     public void handleMessage(Message message) throws IOException,
             InterruptedException {
+        if (message.type.equalsIgnoreCase("SHUTDOWN"))
+            close();
         Message reply = null;
         if (message.type.equalsIgnoreCase("INFORM") ||
             message.type.equalsIgnoreCase("PROMISE") ||

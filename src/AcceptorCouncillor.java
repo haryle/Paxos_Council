@@ -51,6 +51,8 @@ public class AcceptorCouncillor extends AsyncClientConnection {
      */
     @Override
     public void handleMessage(Message message) throws IOException, InterruptedException {
+        if (message.type.equalsIgnoreCase("SHUTDOWN"))
+            close();
         Message reply = acceptorHandler.handleMessage(message);
         // Does not send reply if the reply is null
         if (reply != null)

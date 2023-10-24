@@ -4,15 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="75c0e452-b7e4-426b-bd4d-8ebda73c89ea" name="Changes" comment="feat: feat simplify send receive flow">
+    <list default="true" id="75c0e452-b7e4-426b-bd4d-8ebda73c89ea" name="Changes" comment="feat: checkpoint, seems to have no bug now">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/Makefile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Acceptor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Acceptor.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/AcceptorCouncillor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/AcceptorCouncillor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/CentralRegistry.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/CentralRegistry.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Proposer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Proposer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ProposerCouncillor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ProposerCouncillor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/utils/AsyncClientHandlerImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/AsyncClientHandlerImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/helpers/Message.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/helpers/Message.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -447,11 +443,18 @@
       <option name="project" value="LOCAL" />
       <updated>1698111385786</updated>
     </task>
-    <option name="localTasksCounter" value="33" />
+    <task id="LOCAL-00033" summary="feat: checkpoint, seems to have no bug now">
+      <option name="closed" value="true" />
+      <created>1698115227550</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1698115227550</updated>
+    </task>
+    <option name="localTasksCounter" value="34" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="feat: add jar file" />
     <MESSAGE value="feat: add project files" />
     <MESSAGE value="feat: add message class" />
     <MESSAGE value="feat: add async mesage parser" />
@@ -476,7 +479,8 @@
     <MESSAGE value="feat: add design file" />
     <MESSAGE value="feat: add configs" />
     <MESSAGE value="feat: feat simplify send receive flow" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: feat simplify send receive flow" />
+    <MESSAGE value="feat: checkpoint, seems to have no bug now" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: checkpoint, seems to have no bug now" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
