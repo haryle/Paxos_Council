@@ -8,7 +8,6 @@ import java.util.logging.Logger;
  * Acceptor handles Proposer's message and return
  * corresponding replies. The public interface contains
  * just the handleMessage method, which returns a nullable String.
- *
  */
 public class Acceptor {
     protected final Logger logger = Logger.getLogger(this.getClass().getName());
@@ -34,16 +33,13 @@ public class Acceptor {
      * Otherwise ignore
      *
      * @param message incoming proposer's message
-     * @return reply to PREPARE and PROPOSE, can be PROMISE, NAK_PREPARE, ACCEPT, NAK_PROPOSE
+     * @return reply to PREPARE and PROPOSE, can be PROMISE, NAK_PREPARE, ACCEPT,
+     * NAK_PROPOSE
      */
     public Message handleMessage(Message message) {
-        logger.info("Acceptor receives message: " + message);
         Message response = null;
-        if (message.type.equalsIgnoreCase("PREPARE"))
-            response= handlePrepare(message);
-        if (message.type.equalsIgnoreCase("PROPOSE"))
-            response =  handlePropose(message);
-        logger.info("Acceptor response: " + response);
+        if (message.type.equalsIgnoreCase("PREPARE")) response = handlePrepare(message);
+        if (message.type.equalsIgnoreCase("PROPOSE")) response = handlePropose(message);
         return response;
     }
 
@@ -63,12 +59,23 @@ public class Acceptor {
      * @return promise message or nak
      */
     private synchronized Message handlePrepare(Message message) {
-        if (message.ID <= maxID)
+        logger.info(String.format("Receive PREPARE - sender: %d, ID: %d", message.from,
+                message.ID));
+        if (message.ID <= maxID) {
+            logger.info(String.format("Send NAK - sender: %d, ID: %d", message.from,
+                    message.ID));
             return Message.getNakMessage(message);
+        }
         maxID = message.ID;
-        if (hasAccepted)
-            return Message.promise(message.to, message.from, message.ID,
-                    acceptedID, acceptedValue, message.timestamp);
+        if (hasAccepted) {
+            logger.info(String.format("Send PROMISE - sender: %d, ID: %d, acceptedID: %d, "
+                                      + "acceptedValue: %d", message.from, message.ID
+                    , message.acceptID, message.acceptValue));
+            return Message.promise(message.to, message.from, message.ID, acceptedID,
+                    acceptedValue, message.timestamp);
+        }
+        logger.info(String.format("Send PROMISE - sender: %d, ID: %d", message.from,
+                message.ID));
         return Message.promise(message.to, message.from, message.ID, message.timestamp);
     }
 
@@ -85,13 +92,18 @@ public class Acceptor {
      * @return accept or nak message
      */
     private synchronized Message handlePropose(Message message) {
+        logger.info(String.format("Receive %s - sender: %d, ID: %d, value: %d", message.type, message.from, message.ID, message.acceptValue));
         if (message.ID == maxID) {
             hasAccepted = true;
             acceptedID = message.ID;
             acceptedValue = message.acceptValue;
+            logger.info(String.format("Send ACCEPT - sender: %d, ID: %d, value: %d", message.from,
+                    message.ID, message.acceptValue));
             return Message.accept(message.to, message.from, acceptedID, acceptedValue
                     , message.timestamp);
         }
+        logger.info(String.format("Send NAK - sender: %d, ID: %d, value: %d", message.from,
+                message.ID, message.acceptValue));
         return Message.getNakMessage(message);
     }
 }

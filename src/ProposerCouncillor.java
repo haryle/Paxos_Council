@@ -45,26 +45,6 @@ public class ProposerCouncillor extends AcceptorCouncillor {
     }
 
     /**
-     * Send message to central server.
-     * <p>
-     * If message is a broadcast message (to is 0), send one
-     * to itself.
-     *
-     * @param message message of parameterized type
-     * @throws IOException if there is sending error
-     */
-    @Override
-    public void send(Message message) throws IOException, InterruptedException {
-        super.send(message);
-        if (message.to == 0 &&
-            (message.type.equalsIgnoreCase("PREPARE") || message.type.equalsIgnoreCase("PROPOSE"))) {
-            Message directedMessage = new Message(message);
-            directedMessage.to = councillorID;
-            handleMessage(directedMessage);
-        }
-    }
-
-    /**
      * Handle incoming message
      * <p>
      * If message is INFORM, PROMISE, NAK_PREPARE, handle it as a proposer
@@ -78,7 +58,6 @@ public class ProposerCouncillor extends AcceptorCouncillor {
     @Override
     public void handleMessage(Message message) throws IOException,
             InterruptedException {
-        logger.info("Proposer receives message: " + message);
         Message reply = null;
         if (message.type.equalsIgnoreCase("INFORM") ||
             message.type.equalsIgnoreCase("PROMISE") ||
@@ -88,13 +67,7 @@ public class ProposerCouncillor extends AcceptorCouncillor {
             message.type.equalsIgnoreCase("PREPARE"))
             reply = acceptorHandler.handleMessage(message);
         if (reply != null) {
-            // If message directs to self, handle it excepts for if it is ACCEPT
-            if (reply.to == councillorID && (
-                    reply.type.equalsIgnoreCase("PROMISE") ||
-                    reply.type.equalsIgnoreCase("NAK_PREPARE")))
-                handleMessage(reply);
-            else
-                send(reply);
+            send(reply);
         }
     }
 }

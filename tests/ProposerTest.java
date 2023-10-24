@@ -47,8 +47,7 @@ class ProposerUnitTest {
     void setUp() throws InterruptedException {
         proposer = new Proposer(proposerID, 10, 11);
         receivers = new ArrayList<>(Arrays.asList(1, 2, 3));
-        receivers.remove(Integer.valueOf(proposerID));
-        Message inform = Message.inform(proposer.councillorID, proposer.getID(),
+                Message inform = Message.inform(proposer.councillorID, proposer.getID(),
                 receivers);
         proposer.handleMessage(inform);
         Message prepare = Message.prepare(proposer.councillorID, 0, proposer.getID());
@@ -79,7 +78,6 @@ class ProposerUnitTest {
 
     @Test
     void testRegisterAcceptorsWhenReceivingAcceptorList() throws InterruptedException {
-        receivers.add(proposerID);
         assertEquals(receivers.size(), proposer.getAcceptorList().size());
         assertTrue(proposer.getAcceptorList().containsAll(receivers));
     }
@@ -91,7 +89,6 @@ class ProposerUnitTest {
         proposer.handleMessage(inform);
         proposer.nextRound();
         assertEquals(proposer.councillorID + Proposer.MAX_PROPOSER, proposer.getID());
-        assertTrue(proposer.getAcceptorList().contains(proposerID));
     }
 
     @Test
@@ -100,7 +97,7 @@ class ProposerUnitTest {
         Message inform = Message.inform(proposer.councillorID, proposer.councillorID,
                 receivers);
         proposer.handleMessage(inform);
-        assertTrue(proposer.getAcceptorList().contains(proposerID));
+        assertTrue(proposer.getAcceptorList().isEmpty());
     }
 
     void testHandlingUnhandledMessage(Message message, int sender) throws InterruptedException {
@@ -145,7 +142,6 @@ class ProposerUnitTest {
         proposer.handleMessage(second);
         Message reply = proposer.handleMessage(third);
         assertTrue(proposer.getAcceptorResponse().isEmpty());
-        assertTrue(proposer.getAcceptorList().contains(proposerID));
         assertEquals(proposer.councillorID + Proposer.MAX_PROPOSER, proposer.getID());
         return reply;
     }

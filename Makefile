@@ -26,6 +26,15 @@ compile_test: make_dirs
 run_test: compile_src compile_test
 	@java $(LOGGING_FLAG) -javaagent:jar/intellij-coverage-agent-1.0.737.jar=config/config.args -jar $(JARDIR)/$(JUNITJAR) -cp $(JARFILES):$(TESTOUTDIR):$(OUTDIR) --scan-classpath
 
+central_registry: compile_src
+	@java $(LOGGING_FLAG) -cp $(JARFILES):$(OUTDIR) CentralRegistry
+
+acceptor: compile_src
+	@java $(LOGGING_FLAG) -cp $(JARFILES):$(OUTDIR) AcceptorCouncillor
+
+proposer: compile_src
+	@java $(LOGGING_FLAG) -cp $(JARFILES):$(OUTDIR) ProposerCouncillor
+
 
 .PHONY = clean
 clean:

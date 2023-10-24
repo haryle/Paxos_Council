@@ -35,6 +35,7 @@ public class AcceptorCouncillor extends AsyncClientConnection {
      * @throws IOException if failures during sending
      */
     public void start() throws IOException, InterruptedException {
+        logger.info("CONNECT: " + councillorID);
          send(Message.connect(councillorID));
         super.start();
     }
@@ -50,7 +51,6 @@ public class AcceptorCouncillor extends AsyncClientConnection {
      */
     @Override
     public void handleMessage(Message message) throws IOException, InterruptedException {
-        logger.info("Acceptor receives message: " + message);
         Message reply = acceptorHandler.handleMessage(message);
         // Does not send reply if the reply is null
         if (reply != null)

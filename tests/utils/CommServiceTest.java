@@ -43,7 +43,7 @@ class CommServiceFixture {
     int third = 3;
     int fourth = 4;
 
-    List<Integer> commList = new ArrayList<>(Arrays.asList(second, third,
+    List<Integer> commList = new ArrayList<>(Arrays.asList(first, second, third,
             fourth));
 
     Message informSender;
@@ -64,6 +64,8 @@ class CommServiceFixture {
 
     Message connectFourth;
 
+    Message replyPreparePromiseFirst;
+
     Message replyPreparePromiseIDSecond;
 
     Message replyPrepareRejectIDThird;
@@ -79,6 +81,8 @@ class CommServiceFixture {
     Message proposeThird;
 
     Message proposeFourth;
+
+    Message replyProposeAcceptFirst;
 
     Message replyProposeAcceptSecond;
 
@@ -110,6 +114,7 @@ class CommServiceFixture {
         connectFourth = Message.connect(fourth);
 
         // Reply to Prepare
+        replyPreparePromiseFirst = Message.promise(first, sender, ID, timestamp);
         replyPreparePromiseIDSecond = Message.promise(second, sender, ID,
                 acceptedID, acceptedValue,
                 timestamp);
@@ -125,6 +130,8 @@ class CommServiceFixture {
         proposeFourth = Message.propose(sender, fourth, ID, proposeValue);
 
         // Reply to Propose Message
+        replyProposeAcceptFirst = Message.accept(first, sender, ID, proposeValue,
+                timestamp);
         replyProposeAcceptSecond = Message.accept(second, sender, ID,
                 proposeValue, timestamp);
         replyProposeAcceptThird = Message.accept(third, sender, ID,
@@ -351,7 +358,8 @@ class OneSenderFourReceiversCommServiceTest extends CommServiceFixture {
         int maxAttempt = 3;
         commService.setMAX_ATTEMPT(maxAttempt);
         commService.setTIME_OUT(200);
-
+        // Number of expected messages sender will receive
+        int expMsgToSender = 0;
         // Prepare broadcast and reply messages
         broadcastMessage.timestamp = timestamp;
         // Establish receivers ID and connections
@@ -359,7 +367,10 @@ class OneSenderFourReceiversCommServiceTest extends CommServiceFixture {
         List<MockConnection> replyConns = new ArrayList<>();
         for (Message reply : replies) {
             repliers.add(reply.from);
-            replyConns.add((MockConnection) commService.getRegistry().get(reply.from));
+            if (reply.from != sender) {
+                replyConns.add((MockConnection) commService.getRegistry().get(reply.from));
+            }else
+                expMsgToSender++;
         }
 
         // Establish non-receivers ID and connections
@@ -369,9 +380,15 @@ class OneSenderFourReceiversCommServiceTest extends CommServiceFixture {
                 commService.getRegistry().entrySet()) {
             int id = entry.getKey();
             MockConnection conn = (MockConnection) entry.getValue();
-            if (!repliers.contains(id) && id != sender) {
-                nonRepliers.add(id);
-                nonReplyConns.add(conn);
+            if (!repliers.contains(id)) {
+                if (id != sender ){
+                    nonRepliers.add(id);
+                    nonReplyConns.add(conn);
+                    expMsgToSender++;
+                }else{
+                    expMsgToSender += 2 + maxAttempt; // 1st message + retry + nak
+                }
+
             }
         }
 
@@ -410,10 +427,10 @@ class OneSenderFourReceiversCommServiceTest extends CommServiceFixture {
             }
         }
 
-        // A NAK is sent when no message received f
+        // A NAK is sent when no message received
         MockConnection senderConn =
                 (MockConnection) commService.getRegistry().get(sender);
-        assertEquals(nakMessages.size(), senderConn.messageCount);
+        assertEquals(expMsgToSender, senderConn.messageCount);
         // Check that the retryQueue is empty
         assertTrue(commService.getRetryQueue().isEmpty());
     }
@@ -441,8 +458,8 @@ class OneSenderFourReceiversCommServiceTest extends CommServiceFixture {
         // Since reply message is received, no message is resent and no nak is received
         for (MockConnection receiverConn : receiverConns)
             assertEquals(1, receiverConn.messageCount);
-        // Receive only zero message
-        assertEquals(0, senderConn.messageCount);
+        // Receive only the prepare message
+        assertEquals(1, senderConn.messageCount);
         assertTrue(commService.getRetryQueue().isEmpty());
     }
 
@@ -459,9 +476,22 @@ class OneSenderFourReceiversCommServiceTest extends CommServiceFixture {
     }
 
     @Test
+    void testPrepareReceiveThreeRepliesContainingSenderWillResend() throws InterruptedException {
+        whenBroadCastReceiveInsufficientReplyWillRetryTillNAK(prepareBroadcast,
+                Arrays.asList(replyPrepareRejectIDThird, replyPreparePromiseIDSecond, replyPreparePromiseFirst));
+    }
+
+    @Test
+    void testPrepareReceiveThreeRepliesNotContainingSenderWillResend() throws InterruptedException {
+        whenBroadCastReceiveInsufficientReplyWillRetryTillNAK(prepareBroadcast,
+                Arrays.asList(replyPrepareRejectIDThird, replyPreparePromiseIDSecond, replyPreparePromiseFourth));
+    }
+
+    @Test
     void testPrepareReceiveAllRepliesWillNotResend() throws InterruptedException {
         whenBroadCastReceiveFullReplyWillNotRetry(prepareBroadcast,
-                Arrays.asList(replyPrepareRejectIDThird, replyPreparePromiseIDSecond, replyPreparePromiseFourth));
+                Arrays.asList(replyPrepareRejectIDThird, replyPreparePromiseIDSecond,
+                        replyPreparePromiseFourth, replyPreparePromiseFirst));
     }
 
 
@@ -478,9 +508,22 @@ class OneSenderFourReceiversCommServiceTest extends CommServiceFixture {
     }
 
     @Test
+    void testProposeReceiveThreeRepliesContainingSenderWillResend() throws InterruptedException {
+        whenBroadCastReceiveInsufficientReplyWillRetryTillNAK(proposeBroadcast,
+                Arrays.asList(replyProposeAcceptFirst, replyProposeAcceptSecond, replyProposeAcceptThird));
+    }
+
+    @Test
+    void testProposeReceiveThreeRepliesNotContainingSenderWillResend() throws InterruptedException {
+        whenBroadCastReceiveInsufficientReplyWillRetryTillNAK(proposeBroadcast,
+                Arrays.asList(replyProposeRejectFourth, replyProposeAcceptSecond, replyProposeAcceptThird));
+    }
+
+    @Test
     void testProposeReceiveAllRepliesWillNotResend() throws InterruptedException {
         whenBroadCastReceiveFullReplyWillNotRetry(proposeBroadcast,
-                Arrays.asList(replyProposeAcceptSecond, replyProposeAcceptThird, replyProposeRejectFourth));
+                Arrays.asList(replyProposeAcceptSecond, replyProposeAcceptThird,
+                        replyProposeRejectFourth, replyProposeAcceptFirst));
     }
 }
 

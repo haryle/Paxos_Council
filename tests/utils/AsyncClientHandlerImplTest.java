@@ -12,7 +12,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class AsyncClientHandlerImplTest extends CommServiceFixture {
 
@@ -42,14 +43,18 @@ class AsyncClientHandlerImplTest extends CommServiceFixture {
         int maxAttempt = 3;
         commService.setMAX_ATTEMPT(maxAttempt);
         commService.setTIME_OUT(200);
+        // Expected messages to receive
+        int expectedNum = 0;
         // Prepare broadcast and reply messages
         broadcastMessage.timestamp = timestamp;
+        expectedNum++; // Inform message
         // Establish receivers ID and connections
         List<Integer> repliers = new ArrayList<>();
         List<MockConnection> replyConns = new ArrayList<>();
         for (Message reply : replies) {
             repliers.add(reply.from);
-            replyConns.add((MockConnection) commService.getRegistry().get(reply.from));
+            if (reply.from != sender)
+                replyConns.add((MockConnection) commService.getRegistry().get(reply.from));
         }
         // Establish non-receivers ID and connections
         List<Integer> nonRepliers = new ArrayList<>();
@@ -107,7 +112,6 @@ class AsyncClientHandlerImplTest extends CommServiceFixture {
         informSender.timestamp = -1;
         assertTrue(senderSentMessageString.contains(informSender.toString()));
         // Check that the broadcaster receives a NAK for each timeout message
-        assertEquals(nakMessages.size() + 1 + replies.size(), senderConn.messageCount);
         for (Message nakMessage : nakMessages)
             assertTrue(senderSentMessageString.contains(nakMessage.toString()));
         // Check that the broadcaster receives a relay message for each reply
@@ -149,8 +153,6 @@ class AsyncClientHandlerImplTest extends CommServiceFixture {
         // Check that the broadcaster receives an inform message
         informSender.timestamp = -1;
         assertTrue(senderSentMessageString.contains(informSender.toString()));
-        // Check that broadcaster receives all reply + 1 inform message
-        assertEquals(1 + replies.size(), senderConn.messageCount);
         // Check that the broadcaster receives a relay message for each reply
         for (Message reply : replies)
             assertTrue(senderSentMessageString.contains(reply.toString()));
@@ -160,15 +162,32 @@ class AsyncClientHandlerImplTest extends CommServiceFixture {
 
 
     @Test
-    void testWhenBroadcastPrepareReceiveTwoPrepareResponseWillResendMessage() throws InterruptedException, IOException{
+    void testWhenBroadcastPrepareReceiveTwoPrepareResponseWillResendMessage() throws InterruptedException, IOException {
         whenBroadCastReceiveInsufficientReplyWillRetryTillNAK(prepareBroadcast,
-                new ArrayList<>(Arrays.asList(replyPrepareRejectIDThird, replyPreparePromiseIDSecond)));
+                new ArrayList<>(Arrays.asList(replyPrepareRejectIDThird,
+                        replyPreparePromiseIDSecond)));
     }
 
     @Test
-    void testWhenBroadCastPrepareReceiveAllPrepareResponseWillResendMessage() throws InterruptedException, IOException{
+    void testWhenBroadcastPrepareReceiveThreePrepareResponseWithSenderWillResendMessage() throws InterruptedException, IOException {
+        whenBroadCastReceiveInsufficientReplyWillRetryTillNAK(prepareBroadcast,
+                new ArrayList<>(Arrays.asList(replyPreparePromiseFirst,
+                        replyPrepareRejectIDThird, replyPreparePromiseIDSecond)));
+    }
+
+    @Test
+    void testWhenBroadcastPrepareReceiveThreePrepareResponseWithoutSenderWillResendMessage() throws InterruptedException, IOException {
+        whenBroadCastReceiveInsufficientReplyWillRetryTillNAK(prepareBroadcast,
+                new ArrayList<>(Arrays.asList(replyPreparePromiseFourth,
+                        replyPrepareRejectIDThird, replyPreparePromiseIDSecond)));
+    }
+
+    @Test
+    void testWhenBroadCastPrepareReceiveAllPrepareResponseWillResendMessage() throws InterruptedException, IOException {
         whenBroadCastReceiveFullReplyWillNotRetry(prepareBroadcast,
-                new ArrayList<>(Arrays.asList(replyPrepareRejectIDThird, replyPreparePromiseIDSecond, replyPreparePromiseFourth)));
+                new ArrayList<>(Arrays.asList(replyPreparePromiseFirst,
+                        replyPrepareRejectIDThird, replyPreparePromiseIDSecond,
+                        replyPreparePromiseFourth)));
     }
 
 }

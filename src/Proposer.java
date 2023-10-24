@@ -1,6 +1,7 @@
 import utils.helpers.Message;
 
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Logger;
 
 /**
@@ -10,10 +11,9 @@ import java.util.logging.Logger;
  * Proposer also handles replies for prepare messages
  */
 public class Proposer {
-    protected final Logger logger = Logger.getLogger(this.getClass().getName());
-
     public static final int MAX_PROPOSER = 10;
     public final int councillorID; // My CouncillorID
+    protected final Logger logger = Logger.getLogger(this.getClass().getName());
     Random randomizer = new Random();
     private int waitMin;
     private int waitMax;
@@ -26,7 +26,6 @@ public class Proposer {
         ID = councillorID;
         acceptorResponse = new HashMap<>();
         acceptorList = new ArrayList<>();
-        acceptorList.add(councillorID); // Awaits answer from self
         this.waitMin = waitMin;
         this.waitMax = waitMax;
     }
@@ -55,7 +54,6 @@ public class Proposer {
         ID += MAX_PROPOSER;
         acceptorResponse = new HashMap<>();
         acceptorList = new ArrayList<>();
-        acceptorList.add(councillorID); // Awaits message from self
     }
 
     /**
@@ -66,9 +64,10 @@ public class Proposer {
      *
      * @param message inform message
      */
-    private void handleInformMessage(Message message) {
+    private Message handleInformMessage(Message message) {
         acceptorList.addAll(message.informList);
-        logger.info("Expecting reply from: " + acceptorList);
+        logger.info("INFORM - acceptor list: " + acceptorList);
+        return null;
     }
 
     /**
@@ -81,6 +80,9 @@ public class Proposer {
      */
     private void handlePrepareResponse(Message message) {
         int sender = message.from;
+        logger.info(String.format("Receive: %s, sender: %d, ID: %d, aID: %d, aVal: " +
+                                  "%d", message.type, message.from, message.ID,
+                message.acceptID, message.acceptValue));
         acceptorResponse.put(sender, message);
         if (acceptorList.contains(sender))
             acceptorList.remove(Integer.valueOf(sender));
@@ -89,8 +91,10 @@ public class Proposer {
     /**
      * Propose a value at the end of phase 1
      * <p>
-     * If the majority has replied (with promise messages), if any promise contained a previously accepted value,
-     * choose the value with the highest accepted ID as the proposed value, otherwise choose the councillorID
+     * If the majority has replied (with promise messages), if any promise contained
+     * a previously accepted value,
+     * choose the value with the highest accepted ID as the proposed value, otherwise
+     * choose the councillorID
      * as proposed value. Return a PROPOSE message with the proposed value.
      * <p>
      * If has not received reply from majority, restart phase 1 after some delays
@@ -133,8 +137,10 @@ public class Proposer {
      *
      * @return prepare message
      */
-    public Message prepare() {
+    public synchronized Message prepare() {
+        logger.info("Send PREPARE - ID: " + ID);
         return Message.prepare(councillorID, 0, ID);
+
     }
 
     /**
@@ -143,16 +149,21 @@ public class Proposer {
      * @param proposeValue proposed value
      * @return propose message
      */
-    public Message propose(int proposeValue) {
+    public synchronized Message propose(int proposeValue) {
+        logger.info(String.format("Send PROPOSE - ID: %d, Value: %d", ID,
+                proposeValue));
         return Message.propose(councillorID, 0, ID, proposeValue);
     }
 
     /**
      * Public method for handling acceptor's responses,
      * <p>
-     * If the message's ID is not the current round ID, ignore the message. If the message is INFORM,
-     * handleInform. If the message is a PREPARE's response (PROMISE, NAK_PREPARE), handlePrepareResponse.
-     * If all replies for the current round's PREPARE is received, invoke proposeValue. Any other type of
+     * If the message's ID is not the current round ID, ignore the message. If the
+     * message is INFORM,
+     * handleInform. If the message is a PREPARE's response (PROMISE, NAK_PREPARE),
+     * handlePrepareResponse.
+     * If all replies for the current round's PREPARE is received, invoke
+     * proposeValue. Any other type of
      * messages will be ignored
      *
      * @param message acceptor's response
@@ -163,18 +174,16 @@ public class Proposer {
         if (message.ID != ID) // Ignore messages from a different round
             return null;
         if (message.type.equalsIgnoreCase("INFORM")) {
-            handleInformMessage(message);
-            return null;
+            return handleInformMessage(message);
         }
         if (message.type.equalsIgnoreCase("PROMISE") || message.type.equalsIgnoreCase("NAK_PREPARE")) {
             handlePrepareResponse(message);
             if (acceptorList.isEmpty())
                 return proposeValue();
-            else{
-                logger.info("Expecting reply from: " + acceptorList);
+            else {
+                logger.info("Acceptor list: " + acceptorList);
             }
         }
         return null;
     }
-
 }

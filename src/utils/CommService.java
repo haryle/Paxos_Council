@@ -65,7 +65,14 @@ public class CommService {
     public void receive(Message message) {
         Pair<Integer, Integer> runID = Pair.with(message.timestamp,
                 message.from);
-        logger.info("Receiving reply from: " + runID);
+
+        logger.info(String.format("Receive %s - sender: %d, receiver: %d, ID: %d, " +
+                                  "aID: %d, aValue: %d, TS: %d",
+                message.type, message.from, message.to, message.ID, message.acceptID,
+                message.acceptValue, message.timestamp));
+
+        if (retryQueue.containsKey(runID))
+            logger.fine("Removing message from retry queue: " + retryQueue.get(runID));
         retryQueue.remove(runID);
     }
 
@@ -90,17 +97,17 @@ public class CommService {
                     Pair<Integer, Integer> runID = Pair.with(message.timestamp,
                             message.to);
                     if (retryQueue.containsKey(runID)) {
-                        logger.info("Incrementing retry count for: " + runID);
+                        logger.fine("Incrementing retry count for: " + runID);
                         retryQueue.get(runID).incAttempt();
-                    }
-                    else {
-                        logger.info("Expecting reply from: " + runID);
+                    } else {
+                        logger.fine("Expecting reply from: " + runID);
                         retryQueue.put(runID, new RetryInfo(message));
                     }
                     // Add retry runnable
                     scheduledThreadPool.schedule(new RetryRunnable(message), TIME_OUT
                             , TimeUnit.MILLISECONDS);
                 }
+                logger.info("Send: " + message);
                 connection.send(message);
             } catch (IOException | InterruptedException e) {
                 logger.info("Error sending message to: " + receiver + " message: " + message);
@@ -117,12 +124,19 @@ public class CommService {
      */
     public void broadcast(Message message) {
         int sender = message.from;
+        if (message.type.equalsIgnoreCase("PREPARE"))
+            logger.info(String.format("Broadcast PREPARE - sender: %d, ID: %d, TS: " +
+                                      "%d", message.from, message.ID,
+                    message.timestamp));
+        else
+            logger.info(String.format("Broadcast PROPOSE - sender: %s, ID: %d, Value:" +
+                                      " %d, TS: %d", message.from, message.ID,
+                    message.acceptValue, message.timestamp));
+
         for (int receiver : registry.keySet()) {
-            if (receiver != sender) {
-                Message directedMessage = new Message(message);
-                directedMessage.to = receiver;
-                send(receiver, directedMessage, true);
-            }
+            Message directedMessage = new Message(message);
+            directedMessage.to = receiver;
+            send(receiver, directedMessage, true);
         }
     }
 
@@ -134,9 +148,8 @@ public class CommService {
     public void inform(Message message) {
         int sender = message.from;
         List<Integer> receivers = new ArrayList<>(registry.keySet());
-        // Remove sender from registry
-        receivers.remove(Integer.valueOf(sender));
         Message reply = Message.inform(sender, message.ID, receivers);
+        logger.info(String.format("INFORM sender: %d, receivers: ", sender) + reply.informList);
         send(sender, reply, false);
     }
 
@@ -182,7 +195,7 @@ public class CommService {
                 RetryInfo info = retryQueue.get(runID);
                 // Has not reached the maximum attempts -> retry and increment number
                 if (info.getAttempt() < MAX_ATTEMPT) {
-                    logger.info("Resending message: " + message);
+                    logger.fine("Resending message: " + message);
                     send(message.to, message, true);
                 } else {
                     // Max attempt reached -> send nak and remove from queue

@@ -83,7 +83,7 @@ public abstract class AsyncClient<T> {
      * @throws IOException if fails to send message
      */
     public void send(String message) throws IOException {
-        logger.info("Sending message: " + message);
+        logger.fine("Sending message: " + message);
         ByteBuffer buffer = ByteBuffer.wrap(message.getBytes());
         channel.write(buffer);
     }
@@ -117,7 +117,8 @@ public abstract class AsyncClient<T> {
      * @param message parametrized message
      * @throws IOException if current thread cannot read from channel
      */
-    public abstract void handleMessage(T message) throws IOException, InterruptedException;
+    public abstract void handleMessage(T message) throws IOException,
+            InterruptedException;
 
     /**
      * Method to convert String message to parameterized type T

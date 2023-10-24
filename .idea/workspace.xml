@@ -4,10 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="75c0e452-b7e4-426b-bd4d-8ebda73c89ea" name="Changes" comment="feat: add design file">
-      <change afterPath="$PROJECT_DIR$/Makefile" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/CentralRegistry.java" afterDir="false" />
+    <list default="true" id="75c0e452-b7e4-426b-bd4d-8ebda73c89ea" name="Changes" comment="feat: add configs">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/Makefile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/logging.properties" beforeDir="false" afterPath="$PROJECT_DIR$/config/logging.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Acceptor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Acceptor.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/AcceptorCouncillor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/AcceptorCouncillor.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Proposer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Proposer.java" afterDir="false" />
@@ -15,6 +15,9 @@
       <change beforePath="$PROJECT_DIR$/src/utils/AsyncClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/AsyncClient.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/utils/AsyncClientHandlerImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/AsyncClientHandlerImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/utils/CommService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/CommService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/ProposerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/tests/ProposerTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/utils/AsyncClientHandlerImplTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/tests/utils/AsyncClientHandlerImplTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/utils/CommServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/tests/utils/CommServiceTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -101,28 +104,7 @@
       <recent name="utils" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.CentralRegistry">
-    <configuration name="AcceptorCouncillor" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="AcceptorCouncillor" />
-      <module name="PaxosCouncil" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="CentralRegistry" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="CentralRegistry" />
-      <module name="PaxosCouncil" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="ProposerCouncillor" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="ProposerCouncillor" />
-      <module name="PaxosCouncil" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
+  <component name="RunManager" selected="JUnit.All in PaxosCouncil">
     <configuration name="All in PaxosCouncil" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="PaxosCouncil" />
       <option name="PACKAGE_NAME" value="" />
@@ -131,22 +113,77 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="ProposerUnitTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="AsyncClientHandlerImplTest.testWhenBroadCastPrepareReceiveAllPrepareResponseWillResendMessage" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="PaxosCouncil" />
-      <option name="PACKAGE_NAME" value="" />
-      <option name="MAIN_CLASS_NAME" value="ProposerUnitTest" />
-      <option name="TEST_OBJECT" value="class" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="utils.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="utils" />
+      <option name="MAIN_CLASS_NAME" value="utils.AsyncClientHandlerImplTest" />
+      <option name="METHOD_NAME" value="testWhenBroadCastPrepareReceiveAllPrepareResponseWillResendMessage" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="AsyncClientHandlerImplTest.testWhenBroadcastPrepareReceiveThreePrepareResponseWithSenderWillResendMessage" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="PaxosCouncil" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="utils.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="utils" />
+      <option name="MAIN_CLASS_NAME" value="utils.AsyncClientHandlerImplTest" />
+      <option name="METHOD_NAME" value="testWhenBroadcastPrepareReceiveThreePrepareResponseWithSenderWillResendMessage" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="AsyncClientHandlerImplTest.testWhenBroadcastPrepareReceiveThreePrepareResponseWithoutSenderWillResendMessage" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="PaxosCouncil" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="utils.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="utils" />
+      <option name="MAIN_CLASS_NAME" value="utils.AsyncClientHandlerImplTest" />
+      <option name="METHOD_NAME" value="testWhenBroadcastPrepareReceiveThreePrepareResponseWithoutSenderWillResendMessage" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="AsyncClientHandlerImplTest.testWhenBroadcastPrepareReceiveTwoPrepareResponseWillResendMessage" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="PaxosCouncil" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="utils.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="utils" />
+      <option name="MAIN_CLASS_NAME" value="utils.AsyncClientHandlerImplTest" />
+      <option name="METHOD_NAME" value="testWhenBroadcastPrepareReceiveTwoPrepareResponseWillResendMessage" />
+      <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.CentralRegistry" />
-        <item itemvalue="Application.ProposerCouncillor" />
-        <item itemvalue="Application.AcceptorCouncillor" />
         <item itemvalue="JUnit.All in PaxosCouncil" />
-        <item itemvalue="JUnit.ProposerUnitTest" />
+        <item itemvalue="JUnit.AsyncClientHandlerImplTest.testWhenBroadCastPrepareReceiveAllPrepareResponseWillResendMessage" />
+        <item itemvalue="JUnit.AsyncClientHandlerImplTest.testWhenBroadcastPrepareReceiveThreePrepareResponseWithoutSenderWillResendMessage" />
+        <item itemvalue="JUnit.AsyncClientHandlerImplTest.testWhenBroadcastPrepareReceiveThreePrepareResponseWithSenderWillResendMessage" />
+        <item itemvalue="JUnit.AsyncClientHandlerImplTest.testWhenBroadcastPrepareReceiveTwoPrepareResponseWillResendMessage" />
       </list>
     </recent_temporary>
   </component>
@@ -399,11 +436,18 @@
       <option name="project" value="LOCAL" />
       <updated>1698066310170</updated>
     </task>
-    <option name="localTasksCounter" value="31" />
+    <task id="LOCAL-00031" summary="feat: add configs">
+      <option name="closed" value="true" />
+      <created>1698100098414</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1698100098414</updated>
+    </task>
+    <option name="localTasksCounter" value="32" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="feat: init repository" />
     <MESSAGE value="feat: add roles" />
     <MESSAGE value="feat: add jar file" />
     <MESSAGE value="feat: add project files" />
@@ -428,30 +472,26 @@
     <MESSAGE value="feat: add methods for prepare and propose" />
     <MESSAGE value="feat: update proposer councillor" />
     <MESSAGE value="feat: add design file" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: add design file" />
+    <MESSAGE value="feat: add configs" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: add configs" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/tests/utils/AsyncClientHandlerImplTest.java</url>
-          <line>107</line>
-          <option name="timeStamp" value="5" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/tests/ProposerTest.java</url>
-          <line>118</line>
-          <option name="timeStamp" value="13" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/tests/ProposerTest.java</url>
-          <line>114</line>
-          <option name="timeStamp" value="15" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/CentralRegistry.java</url>
           <line>20</line>
           <option name="timeStamp" value="17" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/tests/utils/CommServiceTest.java</url>
+          <line>461</line>
+          <option name="timeStamp" value="22" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/tests/utils/AsyncClientHandlerImplTest.java</url>
+          <line>95</line>
+          <option name="timeStamp" value="33" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

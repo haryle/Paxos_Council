@@ -1,5 +1,4 @@
 package utils;
-
 import utils.helpers.Message;
 
 import java.io.IOException;
@@ -20,12 +19,15 @@ public class AsyncClientHandlerImpl extends AsyncClientConnection {
 
     @Override
     public void handleMessage(Message message) throws IOException {
+        logger.fine("Handling message: " + message);
         if (message.type.equalsIgnoreCase("CONNECT"))
             handleConnectMessage(message);
         else if (message.type.equalsIgnoreCase("PREPARE") || message.type.equalsIgnoreCase("PROPOSE"))
             handleBroadcastMessage(message);
         else if (message.type.equalsIgnoreCase("PROMISE") || message.type.equalsIgnoreCase("NAK_PREPARE"))
             handleRelayMessage(message);
+        else if (message.type.equalsIgnoreCase("ACCEPT") || message.type.equalsIgnoreCase("NAK_PROPOSE"))
+            handleLearnMessage(message);
     }
 
     /**
@@ -34,7 +36,6 @@ public class AsyncClientHandlerImpl extends AsyncClientConnection {
      * @param message connection message
      */
     private void handleConnectMessage(Message message) {
-        logger.info("Server receives CONNECT message from: " + message.from);
         commService.registerConnection(message.from, this);
     }
 
@@ -48,7 +49,7 @@ public class AsyncClientHandlerImpl extends AsyncClientConnection {
      * @throws IOException if fails to send message
      */
     private void handleBroadcastMessage(Message message) throws IOException {
-        logger.info("Server receives broadcast message : " + message);
+        logger.info(String.format("Broadcast: %s - sender: %d", message.type, message.from));
         commService.inform(message);
         // Register current timestamp
         message.timestamp = timestamp.getAndIncrement();
@@ -64,6 +65,12 @@ public class AsyncClientHandlerImpl extends AsyncClientConnection {
      */
     private void handleRelayMessage(Message message) throws IOException {
         commService.receive(message);
+        commService.send(message.to, message, false);
+    }
+
+    private void handleLearnMessage(Message message) throws IOException{
+        commService.receive(message);
+        // TODO: Learner handles this
         commService.send(message.to, message, false);
     }
 
