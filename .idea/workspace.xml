@@ -4,11 +4,23 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="75c0e452-b7e4-426b-bd4d-8ebda73c89ea" name="Changes" comment="feat: checkpoint, seems to have no bug now">
-      <change afterPath="$PROJECT_DIR$/tests/LearnerTest.java" afterDir="false" />
+    <list default="true" id="75c0e452-b7e4-426b-bd4d-8ebda73c89ea" name="Changes" comment="feat: add learner and shutdown message">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Learner.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Learner.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Design.md" beforeDir="false" afterPath="$PROJECT_DIR$/Design.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/Makefile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Acceptor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Acceptor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AcceptorCouncillor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/AcceptorCouncillor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/CentralRegistry.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/CentralRegistry.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Learner.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/Learner.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Proposer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Proposer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ProposerCouncillor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ProposerCouncillor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/AsyncClientConnection.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/AsyncClientConnection.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/AsyncClientHandlerImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/AsyncClientHandlerImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/AsyncServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/AsyncServer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/CommService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/CommService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/utils/helpers/Message.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/helpers/Message.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/LearnerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/tests/utils/LearnerTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/utils/CommServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/tests/utils/CommServiceTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -86,21 +98,37 @@
       <recent name="C:\Users\harry\IdeaProjects\PaxosCouncil\src" />
     </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
-      <recent name="" />
-      <recent name="utils.helpers" />
-      <recent name="main" />
       <recent name="utils" />
+      <recent name="utils.helpers" />
+      <recent name="" />
+      <recent name="main" />
     </key>
     <key name="CreateTestDialog.RecentsKey">
       <recent name="" />
       <recent name="utils" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.LearnerTest">
+  <component name="RunManager" selected="Application.AcceptorCouncillor">
+    <configuration name="AcceptorCouncillor" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="AcceptorCouncillor" />
+      <module name="PaxosCouncil" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="CentralRegistry" type="Application" factoryName="Application" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="CentralRegistry" />
+      <module name="PaxosCouncil" />
+      <option name="PROGRAM_PARAMETERS" value="-p 12345 -t 1000 -a 5" />
+      <option name="VM_PARAMETERS" value="-Djava.util.logging.config.file=config/logging.properties" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="LearnerTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="PaxosCouncil" />
-      <option name="PACKAGE_NAME" value="" />
-      <option name="MAIN_CLASS_NAME" value="LearnerTest" />
+      <option name="PACKAGE_NAME" value="utils" />
+      <option name="MAIN_CLASS_NAME" value="utils.LearnerTest" />
       <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -108,8 +136,8 @@
     </configuration>
     <configuration name="LearnerTest.testThreeAcceptSendShutdown" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="PaxosCouncil" />
-      <option name="PACKAGE_NAME" value="" />
-      <option name="MAIN_CLASS_NAME" value="LearnerTest" />
+      <option name="PACKAGE_NAME" value="utils" />
+      <option name="MAIN_CLASS_NAME" value="utils.LearnerTest" />
       <option name="METHOD_NAME" value="testThreeAcceptSendShutdown" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
@@ -118,8 +146,8 @@
     </configuration>
     <configuration name="LearnerTest.testTwoAcceptForFirstSecondSendNull" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="PaxosCouncil" />
-      <option name="PACKAGE_NAME" value="" />
-      <option name="MAIN_CLASS_NAME" value="LearnerTest" />
+      <option name="PACKAGE_NAME" value="utils" />
+      <option name="MAIN_CLASS_NAME" value="utils.LearnerTest" />
       <option name="METHOD_NAME" value="testTwoAcceptForFirstSecondSendNull" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
@@ -128,19 +156,9 @@
     </configuration>
     <configuration name="LearnerTest.testTwoAcceptForFirstThirdSendNull" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="PaxosCouncil" />
-      <option name="PACKAGE_NAME" value="" />
-      <option name="MAIN_CLASS_NAME" value="LearnerTest" />
+      <option name="PACKAGE_NAME" value="utils" />
+      <option name="MAIN_CLASS_NAME" value="utils.LearnerTest" />
       <option name="METHOD_NAME" value="testTwoAcceptForFirstThirdSendNull" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="LearnerTest.testTwoAcceptForSecondSendShutdown" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="PaxosCouncil" />
-      <option name="PACKAGE_NAME" value="" />
-      <option name="MAIN_CLASS_NAME" value="LearnerTest" />
-      <option name="METHOD_NAME" value="testTwoAcceptForSecondSendShutdown" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -148,11 +166,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.AcceptorCouncillor" />
         <item itemvalue="JUnit.LearnerTest" />
         <item itemvalue="JUnit.LearnerTest.testThreeAcceptSendShutdown" />
         <item itemvalue="JUnit.LearnerTest.testTwoAcceptForFirstThirdSendNull" />
         <item itemvalue="JUnit.LearnerTest.testTwoAcceptForFirstSecondSendNull" />
-        <item itemvalue="JUnit.LearnerTest.testTwoAcceptForSecondSendShutdown" />
       </list>
     </recent_temporary>
   </component>
@@ -437,11 +455,18 @@
       <option name="project" value="LOCAL" />
       <updated>1698116288275</updated>
     </task>
-    <option name="localTasksCounter" value="35" />
+    <task id="LOCAL-00035" summary="feat: add learner and shutdown message">
+      <option name="closed" value="true" />
+      <created>1698122719261</created>
+      <option name="number" value="00035" />
+      <option name="presentableId" value="LOCAL-00035" />
+      <option name="project" value="LOCAL" />
+      <updated>1698122719261</updated>
+    </task>
+    <option name="localTasksCounter" value="36" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="feat: add project files" />
     <MESSAGE value="feat: add message class" />
     <MESSAGE value="feat: add async mesage parser" />
     <MESSAGE value="feat: fix message parser containing new line not properly formatted" />
@@ -466,7 +491,8 @@
     <MESSAGE value="feat: add configs" />
     <MESSAGE value="feat: feat simplify send receive flow" />
     <MESSAGE value="feat: checkpoint, seems to have no bug now" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: checkpoint, seems to have no bug now" />
+    <MESSAGE value="feat: add learner and shutdown message" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: add learner and shutdown message" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

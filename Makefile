@@ -16,6 +16,9 @@ MAX ?= 5000
 DELAY ?= 3000
 MAX_ATTEMPT ?= 5
 TIMEOUT ?= 1000
+REPLY_MIN ?= 100
+REPLY_MAX ?= 1500
+
 
 make_dirs:
 	@mkdir -p $(OUTDIR) $(TESTOUTDIR)
@@ -37,10 +40,10 @@ central_registry: compile_src
 	@java $(LOGGING_FLAG) -cp $(JARFILES):$(OUTDIR) CentralRegistry -p $(PORT) -t $(TIMEOUT) -a $(MAX_ATTEMPT)
 
 acceptor: compile_src
-	@java $(LOGGING_FLAG) -cp $(JARFILES):$(OUTDIR) AcceptorCouncillor -p $(PORT) -id $(ID)
+	@java $(LOGGING_FLAG) -cp $(JARFILES):$(OUTDIR) AcceptorCouncillor -p $(PORT) -id $(ID) -rMin $(REPLY_MIN) -rMax $(REPLY_MAX)
 
-proposer: compile_src
-	@java $(LOGGING_FLAG) -cp $(JARFILES):$(OUTDIR) ProposerCouncillor -p $(PORT) -id $(ID) -min $(MIN) -max $(MAX) -d $(DELAY)
+proposer:
+	@java $(LOGGING_FLAG) -cp $(JARFILES):$(OUTDIR) ProposerCouncillor -p $(PORT) -id $(ID) -min $(MIN) -max $(MAX) -d $(DELAY) -rMin $(REPLY_MIN) -rMax $(REPLY_MAX)
 
 
 .PHONY = clean

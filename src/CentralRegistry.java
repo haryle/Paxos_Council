@@ -1,10 +1,6 @@
-import utils.AsyncClientHandlerImpl;
 import utils.AsyncServer;
-import utils.CommService;
 
 import java.io.IOException;
-import java.nio.channels.SocketChannel;
-import java.util.concurrent.atomic.AtomicInteger;
 
 public class CentralRegistry extends AsyncServer {
 
@@ -18,15 +14,16 @@ public class CentralRegistry extends AsyncServer {
 
 
     public static void main(String[] argv) throws IOException {
-        if (argv.length != 6){
-            System.out.println("Usage: CentralRegistry -p <PORT> -t <TIMEOUT> -a <MAX_ATTEMPT>");
+        if (argv.length != 6) {
+            System.out.println("Usage: CentralRegistry -p <PORT> -t <TIMEOUT> -a " +
+                               "<MAX_ATTEMPT>");
             System.exit(1);
-        }else{
+        } else {
             String host = "localhost";
             int port = Integer.parseInt(argv[1]);
             int timeout = Integer.parseInt(argv[3]);
             int attempts = Integer.parseInt(argv[5]);
-            CentralRegistry registry = new CentralRegistry(port,attempts, timeout);
+            CentralRegistry registry = new CentralRegistry(port, attempts, timeout);
             registry.start();
         }
     }

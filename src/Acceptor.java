@@ -59,23 +59,14 @@ public class Acceptor {
      * @return promise message or nak
      */
     private synchronized Message handlePrepare(Message message) {
-        logger.info(String.format("Receive PREPARE - sender: %d, ID: %d", message.from,
-                message.ID));
         if (message.ID <= maxID) {
-            logger.info(String.format("Send NAK - sender: %d, ID: %d", message.from,
-                    message.ID));
             return Message.getNakMessage(message);
         }
         maxID = message.ID;
         if (hasAccepted) {
-            logger.info(String.format("Send PROMISE - sender: %d, ID: %d, acceptedID: %d, "
-                                      + "acceptedValue: %d", message.from, message.ID
-                    ,acceptedID, acceptedValue));
             return Message.promise(message.to, message.from, message.ID, acceptedID,
                     acceptedValue, message.timestamp);
         }
-        logger.info(String.format("Send PROMISE - sender: %d, ID: %d", message.from,
-                message.ID));
         return Message.promise(message.to, message.from, message.ID, message.timestamp);
     }
 
@@ -92,18 +83,13 @@ public class Acceptor {
      * @return accept or nak message
      */
     private synchronized Message handlePropose(Message message) {
-        logger.info(String.format("Receive %s - sender: %d, ID: %d, value: %d", message.type, message.from, message.ID, message.acceptValue));
         if (message.ID == maxID) {
             hasAccepted = true;
             acceptedID = message.ID;
             acceptedValue = message.acceptValue;
-            logger.info(String.format("Send ACCEPT - sender: %d, ID: %d, value: %d", message.from,
-                    message.ID, message.acceptValue));
-            return Message.accept(message.to, message.from, acceptedID, acceptedValue
+                       return Message.accept(message.to, message.from, acceptedID, acceptedValue
                     , message.timestamp);
         }
-        logger.info(String.format("Send NAK - sender: %d, ID: %d, value: %d", message.from,
-                message.ID, message.acceptValue));
         return Message.getNakMessage(message);
     }
 }

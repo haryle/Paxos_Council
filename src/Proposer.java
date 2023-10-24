@@ -65,7 +65,6 @@ public class Proposer {
      */
     private Message handleInformMessage(Message message) {
         acceptorList.addAll(message.informList);
-        logger.info("INFORM - acceptor list: " + acceptorList);
         return null;
     }
 
@@ -79,9 +78,6 @@ public class Proposer {
      */
     private void handlePrepareResponse(Message message) {
         int sender = message.from;
-        logger.info(String.format("Receive: %s, sender: %d, ID: %d, aID: %d, aVal: " +
-                                  "%d", message.type, message.from, message.ID,
-                message.acceptID, message.acceptValue));
         acceptorResponse.put(sender, message);
         if (acceptorList.contains(sender))
             acceptorList.remove(Integer.valueOf(sender));
@@ -137,7 +133,6 @@ public class Proposer {
      * @return prepare message
      */
     public synchronized Message prepare() {
-        logger.info("Send PREPARE - ID: " + ID);
         return Message.prepare(councillorID, 0, ID);
 
     }
@@ -149,8 +144,6 @@ public class Proposer {
      * @return propose message
      */
     public synchronized Message propose(int proposeValue) {
-        logger.info(String.format("Send PROPOSE - ID: %d, Value: %d", ID,
-                proposeValue));
         return Message.propose(councillorID, 0, ID, proposeValue);
     }
 

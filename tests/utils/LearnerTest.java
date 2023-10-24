@@ -1,5 +1,8 @@
+package utils;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import utils.Learner;
 import utils.helpers.Message;
 
 import static org.junit.jupiter.api.Assertions.*;

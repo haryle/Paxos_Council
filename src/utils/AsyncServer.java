@@ -10,6 +10,9 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.logging.Logger;
 
+/**
+ * Implemnentation of BroadCast server
+ */
 public class AsyncServer {
     protected final ServerSocketChannel serverSocketChannel;
     protected final Logger logger = Logger.getLogger(this.getClass().getName());
@@ -20,12 +23,6 @@ public class AsyncServer {
 
     public AsyncServer(int port) throws IOException {
         this(port, 5, 5000);
-    }
-
-    public void close() throws IOException {
-        threadPool.shutdown();
-        serverSocketChannel.close();
-        commService.close();
     }
 
     public AsyncServer(int port, int max_attempt, int timeout) throws IOException {
@@ -47,7 +44,20 @@ public class AsyncServer {
         );
     }
 
+    /**
+     * Shutdown server
+     * @throws IOException if errors encountered during shutdown
+     */
+    public void close() throws IOException {
+        threadPool.shutdown();
+        serverSocketChannel.close();
+        commService.close();
+    }
 
+    /**
+     * Start server
+     * @throws IOException errors encountered during start up
+     */
     public void start() throws IOException {
         while (!Thread.currentThread().isInterrupted()) {
             SocketChannel clientChannel = serverSocketChannel.accept();

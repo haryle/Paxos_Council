@@ -117,6 +117,30 @@ public class Message {
         return new Message(from, to, "NAK_PROPOSE", ID, -1, value, timestamp);
     }
 
+    public static String printString(Message message){
+        if (message.type.equalsIgnoreCase("CONNECT"))
+            return String.format("CONNECT - Sender: %d", message.from);
+        if (message.type.equalsIgnoreCase("INFORM"))
+            return String.format("INFORM - Receiver: %d ", message.to) + message.informList;
+        if (message.type.equalsIgnoreCase("PREPARE"))
+            return String.format("PREPARE - Sender: %d, Receiver: %d, ID: %d, TS: %d", message.from, message.to, message.ID, message.timestamp);
+        if (message.type.equalsIgnoreCase("PROPOSE"))
+            return String.format("PROPOSE - Sender: %d, Receiver: %d, ID: %d, Value: %d, TS: %d", message.from, message.to, message.ID, message.acceptValue, message.timestamp);
+        if (message.type.equalsIgnoreCase("PROMISE")){
+            if (message.acceptID == -1)
+                return String.format("PROMISE - Sender: %d, Receiver: %d, ID: %d, TS: %d", message.from, message.to, message.ID, message.timestamp);
+            else
+                return String.format("PROMISE - Sender: %d, Receiver: %d, ID: %d, aID: %d, aVal: %d, TS: %d", message.from, message.to, message.ID, message.acceptID, message.acceptValue, message.timestamp);
+        }
+        if (message.type.equalsIgnoreCase("ACCEPT"))
+            return String.format("ACCEPT - Sender: %d, Receiver: %d, ID: %d, Value: %d, TS: %d", message.from, message.to, message.ID, message.acceptValue, message.timestamp);
+        if (message.type.equalsIgnoreCase("NAK_PREPARE"))
+            return String.format("NAK_PREPARE - Sender: %d, Receiver: %d, ID: %d, TS: %d", message.from, message.to, message.ID, message.timestamp);
+        if (message.type.equalsIgnoreCase("SHUTDOWN"))
+            return String.format("SHUTDOWN - Value: %d", message.acceptValue);
+        return null;
+    }
+
     public static Message getNakMessage(Message message) {
         if (message.type.equalsIgnoreCase("PREPARE"))
             return Message.rejectPrepare(message.to, message.from, message.ID,

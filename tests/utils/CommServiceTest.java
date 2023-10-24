@@ -194,7 +194,7 @@ class OneSenderOneReceiverCommServiceTest extends CommServiceFixture {
         // Add receiver to registry
         int receiver = proposerMessage.to;
         // Send message to receiver
-        commService.send(receiver, proposerMessage, true);
+        commService.send(receiver, proposerMessage, true, true);
         MockConnection receiverConn =
                 (MockConnection) commService.getRegistry().get(receiver);
         MockConnection senderConn =
@@ -226,7 +226,7 @@ class OneSenderOneReceiverCommServiceTest extends CommServiceFixture {
         // Add receiver to registry
         int receiver = proposerMessage.to;
         // Send message to receiver
-        commService.send(receiver, proposerMessage, true);
+        commService.send(receiver, proposerMessage, true, true);
         commService.receive(reply);
         MockConnection receiverConn =
                 (MockConnection) commService.getRegistry().get(receiver);
@@ -257,7 +257,7 @@ class OneSenderOneReceiverCommServiceTest extends CommServiceFixture {
         commService.setMAX_ATTEMPT(maxAttempt);
         // Send proposerMessage to receiver
         int receiver = proposerMessage.to;
-        commService.send(receiver, proposerMessage, true);
+        commService.send(receiver, proposerMessage, true, true);
         commService.receive(reply);
         Thread.sleep(300);
         // Get connections
@@ -400,7 +400,7 @@ class OneSenderFourReceiversCommServiceTest extends CommServiceFixture {
             nakMessages.add(Message.getNakMessage(directedMessage));
         }
         // Broadcast Message
-        commService.broadcast(broadcastMessage);
+        commService.broadcast(broadcastMessage, true);
         // Receive replies
         for (Message reply : replies)
             commService.receive(reply);
@@ -442,7 +442,7 @@ class OneSenderFourReceiversCommServiceTest extends CommServiceFixture {
         commService.setTIME_OUT(100);
         commService.setMAX_ATTEMPT(maxAttempt);
         // Send proposerMessage to receiver
-        commService.broadcast(broadcastMessage);
+        commService.broadcast(broadcastMessage, true);
         for (Message reply : replies)
             commService.receive(reply);
         Thread.sleep(300);

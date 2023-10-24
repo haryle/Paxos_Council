@@ -1,7 +1,6 @@
 import utils.helpers.Message;
 
 import java.io.IOException;
-import java.util.Arrays;
 
 /**
  * A councillor who acts as both a proposer and an acceptor
@@ -22,23 +21,28 @@ public class ProposerCouncillor extends AcceptorCouncillor {
      * @throws IOException if there is any error in connecting to the councillor
      */
     public ProposerCouncillor(String host, int port, int councillorID, int waitMin,
-                              int waitMax) throws IOException {
-        super(host, port, councillorID);
+                              int waitMax, int replyMin, int replyMax) throws IOException {
+        super(host, port, replyMin, replyMax, councillorID);
         proposer = new Proposer(councillorID, waitMin, waitMax);
     }
 
     public static void main(String[] argv) throws IOException, InterruptedException {
-        if (argv.length != 10){
-            System.out.println("Usage: ProposerCouncillor -p <PORT> -id <councillorID> -min <waitMin> -max <waitMax> -d <delay>");
+        if (argv.length != 14) {
+            System.out.println("Usage: ProposerCouncillor -p <PORT> -id " +
+                               "<councillorID> -min <waitMin> -max <waitMax> -d " +
+                               "<delay> + -rMin <replyMin> + -rMax <replyMax>");
             System.exit(1);
-        }else{
+        } else {
             String host = "localhost";
             int port = Integer.parseInt(argv[1]);
             int councillorID = Integer.parseInt(argv[3]);
             int waitMin = Integer.parseInt(argv[5]);
             int waitMax = Integer.parseInt(argv[7]);
             int delay = Integer.parseInt(argv[9]);
-            ProposerCouncillor proposer = new ProposerCouncillor(host, port, councillorID, waitMin, waitMax);
+            int replyMin = Integer.parseInt(argv[11]);
+            int replyMax = Integer.parseInt(argv[13]);
+            ProposerCouncillor proposer = new ProposerCouncillor(host, port,
+                    councillorID, waitMin, waitMax, replyMin, replyMax);
             proposer.start();
             Thread.sleep(delay);
             proposer.prepare();
@@ -69,13 +73,15 @@ public class ProposerCouncillor extends AcceptorCouncillor {
     @Override
     public void handleMessage(Message message) throws IOException,
             InterruptedException {
-        if (message.type.equalsIgnoreCase("SHUTDOWN"))
+        logger.info("Receive: " + Message.printString(message));
+        if (message.type.equalsIgnoreCase("SHUTDOWN")) {
             close();
+        }
         Message reply = null;
         if (message.type.equalsIgnoreCase("INFORM") ||
             message.type.equalsIgnoreCase("PROMISE") ||
-            message.type.equalsIgnoreCase("NAK_PREPARE")||
-            message.type.equalsIgnoreCase("ACCEPT")||
+            message.type.equalsIgnoreCase("NAK_PREPARE") ||
+            message.type.equalsIgnoreCase("ACCEPT") ||
             message.type.equalsIgnoreCase("NAK_PROPOSE"))
             reply = proposer.handleMessage(message);
         if (message.type.equalsIgnoreCase("PROPOSE") ||

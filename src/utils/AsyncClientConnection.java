@@ -4,8 +4,10 @@ import utils.helpers.Message;
 
 import java.io.IOException;
 import java.nio.channels.SocketChannel;
-import java.util.concurrent.atomic.AtomicInteger;
 
+/**
+ * Abstract implementation of AsyncClient With Message data type
+ */
 public abstract class AsyncClientConnection extends AsyncClient<Message> {
 
     public AsyncClientConnection(SocketChannel channel) {
@@ -16,6 +18,11 @@ public abstract class AsyncClientConnection extends AsyncClient<Message> {
         super(host, port);
     }
 
+    /**
+     * Cast string message to Message message
+     * @param message string message
+     * @return Message message
+     */
     @Override
     public Message castMessage(String message) {
         return Message.fromString(message);

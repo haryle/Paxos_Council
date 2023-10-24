@@ -1,3 +1,5 @@
+package utils;
+
 import utils.helpers.Message;
 
 import java.util.HashMap;
@@ -6,12 +8,14 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Logger;
 
 /**
- * Learner class: learn the accepted message and stop the election process if
+ * utils.Learner class: learn the accepted message and stop the election process if
  * consensus is reached
  */
 public class Learner {
     protected final Logger logger = Logger.getLogger(this.getClass().getName());
     public Map<Integer, Integer> acceptEntries;
+
+    private int learnedValue = -1;
 
     public Learner() {
         acceptEntries = new ConcurrentHashMap<>();
@@ -56,6 +60,7 @@ public class Learner {
         if (maxCount > quorumSize / 2) {
             logger.fine(String.format("Learn value: %d, count: %d", maxValue,
                     maxCount));
+            learnedValue = maxValue;
             return Message.shutdown(maxValue);
         }
         return null;

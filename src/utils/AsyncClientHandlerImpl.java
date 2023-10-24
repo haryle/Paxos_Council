@@ -6,6 +6,7 @@ import java.nio.channels.SocketChannel;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class AsyncClientHandlerImpl extends AsyncClientConnection {
+    private final Learner learner;
     private final AtomicInteger timestamp;
 
     private final CommService commService;
@@ -15,13 +16,16 @@ public class AsyncClientHandlerImpl extends AsyncClientConnection {
         super(channel);
         this.timestamp = timestamp;
         this.commService = commService;
+        learner = new Learner();
     }
 
     @Override
     public void handleMessage(Message message) throws IOException {
-        logger.fine("Handling message: " + message);
-        if (message.type.equalsIgnoreCase("CONNECT"))
+        logger.info("Receive: " + Message.printString(message));
+        if (message.type.equalsIgnoreCase("CONNECT")) {
+            learner.registerAcceptor(message.from);
             handleConnectMessage(message);
+        }
         else if (message.type.equalsIgnoreCase("PREPARE") || message.type.equalsIgnoreCase("PROPOSE"))
             handleBroadcastMessage(message);
         else if (message.type.equalsIgnoreCase("PROMISE") || message.type.equalsIgnoreCase("NAK_PREPARE"))
@@ -53,7 +57,7 @@ public class AsyncClientHandlerImpl extends AsyncClientConnection {
         commService.inform(message);
         // Register current timestamp
         message.timestamp = timestamp.getAndIncrement();
-        commService.broadcast(message);
+        commService.broadcast(message, true);
     }
 
     /**
@@ -65,12 +69,14 @@ public class AsyncClientHandlerImpl extends AsyncClientConnection {
      */
     private void handleRelayMessage(Message message) throws IOException {
         commService.receive(message);
-        commService.send(message.to, message, false);
+        commService.send(message.to, message, false, true);
     }
 
     private void handleLearnMessage(Message message) throws IOException{
         commService.receive(message);
-        // TODO: Learner handles this
+        Message reply = learner.handleAcceptMessage(message);
+        if (reply != null)
+            logger.info("LEARN: " + Message.printString(reply));
     }
 
 }

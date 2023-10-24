@@ -180,7 +180,7 @@ SHUTDOWN: tells every one that a consensus has been reached and that each counci
 
 ### When the CentralRegistry receives replies for PROPOSE message:
 
-It handles the message as a Distinguished Learner.
+It handles the message as a Distinguished utils.Learner.
 
 - If at any point in time, the majority reaches consensus on a proposed value, it sends a SHUTDOWN message to every
   councillor, causing everyone to

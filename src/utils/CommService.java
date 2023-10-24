@@ -65,12 +65,6 @@ public class CommService {
     public void receive(Message message) {
         Pair<Integer, Integer> runID = Pair.with(message.timestamp,
                 message.from);
-
-        logger.info(String.format("Receive %s - sender: %d, receiver: %d, ID: %d, " +
-                                  "aID: %d, aValue: %d, TS: %d",
-                message.type, message.from, message.to, message.ID, message.acceptID,
-                message.acceptValue, message.timestamp));
-
         if (retryQueue.containsKey(runID))
             logger.fine("Removing message from retry queue: " + retryQueue.get(runID));
         retryQueue.remove(runID);
@@ -86,7 +80,7 @@ public class CommService {
      * @param message    message
      * @param trackReply whether to trackReply
      */
-    public void send(int receiver, Message message, boolean trackReply) {
+    public void send(int receiver, Message message, boolean trackReply, boolean doLog) {
         if (registry.containsKey(receiver)) {
             AsyncClientConnection connection = registry.get(receiver);
             try {
@@ -107,7 +101,8 @@ public class CommService {
                     scheduledThreadPool.schedule(new RetryRunnable(message), TIME_OUT
                             , TimeUnit.MILLISECONDS);
                 }
-                logger.info("Send: " + message);
+                if (doLog)
+                    logger.info("Send: " + Message.printString(message));
                 connection.send(message);
             } catch (IOException | InterruptedException e) {
                 logger.info("Error sending message to: " + receiver + " message: " + message);
@@ -122,21 +117,12 @@ public class CommService {
      *
      * @param message message to broadcast
      */
-    public void broadcast(Message message) {
+    public void broadcast(Message message, boolean trackReply) {
         int sender = message.from;
-        if (message.type.equalsIgnoreCase("PREPARE"))
-            logger.info(String.format("Broadcast PREPARE - sender: %d, ID: %d, TS: " +
-                                      "%d", message.from, message.ID,
-                    message.timestamp));
-        else
-            logger.info(String.format("Broadcast PROPOSE - sender: %s, ID: %d, Value:" +
-                                      " %d, TS: %d", message.from, message.ID,
-                    message.acceptValue, message.timestamp));
-
         for (int receiver : registry.keySet()) {
             Message directedMessage = new Message(message);
             directedMessage.to = receiver;
-            send(receiver, directedMessage, true);
+            send(receiver, directedMessage, trackReply, true);
         }
     }
 
@@ -149,8 +135,7 @@ public class CommService {
         int sender = message.from;
         List<Integer> receivers = new ArrayList<>(registry.keySet());
         Message reply = Message.inform(sender, message.ID, receivers);
-        logger.info(String.format("INFORM sender: %d, receivers: ", sender) + reply.informList);
-        send(sender, reply, false);
+        send(sender, reply, false, true);
     }
 
     /**
@@ -195,12 +180,12 @@ public class CommService {
                 RetryInfo info = retryQueue.get(runID);
                 // Has not reached the maximum attempts -> retry and increment number
                 if (info.getAttempt() < MAX_ATTEMPT) {
-                    logger.fine("Resending message: " + message);
-                    send(message.to, message, true);
+                    logger.info("Resend: " + Message.printString(message));
+                    send(message.to, message, true, false);
                 } else {
                     // Max attempt reached -> send nak and remove from queue
                     Message nak = Message.getNakMessage(message);
-                    if (nak != null) send(message.from, nak, false);
+                    if (nak != null) send(message.from, nak, false, true);
                     retryQueue.remove(runID);
                 }
             }
