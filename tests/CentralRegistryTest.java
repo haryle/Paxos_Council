@@ -107,7 +107,7 @@ class DeterministicPaxosCouncilTest {
     @Test
     void whenTwoProposerProposesButTheHigherIDOneIsSlowerTheFasterOneWins() throws IOException, InterruptedException{
         ProposerCouncillor first = new ProposerCouncillor(HOST, PORT, 1, 10, 10, 10,10);
-        ProposerCouncillor second = new ProposerCouncillor(HOST, PORT, 2, 1000, 1000, 10,10);
+        ProposerCouncillor second = new ProposerCouncillor(HOST, PORT, 2, 2000, 2000, 10,10);
         first.start();
         second.start();
         first.prepare();
