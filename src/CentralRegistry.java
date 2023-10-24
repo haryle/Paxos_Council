@@ -18,7 +18,16 @@ public class CentralRegistry extends AsyncServer {
 
 
     public static void main(String[] argv) throws IOException {
-        CentralRegistry registry = new CentralRegistry(12345, 5, 5000);
-        registry.start();
+        if (argv.length != 6){
+            System.out.println("Usage: CentralRegistry -p <PORT> -t <TIMEOUT> -a <MAX_ATTEMPT>");
+            System.exit(1);
+        }else{
+            String host = "localhost";
+            int port = Integer.parseInt(argv[1]);
+            int timeout = Integer.parseInt(argv[3]);
+            int attempts = Integer.parseInt(argv[5]);
+            CentralRegistry registry = new CentralRegistry(port,attempts, timeout);
+            registry.start();
+        }
     }
 }

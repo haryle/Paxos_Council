@@ -71,7 +71,6 @@ public class AsyncClientHandlerImpl extends AsyncClientConnection {
     private void handleLearnMessage(Message message) throws IOException{
         commService.receive(message);
         // TODO: Learner handles this
-        commService.send(message.to, message, false);
     }
 
 }

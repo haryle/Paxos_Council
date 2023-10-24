@@ -70,7 +70,7 @@ public class Acceptor {
         if (hasAccepted) {
             logger.info(String.format("Send PROMISE - sender: %d, ID: %d, acceptedID: %d, "
                                       + "acceptedValue: %d", message.from, message.ID
-                    , message.acceptID, message.acceptValue));
+                    ,acceptedID, acceptedValue));
             return Message.promise(message.to, message.from, message.ID, acceptedID,
                     acceptedValue, message.timestamp);
         }

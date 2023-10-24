@@ -1,7 +1,6 @@
 import utils.helpers.Message;
 
 import java.util.*;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Logger;
 
 /**
@@ -176,7 +175,8 @@ public class Proposer {
         if (message.type.equalsIgnoreCase("INFORM")) {
             return handleInformMessage(message);
         }
-        if (message.type.equalsIgnoreCase("PROMISE") || message.type.equalsIgnoreCase("NAK_PREPARE")) {
+        if (message.type.equalsIgnoreCase("PROMISE") ||
+            message.type.equalsIgnoreCase("NAK_PREPARE")) {
             handlePrepareResponse(message);
             if (acceptorList.isEmpty())
                 return proposeValue();

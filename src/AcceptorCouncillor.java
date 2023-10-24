@@ -58,7 +58,15 @@ public class AcceptorCouncillor extends AsyncClientConnection {
     }
 
     public static void main(String[] argv) throws IOException, InterruptedException {
-        AcceptorCouncillor councillor = new AcceptorCouncillor("localhost", 12345, 2);
-        councillor.start();
+        if (argv.length != 4){
+            System.out.println("Usage: AcceptorCouncillor -p <PORT> -id <councillorID>");
+            System.exit(1);
+        }else{
+            String host = "localhost";
+            int port = Integer.parseInt(argv[1]);
+            int cID = Integer.parseInt(argv[3]);
+            AcceptorCouncillor acceptor = new AcceptorCouncillor(host, port, cID);
+            acceptor.start();
+        }
     }
 }

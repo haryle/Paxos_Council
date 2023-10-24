@@ -1,6 +1,7 @@
 import utils.helpers.Message;
 
 import java.io.IOException;
+import java.util.Arrays;
 
 /**
  * A councillor who acts as both a proposer and an acceptor
@@ -27,11 +28,21 @@ public class ProposerCouncillor extends AcceptorCouncillor {
     }
 
     public static void main(String[] argv) throws IOException, InterruptedException {
-        ProposerCouncillor proposer = new ProposerCouncillor("localhost", 12345, 1,
-                1000, 2000);
-        proposer.start();
-        Thread.sleep(1000);
-        proposer.prepare();
+        if (argv.length != 10){
+            System.out.println("Usage: ProposerCouncillor -p <PORT> -id <councillorID> -min <waitMin> -max <waitMax> -d <delay>");
+            System.exit(1);
+        }else{
+            String host = "localhost";
+            int port = Integer.parseInt(argv[1]);
+            int councillorID = Integer.parseInt(argv[3]);
+            int waitMin = Integer.parseInt(argv[5]);
+            int waitMax = Integer.parseInt(argv[7]);
+            int delay = Integer.parseInt(argv[9]);
+            ProposerCouncillor proposer = new ProposerCouncillor(host, port, councillorID, waitMin, waitMax);
+            proposer.start();
+            Thread.sleep(delay);
+            proposer.prepare();
+        }
     }
 
     /**
@@ -61,7 +72,9 @@ public class ProposerCouncillor extends AcceptorCouncillor {
         Message reply = null;
         if (message.type.equalsIgnoreCase("INFORM") ||
             message.type.equalsIgnoreCase("PROMISE") ||
-            message.type.equalsIgnoreCase("NAK_PREPARE"))
+            message.type.equalsIgnoreCase("NAK_PREPARE")||
+            message.type.equalsIgnoreCase("ACCEPT")||
+            message.type.equalsIgnoreCase("NAK_PROPOSE"))
             reply = proposer.handleMessage(message);
         if (message.type.equalsIgnoreCase("PROPOSE") ||
             message.type.equalsIgnoreCase("PREPARE"))
