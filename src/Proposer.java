@@ -76,11 +76,15 @@ public class Proposer {
      *
      * @param message PROMISE or NAK_PREPARE messages
      */
-    private void handlePrepareResponse(Message message) {
+    private Message handlePrepareResponse(Message message) throws InterruptedException {
         int sender = message.from;
         acceptorResponse.put(sender, message);
-        if (acceptorList.contains(sender))
+        if (acceptorList.contains(sender)) {
             acceptorList.remove(Integer.valueOf(sender));
+            if (acceptorList.isEmpty())
+                return proposeValue();
+        }
+        return null;
     }
 
     /**
@@ -169,14 +173,11 @@ public class Proposer {
             return handleInformMessage(message);
         }
         if (message.type.equalsIgnoreCase("PROMISE") ||
-            message.type.equalsIgnoreCase("NAK_PREPARE")) {
-            handlePrepareResponse(message);
-            if (acceptorList.isEmpty())
-                return proposeValue();
-            else {
-                logger.info("Acceptor list: " + acceptorList);
-            }
-        }
+            message.type.equalsIgnoreCase("NAK_PREPARE"))
+            return handlePrepareResponse(message);
+        else
+            logger.info("Acceptor list: " + acceptorList);
+
         return null;
     }
 }

@@ -136,8 +136,11 @@ public class Message {
             return String.format("ACCEPT - Sender: %d, Receiver: %d, ID: %d, Value: %d, TS: %d", message.from, message.to, message.ID, message.acceptValue, message.timestamp);
         if (message.type.equalsIgnoreCase("NAK_PREPARE"))
             return String.format("NAK_PREPARE - Sender: %d, Receiver: %d, ID: %d, TS: %d", message.from, message.to, message.ID, message.timestamp);
+        if (message.type.equalsIgnoreCase("NAK_PROPOSE"))
+            return String.format("NAK_PROPOSE - Sender: %d, Receiver: %d, ID: %d, Value: %d TS: %d", message.from, message.to, message.ID, message.acceptValue, message.timestamp);
         if (message.type.equalsIgnoreCase("SHUTDOWN"))
             return String.format("SHUTDOWN - Value: %d", message.acceptValue);
+        System.out.println("Invalid Message: " + message);
         return null;
     }
 

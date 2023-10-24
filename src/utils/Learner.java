@@ -13,7 +13,12 @@ import java.util.logging.Logger;
  */
 public class Learner {
     protected final Logger logger = Logger.getLogger(this.getClass().getName());
-    public Map<Integer, Integer> acceptEntries;
+
+    public Map<Integer, Integer> getAcceptEntries() {
+        return acceptEntries;
+    }
+
+    private final Map<Integer, Integer> acceptEntries;
 
     private int learnedValue = -1;
 
@@ -23,7 +28,6 @@ public class Learner {
 
     public void registerAcceptor(int acceptorID) {
         if (!acceptEntries.containsKey(acceptorID)) {
-            logger.fine("Registering acceptor: " + acceptorID);
             acceptEntries.put(acceptorID, -1);
         }
     }
@@ -37,7 +41,7 @@ public class Learner {
     }
 
     private Message checkTermination() {
-        logger.fine("Accepted Entries: " + acceptEntries);
+        logger.info("Accepted Entries: " + acceptEntries);
         int quorumSize = acceptEntries.size();
         int acceptCount = 0;
         Map<Integer, Integer> counter = new HashMap<>();

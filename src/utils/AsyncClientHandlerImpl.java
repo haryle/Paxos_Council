@@ -3,20 +3,23 @@ import utils.helpers.Message;
 
 import java.io.IOException;
 import java.nio.channels.SocketChannel;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class AsyncClientHandlerImpl extends AsyncClientConnection {
     private final Learner learner;
     private final AtomicInteger timestamp;
-
     private final CommService commService;
 
+    private final AtomicBoolean isUp;
+
     public AsyncClientHandlerImpl(SocketChannel channel, AtomicInteger timestamp,
-                                  CommService commService) {
+                                  CommService commService, Learner learner, AtomicBoolean isUp) {
         super(channel);
         this.timestamp = timestamp;
         this.commService = commService;
-        learner = new Learner();
+        this.learner = learner;
+        this.isUp = isUp;
     }
 
     @Override
@@ -75,8 +78,11 @@ public class AsyncClientHandlerImpl extends AsyncClientConnection {
     private void handleLearnMessage(Message message) throws IOException{
         commService.receive(message);
         Message reply = learner.handleAcceptMessage(message);
-        if (reply != null)
+        if (reply != null) {
             logger.info("LEARN: " + Message.printString(reply));
+            commService.broadcast(reply, false);
+            isUp.set(false);
+        }
     }
 
 }
