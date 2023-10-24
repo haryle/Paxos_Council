@@ -75,8 +75,8 @@ public class Message {
         return integerList;
     }
 
-    public static Message shutdown(int to, int ID) {
-        return new Message(-1, to, "SHUTDOWN", ID, -1, -1, new ArrayList<>(), -1);
+    public static Message shutdown(int value) {
+        return new Message(-1, 0, "SHUTDOWN", -1, -1, value, new ArrayList<>(), -1);
     }
 
     public static Message inform(int to, int ID, List<Integer> informList) {
