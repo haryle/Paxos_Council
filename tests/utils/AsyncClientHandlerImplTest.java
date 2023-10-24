@@ -27,7 +27,7 @@ class AsyncClientHandlerImplTest extends CommServiceFixture {
         timestamp = 0;
         super.setUp();
         clock = new AtomicInteger(0);
-        server = new AsyncClientHandlerImpl(null, clock, commService, null, null);
+        server = new AsyncClientHandlerImpl(null, clock, commService, null, null, null);
     }
 
     @Override

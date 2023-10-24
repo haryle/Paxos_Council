@@ -11,15 +11,18 @@ public class AsyncClientHandlerImpl extends AsyncClientConnection {
     private final AtomicInteger timestamp;
     private final CommService commService;
 
+    private final AtomicInteger learnedValue;
+
     private final AtomicBoolean isUp;
 
     public AsyncClientHandlerImpl(SocketChannel channel, AtomicInteger timestamp,
-                                  CommService commService, Learner learner, AtomicBoolean isUp) {
+                                  CommService commService, Learner learner, AtomicBoolean isUp, AtomicInteger learnedValue) {
         super(channel);
         this.timestamp = timestamp;
         this.commService = commService;
         this.learner = learner;
         this.isUp = isUp;
+        this.learnedValue = learnedValue;
     }
 
     @Override
@@ -80,6 +83,7 @@ public class AsyncClientHandlerImpl extends AsyncClientConnection {
         Message reply = learner.handleAcceptMessage(message);
         if (reply != null) {
             logger.info("LEARN: " + Message.printString(reply));
+            learnedValue.set(reply.acceptValue);
             commService.broadcast(reply, false);
             isUp.set(false);
         }

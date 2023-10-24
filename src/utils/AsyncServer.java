@@ -15,6 +15,11 @@ import java.util.logging.Logger;
  * Implemnentation of BroadCast server
  */
 public class AsyncServer {
+    public AtomicInteger getLearnedValue() {
+        return learnedValue;
+    }
+
+    private final AtomicInteger learnedValue;
     protected final Learner learner;
     protected final ServerSocketChannel serverSocketChannel;
     protected final Logger logger = Logger.getLogger(this.getClass().getName());
@@ -47,6 +52,7 @@ public class AsyncServer {
         );
         learner = new Learner();
         isUp = new AtomicBoolean(true);
+        learnedValue = new AtomicInteger();
     }
 
     /**
@@ -72,7 +78,7 @@ public class AsyncServer {
                 threadPool.submit(() -> {
                     AsyncClientConnection client =
                             new AsyncClientHandlerImpl(clientChannel, timestamp,
-                                    commService, learner, isUp);
+                                    commService, learner, isUp, learnedValue);
                     try {
                         client.start();
                     } catch (IOException | InterruptedException e) {

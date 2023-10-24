@@ -12,12 +12,12 @@ LOGGING_FLAG = -Djava.util.logging.config.file=config/logging.properties
 PORT ?= 12345
 ID ?= 1
 MIN ?= 1000
-MAX ?= 5000
+MAX ?= 1000
 DELAY ?= 3000
 MAX_ATTEMPT ?= 5
 TIMEOUT ?= 1000
 REPLY_MIN ?= 100
-REPLY_MAX ?= 1500
+REPLY_MAX ?= 100
 
 
 make_dirs:
@@ -44,6 +44,20 @@ acceptor: compile_src
 
 proposer:
 	@java $(LOGGING_FLAG) -cp $(JARFILES):$(OUTDIR) ProposerCouncillor -p $(PORT) -id $(ID) -min $(MIN) -max $(MAX) -d $(DELAY) -rMin $(REPLY_MIN) -rMax $(REPLY_MAX)
+
+
+acceptors: compile_src
+	@java $(LOGGING_FLAG) -cp $(JARFILES):$(OUTDIR) AcceptorCouncillor -p $(PORT) -id 4 -rMin $(REPLY_MIN) -rMax $(REPLY_MAX) &
+	@java $(LOGGING_FLAG) -cp $(JARFILES):$(OUTDIR) AcceptorCouncillor -p $(PORT) -id 5 -rMin $(REPLY_MIN) -rMax $(REPLY_MAX) &
+	@java $(LOGGING_FLAG) -cp $(JARFILES):$(OUTDIR) AcceptorCouncillor -p $(PORT) -id 6 -rMin $(REPLY_MIN) -rMax $(REPLY_MAX) &
+	@java $(LOGGING_FLAG) -cp $(JARFILES):$(OUTDIR) AcceptorCouncillor -p $(PORT) -id 7 -rMin $(REPLY_MIN) -rMax $(REPLY_MAX) &
+	@java $(LOGGING_FLAG) -cp $(JARFILES):$(OUTDIR) AcceptorCouncillor -p $(PORT) -id 8 -rMin $(REPLY_MIN) -rMax $(REPLY_MAX) &
+	@java $(LOGGING_FLAG) -cp $(JARFILES):$(OUTDIR) AcceptorCouncillor -p $(PORT) -id 9 -rMin $(REPLY_MIN) -rMax $(REPLY_MAX) &
+
+proposers: compile_src
+	@java $(LOGGING_FLAG) -cp $(JARFILES):$(OUTDIR) ProposerCouncillor -p $(PORT) -id 1 -min $(MIN) -max $(MAX) -d $(DELAY) -rMin $(REPLY_MIN) -rMax $(REPLY_MAX) &
+	@java $(LOGGING_FLAG) -cp $(JARFILES):$(OUTDIR) ProposerCouncillor -p $(PORT) -id 2 -min $(MIN) -max $(MAX) -d $(DELAY) -rMin $(REPLY_MIN) -rMax $(REPLY_MAX) &
+	@java $(LOGGING_FLAG) -cp $(JARFILES):$(OUTDIR) ProposerCouncillor -p $(PORT) -id 3 -min $(MIN) -max $(MAX) -d $(DELAY) -rMin $(REPLY_MIN) -rMax $(REPLY_MAX) &
 
 
 .PHONY = clean

@@ -11,6 +11,11 @@ import java.util.Random;
 public class AcceptorCouncillor extends AsyncClientConnection {
     protected final int replyMin;
     protected final int replyMax;
+
+    public int getCouncillorID() {
+        return councillorID;
+    }
+
     protected final int councillorID;
     protected final Acceptor acceptorHandler;
     Random randomizer = new Random();
