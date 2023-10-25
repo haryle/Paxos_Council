@@ -73,8 +73,9 @@ public class ProposerCouncillor extends AcceptorCouncillor {
     @Override
     public void handleMessage(Message message) throws IOException,
             InterruptedException {
-        logger.info("Receive: " + Message.printString(message));
+        logger.info("Receive: " + councillorID + ": " +  Message.printString(message));
         if (message.type.equalsIgnoreCase("SHUTDOWN")) {
+            logger.info("SHUTDOWN: " + + councillorID + ": " + message.acceptValue);
             close();
         }
         Message reply = null;

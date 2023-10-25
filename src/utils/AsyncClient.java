@@ -104,7 +104,7 @@ public abstract class AsyncClient<T> {
      *
      * @throws IOException if fails to close
      */
-    public void close() throws IOException {
+    public void close() throws IOException, InterruptedException {
         if (channel != null)
             channel.close();
         socketReader.interrupt();
@@ -144,7 +144,8 @@ public abstract class AsyncClient<T> {
                     } catch (IOException | InterruptedException e) {
                         try {
                             close();
-                        } catch (IOException ex) {
+                        } catch (IOException | InterruptedException ex) {
+                            logger.info(ex.toString());
                             throw new RuntimeException(ex);
                         }
                         break;
@@ -185,7 +186,8 @@ public abstract class AsyncClient<T> {
                 } catch (IOException e) {
                     try {
                         close();
-                    } catch (IOException ex) {
+                    } catch (IOException | InterruptedException ex) {
+                        logger.info(ex.toString());
                         throw new RuntimeException(ex);
                     }
                     break;

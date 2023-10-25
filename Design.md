@@ -183,8 +183,7 @@ SHUTDOWN: tells every one that a consensus has been reached and that each counci
 It handles the message as a Distinguished utils.Learner.
 
 - If at any point in time, the majority reaches consensus on a proposed value, it sends a SHUTDOWN message to every
-  councillor, causing everyone to
-  shutdown. It then outputs the agreed upon value to the screen.
+  councillor, causing everyone to shutdown. It then outputs the agreed upon value to the screen.
 
 ## Normal Operation:
 
@@ -716,6 +715,8 @@ class ProposerUnitTest {
     - Let proposer 1 propose a value together with proposer 2 and proposer 2 prepare message reaches the majority first.
       However, proposer 2 then sleeps for a long time when proposer 1
       begins the next prepare round and propose value of 1. Proposer 1 should be declared the winner.
+    - The tests are in `tests/CentralRegistryTest/DeterministicPaxosCouncilTest`    
 
 - Non standard operating condition:
     - Perform UAT to verify the logic in the log is correct. 
+    - The UAT is found [here](TestLogging.md)

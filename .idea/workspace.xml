@@ -4,11 +4,22 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="75c0e452-b7e4-426b-bd4d-8ebda73c89ea" name="Changes" comment="feat: add more testing">
+    <list default="true" id="75c0e452-b7e4-426b-bd4d-8ebda73c89ea" name="Changes" comment="feat: make some tests more determinisitic">
+      <change afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/TestLogging.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Design.md" beforeDir="false" afterPath="$PROJECT_DIR$/Design.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/Makefile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Proposer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Proposer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AcceptorCouncillor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/AcceptorCouncillor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/CentralRegistry.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/CentralRegistry.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ProposerCouncillor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ProposerCouncillor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/AsyncClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/AsyncClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/AsyncClientHandlerImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/AsyncClientHandlerImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/AsyncServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/AsyncServer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/CommService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/CommService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tests/CentralRegistryTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/tests/CentralRegistryTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/utils/AsyncClientHandlerImplTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/tests/utils/AsyncClientHandlerImplTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/utils/CommServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/tests/utils/CommServiceTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -96,7 +107,7 @@
       <recent name="utils" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.DeterministicPaxosCouncilTest.testWhenOnlyOneProposesTheProposeWins">
+  <component name="RunManager" selected="JUnit.All in PaxosCouncil">
     <configuration name="CentralRegistry" type="Application" factoryName="Application" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="CentralRegistry" />
       <module name="PaxosCouncil" />
@@ -169,11 +180,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.DeterministicPaxosCouncilTest.testWhenOnlyOneProposesTheProposeWins" />
         <item itemvalue="JUnit.All in PaxosCouncil" />
-        <item itemvalue="JUnit.DeterministicPaxosCouncilTest.whenThreeProposersProposeButTheHigherOnesAreSlowerTheFirstOneWins" />
-        <item itemvalue="JUnit.DeterministicPaxosCouncilTest.testWhenThreeProposersProposesTheOneWithHigherIDWins" />
         <item itemvalue="JUnit.DeterministicPaxosCouncilTest.whenTwoProposerProposesButTheHigherIDOneIsSlowerTheFasterOneWins" />
+        <item itemvalue="JUnit.DeterministicPaxosCouncilTest.testWhenThreeProposersProposesTheOneWithHigherIDWins" />
+        <item itemvalue="JUnit.DeterministicPaxosCouncilTest.testWhenOnlyOneProposesTheProposeWins" />
+        <item itemvalue="JUnit.DeterministicPaxosCouncilTest.whenThreeProposersProposeButTheHigherOnesAreSlowerTheFirstOneWins" />
       </list>
     </recent_temporary>
   </component>
@@ -482,11 +493,18 @@
       <option name="project" value="LOCAL" />
       <updated>1698149204398</updated>
     </task>
-    <option name="localTasksCounter" value="38" />
+    <task id="LOCAL-00038" summary="feat: make some tests more determinisitic">
+      <option name="closed" value="true" />
+      <created>1698186523188</created>
+      <option name="number" value="00038" />
+      <option name="presentableId" value="LOCAL-00038" />
+      <option name="project" value="LOCAL" />
+      <updated>1698186523188</updated>
+    </task>
+    <option name="localTasksCounter" value="39" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="feat: fix message parser containing new line not properly formatted" />
     <MESSAGE value="feat: add Client with non blocking receive" />
     <MESSAGE value="feat: add test server" />
     <MESSAGE value="feat: remove redundant fields" />
@@ -511,7 +529,8 @@
     <MESSAGE value="feat: add learner and shutdown message" />
     <MESSAGE value="feat: add more structured logging" />
     <MESSAGE value="feat: add more testing" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: add more testing" />
+    <MESSAGE value="feat: make some tests more determinisitic" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: make some tests more determinisitic" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

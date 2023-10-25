@@ -1,4 +1,5 @@
 package utils;
+
 import utils.helpers.Message;
 
 import java.io.IOException;
@@ -31,8 +32,7 @@ public class AsyncClientHandlerImpl extends AsyncClientConnection {
         if (message.type.equalsIgnoreCase("CONNECT")) {
             learner.registerAcceptor(message.from);
             handleConnectMessage(message);
-        }
-        else if (message.type.equalsIgnoreCase("PREPARE") || message.type.equalsIgnoreCase("PROPOSE"))
+        } else if (message.type.equalsIgnoreCase("PREPARE") || message.type.equalsIgnoreCase("PROPOSE"))
             handleBroadcastMessage(message);
         else if (message.type.equalsIgnoreCase("PROMISE") || message.type.equalsIgnoreCase("NAK_PREPARE"))
             handleRelayMessage(message);
@@ -78,13 +78,13 @@ public class AsyncClientHandlerImpl extends AsyncClientConnection {
         commService.send(message.to, message, false, true);
     }
 
-    private void handleLearnMessage(Message message) throws IOException{
+
+    private void handleLearnMessage(Message message) throws IOException {
         commService.receive(message);
         Message reply = learner.handleAcceptMessage(message);
         if (reply != null) {
             logger.info("LEARN: " + Message.printString(reply));
             learnedValue.set(reply.acceptValue);
-            commService.broadcast(reply, false);
             isUp.set(false);
         }
     }

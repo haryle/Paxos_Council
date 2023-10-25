@@ -146,7 +146,7 @@ public class CommService {
         for (int id : registry.keySet()) {
             try {
                 registry.get(id).close();
-            } catch (IOException e) {
+            } catch (IOException | InterruptedException e) {
                 logger.info("Fail to close connection: " + id + " error: " + e.toString());
             }
         }

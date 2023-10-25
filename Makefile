@@ -18,6 +18,12 @@ MAX_ATTEMPT ?= 5
 TIMEOUT ?= 1000
 REPLY_MIN ?= 100
 REPLY_MAX ?= 100
+MIN1 ?= 10
+MAX1 ?= 10
+MIN2 ?= 200
+MAX2 ?= 5000
+MIN3 ?= 1000
+MAX3 ?= 4000
 
 
 make_dirs:
@@ -54,11 +60,27 @@ acceptors: compile_src
 	@java $(LOGGING_FLAG) -cp $(JARFILES):$(OUTDIR) AcceptorCouncillor -p $(PORT) -id 8 -rMin $(REPLY_MIN) -rMax $(REPLY_MAX) &
 	@java $(LOGGING_FLAG) -cp $(JARFILES):$(OUTDIR) AcceptorCouncillor -p $(PORT) -id 9 -rMin $(REPLY_MIN) -rMax $(REPLY_MAX) &
 
-proposers: compile_src
-	@java $(LOGGING_FLAG) -cp $(JARFILES):$(OUTDIR) ProposerCouncillor -p $(PORT) -id 3 -min $(MIN) -max $(MAX) -d $(DELAY) -rMin $(REPLY_MIN) -rMax $(REPLY_MAX) &
-	@java $(LOGGING_FLAG) -cp $(JARFILES):$(OUTDIR) ProposerCouncillor -p $(PORT) -id 1 -min $(MIN) -max $(MAX) -d $(DELAY) -rMin $(REPLY_MIN) -rMax $(REPLY_MAX) &
-	@java $(LOGGING_FLAG) -cp $(JARFILES):$(OUTDIR) ProposerCouncillor -p $(PORT) -id 2 -min $(MIN) -max $(MAX) -d $(DELAY) -rMin $(REPLY_MIN) -rMax $(REPLY_MAX) &
+acceptors_with_drop_out: compile_src
+	@java $(LOGGING_FLAG) -cp $(JARFILES):$(OUTDIR) AcceptorCouncillor -p $(PORT) -id 4 -rMin $(REPLY_MIN) -rMax $(REPLY_MAX) &
+	@java $(LOGGING_FLAG) -cp $(JARFILES):$(OUTDIR) AcceptorCouncillor -p $(PORT) -id 5 -rMin $(REPLY_MIN) -rMax $(REPLY_MAX) &
+	@java $(LOGGING_FLAG) -cp $(JARFILES):$(OUTDIR) AcceptorCouncillor -p $(PORT) -id 6 -rMin $(REPLY_MIN) -rMax $(REPLY_MAX) &
+	@java $(LOGGING_FLAG) -cp $(JARFILES):$(OUTDIR) AcceptorCouncillor -p $(PORT) -id 7 -rMin $(REPLY_MIN) -rMax $(REPLY_MAX) &
+	@java $(LOGGING_FLAG) -cp $(JARFILES):$(OUTDIR) AcceptorCouncillor -p $(PORT) -id 8 -rMin $(REPLY_MIN) -rMax $(REPLY_MAX) &
+	@java $(LOGGING_FLAG) -cp $(JARFILES):$(OUTDIR) AcceptorCouncillor -p $(PORT) -id 9 -rMin 1000 -rMax 1500 &
 
+two_proposers_simultaneous: compile_src
+	@java $(LOGGING_FLAG) -cp $(JARFILES):$(OUTDIR) ProposerCouncillor -p $(PORT) -id 3 -min 100 -max 100 -d $(DELAY) -rMin $(REPLY_MIN) -rMax $(REPLY_MAX) &
+	@java $(LOGGING_FLAG) -cp $(JARFILES):$(OUTDIR) ProposerCouncillor -p $(PORT) -id 1 -min 100 -max 100 -d $(DELAY) -rMin $(REPLY_MIN) -rMax $(REPLY_MAX) &
+
+three_proposers_simultaneous: compile_src
+	@java $(LOGGING_FLAG) -cp $(JARFILES):$(OUTDIR) ProposerCouncillor -p $(PORT) -id 3 -min 100 -max 100 -d $(DELAY) -rMin $(REPLY_MIN) -rMax $(REPLY_MAX) &
+	@java $(LOGGING_FLAG) -cp $(JARFILES):$(OUTDIR) ProposerCouncillor -p $(PORT) -id 1 -min 100 -max 100 -d $(DELAY) -rMin $(REPLY_MIN) -rMax $(REPLY_MAX) &
+	@java $(LOGGING_FLAG) -cp $(JARFILES):$(OUTDIR) ProposerCouncillor -p $(PORT) -id 2 -min 100 -max 100 -d $(DELAY) -rMin $(REPLY_MIN) -rMax $(REPLY_MAX) &
+
+three_proposers_canonical: compile_src
+	@java $(LOGGING_FLAG) -cp $(JARFILES):$(OUTDIR) ProposerCouncillor -p $(PORT) -id 1 -min $(MIN1) -max $(MAX1) -d $(DELAY) -rMin $(REPLY_MIN) -rMax $(REPLY_MAX) &
+	@java $(LOGGING_FLAG) -cp $(JARFILES):$(OUTDIR) ProposerCouncillor -p $(PORT) -id 2 -min $(MIN2) -max $(MAX2) -d $(DELAY) -rMin $(REPLY_MIN) -rMax $(REPLY_MAX) &
+	@java $(LOGGING_FLAG) -cp $(JARFILES):$(OUTDIR) ProposerCouncillor -p $(PORT) -id 3 -min $(MIN3) -max $(MAX3) -d $(DELAY) -rMin $(REPLY_MIN) -rMax $(REPLY_MAX) &
 
 
 .PHONY = clean

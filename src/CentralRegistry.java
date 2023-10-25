@@ -2,6 +2,9 @@ import utils.AsyncServer;
 
 import java.io.IOException;
 
+/**
+ * Central Repository acts as a broadcast server
+ */
 public class CentralRegistry extends AsyncServer {
 
     public CentralRegistry(int port) throws IOException {
@@ -13,7 +16,7 @@ public class CentralRegistry extends AsyncServer {
     }
 
 
-    public static void main(String[] argv) throws IOException {
+    public static void main(String[] argv) throws IOException, InterruptedException {
         if (argv.length != 6) {
             System.out.println("Usage: CentralRegistry -p <PORT> -t <TIMEOUT> -a " +
                                "<MAX_ATTEMPT>");

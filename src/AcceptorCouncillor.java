@@ -60,7 +60,12 @@ public class AcceptorCouncillor extends AsyncClientConnection {
 
     public void send(Message message) throws IOException, InterruptedException {
         Thread.sleep(randomizer.nextInt(replyMax - replyMin + 1) + replyMin);
-        logger.info("Send: " + Message.printString(message));
+        logger.info("Send: " + councillorID +": " + Message.printString(message));
+        super.send(message);
+    }
+
+    private void sendNoDelay(Message message) throws IOException, InterruptedException{
+        logger.info("Send: " + councillorID +": " + Message.printString(message));
         super.send(message);
     }
 
@@ -71,7 +76,7 @@ public class AcceptorCouncillor extends AsyncClientConnection {
      * @throws IOException if failures during sending
      */
     public void start() throws IOException, InterruptedException {
-        send(Message.connect(councillorID));
+        sendNoDelay(Message.connect(councillorID));
         super.start();
     }
 
@@ -87,9 +92,9 @@ public class AcceptorCouncillor extends AsyncClientConnection {
     @Override
     public void handleMessage(Message message) throws IOException,
             InterruptedException {
-        logger.info("Receive: " + Message.printString(message));
+        logger.info("Receive: " + councillorID + ": " +  Message.printString(message));
         if (message.type.equalsIgnoreCase("SHUTDOWN")) {
-            logger.info("SHUTDOWN: " + message.acceptValue);
+            logger.info("SHUTDOWN: " + + councillorID + ": " + message.acceptValue);
             close();
         }
         Message reply = acceptorHandler.handleMessage(message);

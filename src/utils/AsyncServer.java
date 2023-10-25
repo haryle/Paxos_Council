@@ -1,5 +1,7 @@
 package utils;
 
+import utils.helpers.Message;
+
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.nio.channels.ServerSocketChannel;
@@ -7,6 +9,7 @@ import java.nio.channels.SocketChannel;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.logging.Logger;
@@ -59,8 +62,9 @@ public class AsyncServer {
      * Shutdown server
      * @throws IOException if errors encountered during shutdown
      */
-    public void close() throws IOException {
+    public void close() throws IOException, InterruptedException {
         threadPool.shutdown();
+        threadPool.awaitTermination(5000, TimeUnit.MILLISECONDS);
         serverSocketChannel.close();
         commService.close();
     }
@@ -69,7 +73,7 @@ public class AsyncServer {
      * Start server
      * @throws IOException errors encountered during start up
      */
-    public void start() throws IOException {
+    public void start() throws IOException, InterruptedException {
         while (!Thread.currentThread().isInterrupted()&& isUp.get()) {
             SocketChannel clientChannel = serverSocketChannel.accept();
             if (clientChannel != null ) {
@@ -87,6 +91,8 @@ public class AsyncServer {
                 });
             }
         }
+        Message shutdown = Message.shutdown(learnedValue.get());
+        commService.broadcast(shutdown, false);
         close();
     }
 

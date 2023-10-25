@@ -47,7 +47,7 @@ class DeterministicPaxosCouncilTest {
         new Thread(()->{
             try {
                 registry.start();
-            } catch (IOException e) {
+            } catch (IOException | InterruptedException e) {
                 throw new RuntimeException(e);
             }
         }).start();
@@ -62,7 +62,7 @@ class DeterministicPaxosCouncilTest {
     }
 
     @AfterEach
-    void tearDown() throws IOException {
+    void tearDown() throws IOException, InterruptedException {
         registry.close();
         for (AcceptorCouncillor acceptor: acceptors)
             acceptor.close();

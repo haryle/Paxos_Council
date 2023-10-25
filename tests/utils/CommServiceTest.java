@@ -154,7 +154,7 @@ class CommServiceFixture {
     }
 
     @AfterEach
-    void tearDown() throws IOException {
+    void tearDown() throws IOException, InterruptedException {
         commService.close();
         firstConn.close();
         secondConn.close();

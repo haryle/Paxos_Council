@@ -32,7 +32,7 @@ class AsyncClientHandlerImplTest extends CommServiceFixture {
 
     @Override
     @AfterEach
-    void tearDown() throws IOException {
+    void tearDown() throws IOException, InterruptedException {
         super.tearDown();
         server.close();
     }
